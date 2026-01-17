@@ -254,7 +254,7 @@ int main() {
         "/api/notes", [&db](const drogon::HttpRequestPtr &request, std::function<void(const HttpResponsePtr &)> &&callback) {
             if (request->method() == drogon::Get) {
                 Value payload;
-                payload["notes"] = Value(Value::arrayValue);
+                payload["notes"] = Value(Json::arrayValue);
                 for (const auto &note : db.listNotes()) {
                     payload["notes"].append(noteToJson(note));
                 }
@@ -374,7 +374,7 @@ int main() {
         "/api/reviews", [&db](const drogon::HttpRequestPtr &request, std::function<void(const HttpResponsePtr &)> &&callback) {
             auto now = nowIso8601();
             Value payload;
-            payload["notes"] = Value(Value::arrayValue);
+            payload["notes"] = Value(Json::arrayValue);
             for (const auto &note : db.listReviewsDue(now)) {
                 payload["notes"].append(noteToJson(note));
             }
@@ -390,14 +390,14 @@ int main() {
                 callback(resp);
                 return;
             }
-            const auto &files = request->getFiles();
+            const auto &files = request->getUploadedFiles();
             if (files.empty()) {
                 Value error;
                 error["error"] = "No file uploaded";
                 callback(jsonResponse(error, HttpStatusCode::k400BadRequest));
                 return;
             }
-            const auto &file = files.begin()->second;
+            const auto &file = files.front();
             std::string filename = file.getFileName();
             std::string destPath = fs::path(uploadDir) / filename;
             file.saveAs(destPath);
