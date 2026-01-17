@@ -18,7 +18,7 @@ This project is designed to be **C++-first** with **minimal configuration**. It 
 - Spaced repetition review queue
 
 ## Quick Start (local)
-> You need a C++20 compiler, CMake, Drogon, and SQLite.
+> You need a C++17 compiler, CMake, Drogon (1.9.11), and SQLite.
 
 ### 1) Install dependencies (Ubuntu example)
 ```bash
@@ -44,13 +44,13 @@ Open: `http://localhost:8080`
 ## Deployment (single server, no domain)
 These steps assume **Ubuntu 20.04/22.04** and a single server. You can access the site by **IP address**.
 
-### 1) Install build dependencies
+### 1) Install build dependencies (C++17)
 ```bash
 sudo apt-get update
 sudo apt-get install -y g++ cmake git libsqlite3-dev
 ```
 
-### 2) Install Drogon
+### 2) Install Drogon (1.9.11)
 If your distro packages Drogon, install it directly:
 ```bash
 sudo apt-get install -y libdrogon-dev
