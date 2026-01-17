@@ -390,7 +390,14 @@ int main() {
                 callback(resp);
                 return;
             }
-            const auto &files = request->getUploadedFiles();
+            drogon::MultiPartParser parser;
+            if (parser.parse(request) != 0) {
+                Value error;
+                error["error"] = "Failed to parse upload";
+                callback(jsonResponse(error, HttpStatusCode::k400BadRequest));
+                return;
+            }
+            const auto &files = parser.getFiles();
             if (files.empty()) {
                 Value error;
                 error["error"] = "No file uploaded";
