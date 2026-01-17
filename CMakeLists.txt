@@ -5,8 +5,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Drogon REQUIRED)
-find_package(SQLite3 REQUIRED)
-
 add_executable(personal_learning_hub
     src/main.cpp
 )
@@ -14,5 +12,4 @@ add_executable(personal_learning_hub
 target_link_libraries(personal_learning_hub
     PRIVATE
     Drogon::Drogon
-    SQLite::SQLite3
 )
