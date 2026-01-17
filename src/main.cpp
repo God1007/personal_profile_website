@@ -1,12 +1,14 @@
 #include <drogon/drogon.h>
+#include <drogon/HttpFile.h>
 #include <filesystem>
 #include <optional>
 #include <sqlite3.h>
 
 namespace fs = std::filesystem;
 using drogon::HttpResponse;
+using drogon::HttpResponsePtr;
 using drogon::HttpStatusCode;
-using drogon::Json::Value;
+using Json::Value;
 
 namespace {
 constexpr int kReviewIntervalsDays[] = {1, 3, 7, 14, 30};
@@ -286,7 +288,9 @@ int main() {
                 callback(jsonResponse(noteToJson(*created), HttpStatusCode::k201Created));
                 return;
             }
-            callback(HttpResponse::newHttpResponse(HttpStatusCode::k405MethodNotAllowed));
+            auto resp = HttpResponse::newHttpResponse();
+            resp->setStatusCode(HttpStatusCode::k405MethodNotAllowed);
+            callback(resp);
         },
         {drogon::Get, drogon::Post});
 
@@ -342,14 +346,18 @@ int main() {
                 callback(jsonResponse(response));
                 return;
             }
-            callback(HttpResponse::newHttpResponse(HttpStatusCode::k405MethodNotAllowed));
+            auto resp = HttpResponse::newHttpResponse();
+            resp->setStatusCode(HttpStatusCode::k405MethodNotAllowed);
+            callback(resp);
         },
         {drogon::Put, drogon::Delete});
 
     drogon::app().registerHandler(
         "/api/notes/{1}/review", [&db](const drogon::HttpRequestPtr &request, std::function<void(const HttpResponsePtr &)> &&callback, int id) {
             if (request->method() != drogon::Post) {
-                callback(HttpResponse::newHttpResponse(HttpStatusCode::k405MethodNotAllowed));
+                auto resp = HttpResponse::newHttpResponse();
+                resp->setStatusCode(HttpStatusCode::k405MethodNotAllowed);
+                callback(resp);
                 return;
             }
             auto updated = db.advanceReview(id);
@@ -378,17 +386,19 @@ int main() {
     drogon::app().registerHandler(
         "/api/upload", [&uploadDir](const drogon::HttpRequestPtr &request, std::function<void(const HttpResponsePtr &)> &&callback) {
             if (request->method() != drogon::Post) {
-                callback(HttpResponse::newHttpResponse(HttpStatusCode::k405MethodNotAllowed));
+                auto resp = HttpResponse::newHttpResponse();
+                resp->setStatusCode(HttpStatusCode::k405MethodNotAllowed);
+                callback(resp);
                 return;
             }
-            auto files = request->getUploadedFiles();
+            const auto &files = request->getFiles();
             if (files.empty()) {
                 Value error;
                 error["error"] = "No file uploaded";
                 callback(jsonResponse(error, HttpStatusCode::k400BadRequest));
                 return;
             }
-            const auto &file = files.front();
+            const auto &file = files.begin()->second;
             std::string filename = file.getFileName();
             std::string destPath = fs::path(uploadDir) / filename;
             file.saveAs(destPath);
@@ -402,7 +412,9 @@ int main() {
         "/uploads/{1}", [&uploadDir](const drogon::HttpRequestPtr &request, std::function<void(const HttpResponsePtr &)> &&callback, const std::string &filename) {
             auto filePath = fs::path(uploadDir) / filename;
             if (!fs::exists(filePath)) {
-                callback(HttpResponse::newHttpResponse(HttpStatusCode::k404NotFound));
+                auto resp = HttpResponse::newHttpResponse();
+                resp->setStatusCode(HttpStatusCode::k404NotFound);
+                callback(resp);
                 return;
             }
             auto resp = HttpResponse::newFileResponse(filePath.string());
