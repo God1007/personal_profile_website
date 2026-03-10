@@ -6,13 +6,14 @@
     <title>学习记录中心</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
     <script src="app.js" defer></script>
   </head>
   <body>
     <header class="app-header">
       <div>
         <h1>学习记录中心</h1>
-        <p>轻量 · 清晰 · C++ 驱动</p>
+        <p>笔记 / 面试记录 / 学习时间线</p>
       </div>
       <div class="badge">Light Theme</div>
     </header>
@@ -21,22 +22,20 @@
       <section class="card">
         <h2>新增笔记</h2>
         <form id="note-form">
+          <label>标题 <input type="text" name="title" placeholder="如：C++ 并发基础" required /></label>
+          <label>标签（逗号分隔） <input type="text" name="tags" placeholder="C++,并发" /></label>
           <label>
-            标题
-            <input type="text" name="title" placeholder="如：C++ 并发基础" required />
+            内容（支持 Markdown）
+            <textarea id="note-content-input" name="content" rows="7" placeholder="例如：
+## 今日学习
+- C++ 协程
+- 手写 LRU"></textarea>
           </label>
-          <label>
-            标签（用逗号分隔）
-            <input type="text" name="tags" placeholder="C++,并发" />
-          </label>
-          <label>
-            内容
-            <textarea name="content" rows="6" placeholder="记录学习要点..."></textarea>
-          </label>
-          <label>
-            PDF 上传（可选）
-            <input type="file" name="pdf" accept="application/pdf" />
-          </label>
+          <div class="live-preview-wrap">
+            <div class="muted">实时 Markdown 预览</div>
+            <div id="live-md-preview" class="live-md-preview"></div>
+          </div>
+          <label>附件上传（PDF/MD，可选） <input type="file" name="attachment" accept=".pdf,.md,text/markdown,application/pdf" /></label>
           <button class="primary" type="submit">保存笔记</button>
         </form>
       </section>
@@ -49,6 +48,27 @@
         <div id="review-list" class="list"></div>
       </section>
 
+      <section class="card">
+        <h2>新增面试记录</h2>
+        <form id="interview-form">
+          <label>公司 <input type="text" name="company" required /></label>
+          <label>岗位 <input type="text" name="role" required /></label>
+          <label>日期 <input type="date" name="interviewDate" /></label>
+          <label>总结 <textarea name="summary" rows="3" placeholder="技术点、表现、复盘"></textarea></label>
+          <button class="primary" type="submit">保存面试记录</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>新增学习时间线</h2>
+        <form id="timeline-form">
+          <label>日期 <input type="date" name="eventDate" /></label>
+          <label>标题 <input type="text" name="title" required /></label>
+          <label>详情 <textarea name="detail" rows="3" placeholder="今天学了什么、产出了什么"></textarea></label>
+          <button class="primary" type="submit">加入时间线</button>
+        </form>
+      </section>
+
       <section class="card full">
         <div class="card-header">
           <h2>全部笔记</h2>
@@ -57,12 +77,31 @@
         <div id="note-list" class="list"></div>
       </section>
 
+      <section class="card full two-col">
+        <div>
+          <div class="card-header">
+            <h2>面试记录</h2>
+            <button class="ghost" id="refresh-interviews">刷新</button>
+          </div>
+          <div id="interview-list" class="list"></div>
+        </div>
+        <div>
+          <div class="card-header">
+            <h2>学习日历</h2>
+            <button class="ghost" id="refresh-timeline">刷新</button>
+          </div>
+          <div id="calendar" class="calendar"></div>
+          <div id="timeline-list" class="list"></div>
+        </div>
+      </section>
+
       <section class="card full">
-        <h2>PDF 预览</h2>
-        <div class="pdf-preview">
+        <h2>附件预览</h2>
+        <div class="pdf-preview" id="pdf-container">
           <canvas id="pdf-canvas"></canvas>
         </div>
-        <p class="muted" id="pdf-empty">选择一份笔记中的 PDF 即可预览</p>
+        <pre class="md-preview" id="md-preview"></pre>
+        <p class="muted" id="preview-empty">点击笔记中的“预览附件”查看 PDF 或 Markdown</p>
       </section>
     </main>
   </body>
