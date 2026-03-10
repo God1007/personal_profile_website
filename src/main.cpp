@@ -365,6 +365,24 @@ public:
         return row;
     }
 
+    std::optional<TimelineEvent> updateTimelineEvent(int id, const TimelineEvent &record) {
+        const char *sql = "UPDATE timeline_events SET event_date = ?, title = ?, detail = ? WHERE id = ?";
+        sqlite3_stmt *stmt = nullptr;
+        if (sqlite3_prepare_v2(db_, sql, -1, &stmt, nullptr) != SQLITE_OK) {
+            return std::nullopt;
+        }
+        sqlite3_bind_text(stmt, 1, record.eventDate.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(stmt, 2, record.title.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(stmt, 3, record.detail.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_int(stmt, 4, id);
+        bool ok = sqlite3_step(stmt) == SQLITE_DONE;
+        sqlite3_finalize(stmt);
+        if (!ok) {
+            return std::nullopt;
+        }
+        return getTimelineEventById(id);
+    }
+
     bool deleteTimelineEvent(int id) {
         return executeDelete("DELETE FROM timeline_events WHERE id = ?", id);
     }
@@ -726,23 +744,56 @@ int main() {
 
     drogon::app().registerHandler(
         "/api/timeline/{1}", [&db](const drogon::HttpRequestPtr &request, std::function<void(const HttpResponsePtr &)> &&callback, int id) {
-            if (request->method() != drogon::Delete) {
-                auto resp = HttpResponse::newHttpResponse();
-                resp->setStatusCode(HttpStatusCode::k405MethodNotAllowed);
-                callback(resp);
+            if (request->method() == drogon::Delete) {
+                if (!db.deleteTimelineEvent(id)) {
+                    Value error;
+                    error["error"] = "Not found";
+                    callback(jsonResponse(error, HttpStatusCode::k404NotFound));
+                    return;
+                }
+                Value payload;
+                payload["ok"] = true;
+                callback(jsonResponse(payload));
                 return;
             }
-            if (!db.deleteTimelineEvent(id)) {
-                Value error;
-                error["error"] = "Not found";
-                callback(jsonResponse(error, HttpStatusCode::k404NotFound));
+
+            if (request->method() == drogon::Put) {
+                auto json = request->getJsonObject();
+                if (!json) {
+                    Value error;
+                    error["error"] = "Missing body";
+                    callback(jsonResponse(error, HttpStatusCode::k400BadRequest));
+                    return;
+                }
+                TimelineEvent event;
+                event.eventDate = trim((*json)["eventDate"].asString());
+                event.title = trim((*json)["title"].asString());
+                event.detail = trim((*json)["detail"].asString());
+                if (event.title.empty()) {
+                    Value error;
+                    error["error"] = "Title is required";
+                    callback(jsonResponse(error, HttpStatusCode::k400BadRequest));
+                    return;
+                }
+                if (event.eventDate.empty()) {
+                    event.eventDate = todayDate();
+                }
+                auto updated = db.updateTimelineEvent(id, event);
+                if (!updated) {
+                    Value error;
+                    error["error"] = "Not found";
+                    callback(jsonResponse(error, HttpStatusCode::k404NotFound));
+                    return;
+                }
+                callback(jsonResponse(timelineToJson(*updated)));
                 return;
             }
-            Value payload;
-            payload["ok"] = true;
-            callback(jsonResponse(payload));
+
+            auto resp = HttpResponse::newHttpResponse();
+            resp->setStatusCode(HttpStatusCode::k405MethodNotAllowed);
+            callback(resp);
         },
-        {drogon::Delete});
+        {drogon::Delete, drogon::Put});
 
     drogon::app().registerHandler(
         "/api/upload", [&uploadDir](const drogon::HttpRequestPtr &request, std::function<void(const HttpResponsePtr &)> &&callback) {
@@ -775,13 +826,83 @@ int main() {
                 return;
             }
             filename = makeUniqueUploadName(filename);
+            fs::create_directories(uploadDir);
             std::string destPath = (fs::path(uploadDir) / filename).string();
-            file.saveAs(destPath);
+            if (file.saveAs(destPath) != 0) {
+                Value error;
+                error["error"] = "Failed to save uploaded file";
+                callback(jsonResponse(error, HttpStatusCode::k500InternalServerError));
+                return;
+            }
             Value payload;
             payload["path"] = "/uploads/" + filename;
             callback(jsonResponse(payload, HttpStatusCode::k201Created));
         },
         {drogon::Post});
+
+    drogon::app().registerHandler(
+        "/api/uploads", [&uploadDir](const drogon::HttpRequestPtr &request, std::function<void(const HttpResponsePtr &)> &&callback) {
+            if (request->method() != drogon::Get) {
+                auto resp = HttpResponse::newHttpResponse();
+                resp->setStatusCode(HttpStatusCode::k405MethodNotAllowed);
+                callback(resp);
+                return;
+            }
+            fs::create_directories(uploadDir);
+            Value payload;
+            payload["files"] = Value(Json::arrayValue);
+            std::error_code ec;
+            for (const auto &entry : fs::directory_iterator(uploadDir, ec)) {
+                if (ec || !entry.is_regular_file()) {
+                    continue;
+                }
+                Value file;
+                const auto name = entry.path().filename().string();
+                file["name"] = name;
+                file["path"] = "/uploads/" + name;
+                file["size"] = static_cast<Json::Int64>(entry.file_size());
+                auto ticks = entry.last_write_time().time_since_epoch().count();
+                file["lastModified"] = std::to_string(ticks);
+                payload["files"].append(file);
+            }
+            callback(jsonResponse(payload));
+        },
+        {drogon::Get});
+
+    drogon::app().registerHandler(
+        "/api/uploads/{1}", [&uploadDir](const drogon::HttpRequestPtr &request, std::function<void(const HttpResponsePtr &)> &&callback, const std::string &filename) {
+            if (request->method() != drogon::Delete) {
+                auto resp = HttpResponse::newHttpResponse();
+                resp->setStatusCode(HttpStatusCode::k405MethodNotAllowed);
+                callback(resp);
+                return;
+            }
+            if (filename.find('/') != std::string::npos || filename.find("..") != std::string::npos) {
+                auto resp = HttpResponse::newHttpResponse();
+                resp->setStatusCode(HttpStatusCode::k400BadRequest);
+                callback(resp);
+                return;
+            }
+            auto filePath = fs::path(uploadDir) / filename;
+            if (!fs::exists(filePath)) {
+                Value error;
+                error["error"] = "Not found";
+                callback(jsonResponse(error, HttpStatusCode::k404NotFound));
+                return;
+            }
+            std::error_code ec2;
+            fs::remove(filePath, ec2);
+            if (ec2) {
+                Value error;
+                error["error"] = "Failed to delete upload";
+                callback(jsonResponse(error, HttpStatusCode::k500InternalServerError));
+                return;
+            }
+            Value payload;
+            payload["ok"] = true;
+            callback(jsonResponse(payload));
+        },
+        {drogon::Delete});
 
     drogon::app().registerHandler(
         "/uploads/{1}", [&uploadDir](const drogon::HttpRequestPtr &request, std::function<void(const HttpResponsePtr &)> &&callback, const std::string &filename) {
