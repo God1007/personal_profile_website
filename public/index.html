@@ -10,98 +10,142 @@
     <script src="app.js" defer></script>
   </head>
   <body>
-    <header class="app-header">
+    <div class="bg-glow"></div>
+    <header class="app-header glass">
       <div>
-        <h1>学习记录中心</h1>
-        <p>笔记 / 面试记录 / 学习时间线</p>
+        <h1>Learning Hub</h1>
+        <p>清晰记录 · 轻量复盘 · 持续成长</p>
       </div>
-      <div class="badge">Light Theme</div>
+      <div class="badge">Apple-like Light UI</div>
     </header>
 
-    <main class="layout">
-      <section class="card">
-        <h2>新增笔记</h2>
-        <form id="note-form">
-          <label>标题 <input type="text" name="title" placeholder="如：C++ 并发基础" required /></label>
-          <label>标签（逗号分隔） <input type="text" name="tags" placeholder="C++,并发" /></label>
-          <label>
-            内容（支持 Markdown）
-            <textarea id="note-content-input" name="content" rows="7" placeholder="例如：
-## 今日学习
-- C++ 协程
-- 手写 LRU"></textarea>
-          </label>
-          <div class="live-preview-wrap">
-            <div class="muted">实时 Markdown 预览</div>
-            <div id="live-md-preview" class="live-md-preview"></div>
-          </div>
-          <label>附件上传（PDF/MD，可选） <input type="file" name="attachment" accept=".pdf,.md,text/markdown,application/pdf" /></label>
-          <button class="primary" type="submit">保存笔记</button>
-        </form>
-      </section>
+    <nav class="top-nav glass" aria-label="页面导航">
+      <button class="nav-item active" data-page="page-create">新增中心</button>
+      <button class="nav-item" data-page="page-reviews">复习与笔记</button>
+      <button class="nav-item" data-page="page-calendar">学习日历</button>
+      <button class="nav-item" data-page="page-interviews">面试记录</button>
+      <button class="nav-item" data-page="page-uploads">附件管理</button>
+      <button class="nav-item" data-page="page-author">关于作者</button>
+    </nav>
 
-      <section class="card">
-        <div class="card-header">
-          <h2>今日复习</h2>
-          <button class="ghost" id="refresh-reviews">刷新</button>
+    <main>
+      <section class="page active" id="page-create">
+        <div class="hero-card glass">
+          <h2>新增中心</h2>
+          <p>你可以在这里集中新增：笔记、学习计划（日历事件）、面试记录。</p>
         </div>
-        <div id="review-list" class="list"></div>
-      </section>
 
-      <section class="card">
-        <h2>新增面试记录</h2>
-        <form id="interview-form">
-          <label>公司 <input type="text" name="company" required /></label>
-          <label>岗位 <input type="text" name="role" required /></label>
-          <label>日期 <input type="date" name="interviewDate" /></label>
-          <label>总结 <textarea name="summary" rows="3" placeholder="技术点、表现、复盘"></textarea></label>
-          <button class="primary" type="submit">保存面试记录</button>
-        </form>
-      </section>
+        <div class="grid-2">
+          <section class="card glass">
+            <h3>新增笔记</h3>
+            <form id="note-form">
+              <label>标题 <input type="text" name="title" placeholder="如：C++ 并发基础" required /></label>
+              <label>标签（逗号分隔） <input type="text" name="tags" placeholder="C++,并发" /></label>
+              <label>
+                内容（支持 Markdown）
+                <textarea id="note-content-input" name="content" rows="7"></textarea>
+              </label>
+              <div class="live-preview-wrap">
+                <div class="muted">实时 Markdown 预览</div>
+                <div id="live-md-preview" class="live-md-preview"></div>
+              </div>
+              <label>附件上传（PDF/MD，可选）<input type="file" name="attachment" accept=".pdf,.md,text/markdown,application/pdf" /></label>
+              <button class="primary" type="submit">保存笔记</button>
+            </form>
+          </section>
 
-      <section class="card">
-        <h2>新增学习时间线</h2>
-        <form id="timeline-form">
-          <label>日期 <input type="date" name="eventDate" /></label>
-          <label>标题 <input type="text" name="title" required /></label>
-          <label>详情 <textarea name="detail" rows="3" placeholder="今天学了什么、产出了什么"></textarea></label>
-          <button class="primary" type="submit">加入时间线</button>
-        </form>
-      </section>
+          <section class="card glass">
+            <h3>新增学习安排</h3>
+            <form id="timeline-form">
+              <label>日期 <input type="date" name="eventDate" /></label>
+              <label>标题 <input type="text" name="title" required /></label>
+              <label>详情 <textarea name="detail" rows="4" placeholder="今天打算学什么"></textarea></label>
+              <button class="primary" type="submit">加入日程</button>
+            </form>
 
-      <section class="card full">
-        <div class="card-header">
-          <h2>全部笔记</h2>
-          <button class="ghost" id="refresh-notes">刷新</button>
+            <hr />
+
+            <h3>新增面试记录</h3>
+            <form id="interview-form">
+              <label>公司 <input type="text" name="company" required /></label>
+              <label>岗位 <input type="text" name="role" required /></label>
+              <label>日期 <input type="date" name="interviewDate" /></label>
+              <label>总结 <textarea name="summary" rows="4"></textarea></label>
+              <button class="primary" type="submit">保存面试记录</button>
+            </form>
+          </section>
         </div>
-        <div id="note-list" class="list"></div>
       </section>
 
-      <section class="card full two-col">
-        <div>
-          <div class="card-header">
-            <h2>面试记录</h2>
-            <button class="ghost" id="refresh-interviews">刷新</button>
-          </div>
+      <section class="page" id="page-reviews">
+        <div class="grid-2">
+          <section class="card glass">
+            <div class="card-header"><h3>今日复习</h3><button class="ghost" id="refresh-reviews">刷新</button></div>
+            <div id="review-list" class="list"></div>
+          </section>
+
+          <section class="card glass">
+            <div class="card-header"><h3>全部笔记</h3><button class="ghost" id="refresh-notes">刷新</button></div>
+            <div id="note-list" class="list"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="page" id="page-calendar">
+        <div class="grid-2">
+          <section class="card glass">
+            <div class="card-header"><h3>学习日历（可点击日期）</h3><button class="ghost" id="refresh-timeline">刷新</button></div>
+            <div class="calendar-legend muted">点击某个日期后，可查看并编辑当日安排。</div>
+            <div id="calendar" class="calendar"></div>
+          </section>
+
+          <section class="card glass">
+            <h3 id="selected-date-title">当日安排</h3>
+            <form id="day-plan-form">
+              <input type="hidden" name="eventDate" id="day-event-date" />
+              <label>标题 <input type="text" name="title" required /></label>
+              <label>详情 <textarea name="detail" rows="3"></textarea></label>
+              <button class="primary" type="submit">新增到该日期</button>
+            </form>
+            <div id="day-plan-list" class="list"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="page" id="page-interviews">
+        <section class="card glass">
+          <div class="card-header"><h3>面试记录</h3><button class="ghost" id="refresh-interviews">刷新</button></div>
           <div id="interview-list" class="list"></div>
-        </div>
-        <div>
-          <div class="card-header">
-            <h2>学习日历</h2>
-            <button class="ghost" id="refresh-timeline">刷新</button>
-          </div>
-          <div id="calendar" class="calendar"></div>
-          <div id="timeline-list" class="list"></div>
+        </section>
+      </section>
+
+      <section class="page" id="page-uploads">
+        <div class="grid-2">
+          <section class="card glass">
+            <div class="card-header"><h3>附件列表（查 / 删）</h3><button class="ghost" id="refresh-uploads">刷新</button></div>
+            <div id="upload-list" class="list"></div>
+          </section>
+
+          <section class="card glass">
+            <h3>附件预览</h3>
+            <div class="pdf-preview" id="pdf-container"><canvas id="pdf-canvas"></canvas></div>
+            <pre class="md-preview" id="md-preview"></pre>
+            <p class="muted" id="preview-empty">在左侧点击“预览”查看 PDF/Markdown。</p>
+          </section>
         </div>
       </section>
 
-      <section class="card full">
-        <h2>附件预览</h2>
-        <div class="pdf-preview" id="pdf-container">
-          <canvas id="pdf-canvas"></canvas>
-        </div>
-        <pre class="md-preview" id="md-preview"></pre>
-        <p class="muted" id="preview-empty">点击笔记中的“预览附件”查看 PDF 或 Markdown</p>
+      <section class="page" id="page-author">
+        <section class="card glass about">
+          <h2>关于作者</h2>
+          <p>你好，我是这个学习网站的作者，专注于 C++ 后端、系统设计与工程化实践。</p>
+          <p>这个网站的目标是：把学习、面试、复盘和日程整合在一个清晰可持续的流程里。</p>
+          <ul>
+            <li>擅长方向：C++、后端架构、性能优化。</li>
+            <li>当前目标：构建高可用、可维护的个人知识系统。</li>
+            <li>联系建议：可在此处替换成你的邮箱 / GitHub。</li>
+          </ul>
+        </section>
       </section>
     </main>
   </body>
