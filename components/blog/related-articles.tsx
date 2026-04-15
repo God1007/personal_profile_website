@@ -11,8 +11,8 @@ export function RelatedArticles({ posts }: RelatedArticlesProps) {
   }
 
   return (
-    <section className="related-articles">
-      <h2>推荐阅读</h2>
+    <section className="related-articles surface-panel">
+      <h2>Related Notes</h2>
       <div className="article-list">
         {posts.map((post) => (
           <ArticleCard key={post.slug} post={post} />

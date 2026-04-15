@@ -1,4 +1,5 @@
 import { ArticleCard } from "@/components/blog/article-card";
+import { siteContent } from "@/data/site-content";
 import { getAllTags, getPostsByTag } from "@/lib/blog";
 
 type TagPageProps = {
@@ -12,12 +13,14 @@ export async function generateStaticParams() {
 export default async function TagPage({ params }: TagPageProps) {
   const { tag } = await params;
   const posts = getPostsByTag(tag);
+  const { writing } = siteContent;
 
   return (
     <main className="blog-page container">
       <header className="blog-hero">
-        <p className="eyebrow">Tag</p>
-        <h1>标签：{tag}</h1>
+        <p className="eyebrow">Archive</p>
+        <h1>{writing.title}</h1>
+        <p className="section-subtitle">Tag / {tag}</p>
       </header>
       <section className="article-list">
         {posts.map((post) => (

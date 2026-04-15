@@ -1,4 +1,5 @@
 import { ArticleCard } from "@/components/blog/article-card";
+import { siteContent } from "@/data/site-content";
 import { getAllCategories, getPostsByCategory } from "@/lib/blog";
 
 type CategoryPageProps = {
@@ -12,12 +13,14 @@ export async function generateStaticParams() {
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { category } = await params;
   const posts = getPostsByCategory(category);
+  const { writing } = siteContent;
 
   return (
     <main className="blog-page container">
       <header className="blog-hero">
-        <p className="eyebrow">Category</p>
-        <h1>分类：{category}</h1>
+        <p className="eyebrow">Archive</p>
+        <h1>{writing.title}</h1>
+        <p className="section-subtitle">Category / {category}</p>
       </header>
       <section className="article-list">
         {posts.map((post) => (

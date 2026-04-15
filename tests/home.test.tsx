@@ -2,22 +2,22 @@ import { render, screen } from "@testing-library/react";
 import HomePage from "@/app/page";
 
 describe("HomePage", () => {
-  it("shows the Chinese profile content and the writing preview", () => {
+  it("shows the stronger technical brand hero and key sections", () => {
     render(<HomePage />);
 
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: /专注网络系统、工程实现与智能分析的开发者/i
+        name: /engineering systems with clarity/i
       })
     ).toBeInTheDocument();
 
-    expect(screen.getByText(/陈嘉乐/i)).toBeInTheDocument();
-    expect(screen.getByRole("heading", { level: 2, name: /关于我/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { level: 2, name: /项目经历/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { level: 2, name: /文章与笔记/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /查看全部文章/i })).toHaveAttribute("href", "/blog");
-    expect(screen.getByRole("heading", { level: 2, name: /教育与经历/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { level: 2, name: /欢迎交流与合作/i })).toBeInTheDocument();
+    expect(screen.getAllByText(/jared 01 home/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/小陈/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /toggle theme/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: /selected projects/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: /jared 01 home/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: /education & journey/i })).toBeInTheDocument();
+    expect(screen.getByText(/build, measure, iterate/i)).toBeInTheDocument();
   });
 });

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArticleMeta } from "@/components/blog/article-meta";
 import { RelatedArticles } from "@/components/blog/related-articles";
+import { siteContent } from "@/data/site-content";
 import { getAdjacentPosts, getAllPosts, getPostBySlug, getRelatedPosts } from "@/lib/blog";
 
 type BlogPostPageProps = {
@@ -15,6 +16,7 @@ export async function generateStaticParams() {
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
+  const { writing } = siteContent;
 
   if (!post) {
     notFound();
@@ -26,7 +28,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <main className="article-page container">
       <article className="article-layout">
-        <p className="eyebrow">{post.category}</p>
+        <p className="eyebrow">{writing.title}</p>
+        <p className="article-category-label">{post.category}</p>
         <h1>{post.title}</h1>
         <p className="article-summary">{post.summary}</p>
         <ArticleMeta date={post.date} category={post.category} tags={post.tags} />
@@ -35,11 +38,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       <nav className="article-pagination" aria-label="Article pagination">
         {adjacent.previous ? (
-          <Link href={`/blog/${adjacent.previous.slug}`}>上一篇：{adjacent.previous.title}</Link>
+          <Link href={`/blog/${adjacent.previous.slug}`}>Previous Note: {adjacent.previous.title}</Link>
         ) : (
           <span />
         )}
-        {adjacent.next ? <Link href={`/blog/${adjacent.next.slug}`}>下一篇：{adjacent.next.title}</Link> : null}
+        {adjacent.next ? <Link href={`/blog/${adjacent.next.slug}`}>Next Note: {adjacent.next.title}</Link> : null}
       </nav>
 
       <RelatedArticles posts={related} />

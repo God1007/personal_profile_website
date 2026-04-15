@@ -8,7 +8,7 @@ type ArticleCardProps = {
 
 export function ArticleCard({ post }: ArticleCardProps) {
   return (
-    <article className="article-card">
+    <article className="article-card surface-panel">
       <ArticleMeta date={post.date} category={post.category} tags={post.tags} />
       <h2>
         <Link href={`/blog/${post.slug}`}>{post.title}</Link>

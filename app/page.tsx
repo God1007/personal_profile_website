@@ -1,94 +1,172 @@
 import Link from "next/link";
+import { HeroOrbit } from "@/components/home/hero-orbit";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { siteContent } from "@/data/site-content";
 import { getFeaturedPosts } from "@/lib/blog";
 
 export default function HomePage() {
-  const { profile, strengths, projects, timeline, contacts, writing } = siteContent;
+  const { site, profile, strengths, projects, timeline, contacts, writing } = siteContent;
   const featuredPosts = getFeaturedPosts().slice(0, 3);
+  const [featuredProject, ...secondaryProjects] = projects;
 
   return (
-    <main>
+    <main className="site-shell">
       <section className="hero-shell">
+        <div className="hero-backdrop" aria-hidden="true">
+          <span className="hero-glow hero-glow-a" />
+          <span className="hero-glow hero-glow-b" />
+          <span className="hero-gridline" />
+        </div>
+
         <header className="site-nav container">
-          <a className="brand-mark" href="#top" aria-label="Back to top">
-            {profile.initials}
+          <a className="brand-lockup" href="#top" aria-label="Back to top">
+            <span className="brand-mark">{profile.initials}</span>
+            <span className="brand-copy">
+              <strong>{site.name}</strong>
+              <small>{site.label}</small>
+            </span>
           </a>
+
           <nav className="nav-links" aria-label="Main navigation">
-            <a href="#about">关于</a>
-            <a href="#work">项目</a>
-            <Link href="/blog">博客</Link>
-            <a href="#timeline">经历</a>
-            <a href="#contact">联系</a>
+            <a href="#about">About</a>
+            <a href="#work">Projects</a>
+            <Link href="/blog">Journal</Link>
+            <a href="#timeline">Journey</a>
+            <a href="#contact">Contact</a>
           </nav>
+
+          <ThemeToggle />
         </header>
 
         <div className="hero-grid container" id="top">
-          <div className="hero-copy">
+          <div className="hero-copy surface-panel surface-panel-strong">
             <p className="eyebrow">{profile.role}</p>
-            <h1>专注网络系统、工程实现与智能分析的开发者。</h1>
+            <p className="hero-kicker">Technical Brand / Systems / Networks / Analysis</p>
+            <h1>{profile.heroTitle}</h1>
             <p className="hero-text">{profile.intro}</p>
+
             <div className="hero-actions">
               <a className="button primary" href="#work">
-                查看项目经历
+                View Projects
               </a>
-              <a className="button secondary" href={`mailto:${contacts.email}`}>
-                发送邮件联系
-              </a>
+              <Link className="button secondary" href="/blog">
+                Enter Journal
+              </Link>
+            </div>
+
+            <div className="hero-signal-grid" aria-label="Core signals">
+              <article className="signal-card">
+                <span className="signal-label">Identity</span>
+                <strong>{profile.englishName}</strong>
+                <p>用系统思维、协议理解与工程实现去组织技术表达，而不是只展示工具关键词。</p>
+              </article>
+              <article className="signal-card">
+                <span className="signal-label">Approach</span>
+                <strong>Build, Measure, Iterate</strong>
+                <p>先把系统做出来，再用实验、日志与数据去校验判断，让每一次迭代都有依据。</p>
+              </article>
             </div>
           </div>
 
-          <aside className="hero-card" aria-label="Quick profile">
-            <p className="card-label">当前状态</p>
-            <h2>{profile.location}</h2>
-            <p>{profile.summary}</p>
-            <ul className="metric-list">
-              <li>
-                <strong>2025</strong>
-                <span>南京信息工程大学本科毕业，进入港城大硕士阶段</span>
-              </li>
-              <li>
-                <strong>1</strong>
-                <span>EAAI 联合作者论文发表，参与强化学习交通控制研究</span>
-              </li>
-              <li>
-                <strong>3</strong>
-                <span>核心方向：C++、Linux 系统编程、网络分析</span>
-              </li>
-            </ul>
+          <aside className="hero-panel surface-panel" aria-label="Profile Snapshot">
+            <div className="hero-panel-copy">
+              <p className="panel-label">{site.name}</p>
+              <h2>{profile.name}</h2>
+              <p className="panel-text">{profile.summary}</p>
+              <p className="panel-note">{site.description}</p>
+            </div>
+
+            <HeroOrbit />
+
+            <div className="hero-metrics" aria-label="Profile metrics">
+              <div className="metric-card">
+                <span className="metric-value">4</span>
+                <span className="metric-label">technical tracks</span>
+              </div>
+              <div className="metric-card">
+                <span className="metric-value">2025</span>
+                <span className="metric-label">research publication</span>
+              </div>
+              <div className="metric-card">
+                <span className="metric-value">J01</span>
+                <span className="metric-label">personal tech journal</span>
+              </div>
+            </div>
           </aside>
         </div>
       </section>
 
-      <section className="section container section-split" id="about">
-        <div className="section-heading">
+      <section className="section container profile-snapshot" id="about">
+        <div className="section-heading narrow">
           <p className="eyebrow">Profile</p>
-          <h2>关于我</h2>
+          <h2>About the Engineer</h2>
+          <p className="section-intro">{profile.about}</p>
         </div>
-        <div className="section-body">
-          <p>{profile.about}</p>
-          <div className="pill-row" aria-label="Strengths">
-            {strengths.map((item) => (
-              <span key={item.title} className="pill">
-                {item.title}
-              </span>
-            ))}
-          </div>
+
+        <div className="snapshot-grid">
+          <article className="snapshot-card surface-panel">
+            <p className="snapshot-label">Current Focus</p>
+            <h3>{profile.location}</h3>
+            <p>{profile.summary}</p>
+          </article>
+
+          <article className="snapshot-card surface-panel">
+            <p className="snapshot-label">Quick Facts</p>
+            <ul className="fact-list">
+              {profile.quickFacts.map((fact) => (
+                <li key={fact}>{fact}</li>
+              ))}
+            </ul>
+          </article>
+
+          <article className="snapshot-card surface-panel">
+            <p className="snapshot-label">Writing System</p>
+            <h3>{writing.title}</h3>
+            <p>{writing.intro}</p>
+          </article>
+        </div>
+
+        <div className="strength-grid">
+          {strengths.map((item) => (
+            <article key={item.title} className="strength-card surface-panel">
+              <p className="card-label">{item.title}</p>
+              <p>{item.description}</p>
+            </article>
+          ))}
         </div>
       </section>
 
-      <section className="section showcase-section" id="work">
-        <div className="container">
-          <div className="section-heading narrow">
-            <p className="eyebrow">Projects</p>
-            <h2>项目经历</h2>
-            <p className="section-intro">
-              这里展示的是目前最能代表我方向与能力的几段经历，重点放在网络系统、工程实现、研究分析和实践成果上。
-            </p>
-          </div>
+      <section className="section container projects-showcase" id="work">
+        <div className="section-heading narrow">
+          <p className="eyebrow">Projects</p>
+          <h2>Selected Projects</h2>
+          <p className="section-intro">
+            用工程实现、研究分析与系统能力来定义项目表达，而不是简单堆叠经历。每个项目都尽量呈现“问题、路径、验证、结果”。
+          </p>
+        </div>
 
-          <div className="project-grid">
-            {projects.map((project) => (
-              <article key={project.title} className="project-card">
+        <div className="project-showcase-grid">
+          <article className="project-card featured surface-panel surface-panel-strong">
+            <div className="project-surface">
+              <p className="project-kicker">{featuredProject.category}</p>
+              <h3>{featuredProject.title}</h3>
+              <p>{featuredProject.description}</p>
+            </div>
+            <div className="project-feature-band">
+              <div className="project-feature-stat">
+                <span className="feature-stat-label">Impact</span>
+                <strong>{featuredProject.impact}</strong>
+              </div>
+              <div className="project-feature-stat">
+                <span className="feature-stat-label">Stack</span>
+                <strong>{featuredProject.stack}</strong>
+              </div>
+            </div>
+          </article>
+
+          <div className="project-stack">
+            {secondaryProjects.map((project) => (
+              <article key={project.title} className="project-card surface-panel">
                 <div className="project-surface">
                   <p className="project-kicker">{project.category}</p>
                   <h3>{project.title}</h3>
@@ -104,56 +182,45 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section container" id="writing">
+      <section className="section container writing-section" id="writing">
         <div className="section-heading narrow">
           <p className="eyebrow">{writing.eyebrow}</p>
           <h2>{writing.title}</h2>
+          <p className="section-subtitle">{writing.subtitle}</p>
           <p className="section-intro">{writing.intro}</p>
         </div>
 
         <div className="article-preview-grid">
-          {featuredPosts.map((post) => (
-            <article key={post.slug} className="article-preview-card">
-              <p className="article-preview-meta">
-                {post.category} · {post.date}
-              </p>
+          {featuredPosts.map((post, index) => (
+            <article key={post.slug} className="article-preview-card surface-panel">
+              <div className="article-preview-head">
+                <p className="article-preview-index">0{index + 1}</p>
+                <p className="article-preview-meta">
+                  {post.category} · {post.date}
+                </p>
+              </div>
               <h3>{post.title}</h3>
               <p>{post.summary}</p>
-              <Link href={`/blog/${post.slug}`}>阅读全文</Link>
+              <Link href={`/blog/${post.slug}`}>Read Note</Link>
             </article>
           ))}
         </div>
 
         <div className="section-cta">
           <Link className="button secondary" href="/blog">
-            查看全部文章
+            Open {writing.title}
           </Link>
-        </div>
-      </section>
-
-      <section className="section container section-split">
-        <div className="section-heading">
-          <p className="eyebrow">Skills</p>
-          <h2>技能与方向</h2>
-        </div>
-        <div className="strength-grid">
-          {strengths.map((item) => (
-            <article key={item.title} className="strength-card">
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-            </article>
-          ))}
         </div>
       </section>
 
       <section className="section container section-split" id="timeline">
         <div className="section-heading">
-          <p className="eyebrow">Timeline</p>
-          <h2>教育与经历</h2>
+          <p className="eyebrow">Journey</p>
+          <h2>Education & Journey</h2>
         </div>
         <div className="timeline-list">
           {timeline.map((item) => (
-            <article key={`${item.period}-${item.title}`} className="timeline-item">
+            <article key={`${item.period}-${item.title}`} className="timeline-item surface-panel">
               <div>
                 <p className="timeline-period">{item.period}</p>
                 <h3>{item.title}</h3>
@@ -165,12 +232,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section container contact-band" id="contact">
+      <section className="section container contact-band surface-panel" id="contact">
         <div>
           <p className="eyebrow">Contact</p>
-          <h2>欢迎交流与合作</h2>
+          <h2>Connect for Technical Work</h2>
           <p className="section-intro">
-            如果你对我的项目经历、研究方向或技术能力感兴趣，欢迎通过邮箱、电话或 GitHub 与我联系。
+            如果你对我的项目经历、研究方向、系统开发能力或技术写作感兴趣，欢迎通过邮箱、电话或 GitHub 与我联系。
           </p>
         </div>
         <div className="contact-grid">
@@ -181,8 +248,8 @@ export default function HomePage() {
       </section>
 
       <footer className="site-footer container">
-        <p>{profile.name}</p>
-        <p>以清晰表达、工程能力与持续积累为核心。</p>
+        <p>{site.name}</p>
+        <p>Built around systems thinking, engineering clarity, and continuous iteration.</p>
       </footer>
     </main>
   );
