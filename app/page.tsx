@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CodingPulse } from "@/components/home/coding-pulse";
 import { HeroOrbit } from "@/components/home/hero-orbit";
 import { ScrollReveal } from "@/components/home/scroll-reveal";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
@@ -6,7 +7,7 @@ import { siteContent } from "@/data/site-content";
 import { getFeaturedPosts } from "@/lib/blog";
 
 export default function HomePage() {
-  const { site, profile, strengths, projects, timeline, contacts, writing } = siteContent;
+  const { site, profile, codingPulse, strengths, projects, timeline, contacts, writing } = siteContent;
   const featuredPosts = getFeaturedPosts().slice(0, 3);
   const [featuredProject, ...secondaryProjects] = projects;
 
@@ -31,6 +32,7 @@ export default function HomePage() {
 
           <nav className="nav-links" aria-label="Main navigation">
             <a href="#about">About</a>
+            <a href="#pulse">Activity</a>
             <a href="#work">Projects</a>
             <Link href="/blog">Journal</Link>
             <a href="#timeline">Journey</a>
@@ -143,6 +145,24 @@ export default function HomePage() {
                 </ScrollReveal>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-frame container" id="pulse">
+        <div className="frame-grid frame-grid-wide">
+          <div className="frame-heading frame-heading-sticky">
+            <ScrollReveal offset={20}>
+              <p className="eyebrow">{codingPulse.eyebrow}</p>
+              <h2>{codingPulse.title}</h2>
+              <p className="section-intro">{codingPulse.intro}</p>
+            </ScrollReveal>
+          </div>
+
+          <div className="frame-content">
+            <ScrollReveal offset={30}>
+              <CodingPulse shareUrl={codingPulse.shareUrl ?? process.env.NEXT_PUBLIC_WAKATIME_SHARE_URL ?? null} />
+            </ScrollReveal>
           </div>
         </div>
       </section>

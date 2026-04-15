@@ -15,6 +15,7 @@ describe("HomePage", () => {
     expect(screen.getAllByText(/jared 01 home/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/小陈/i).length).toBeGreaterThan(0);
     expect(screen.getByRole("button", { name: /toggle theme/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: /coding pulse/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 2, name: /selected projects/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 2, name: /jared 01 home/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 2, name: /education & journey/i })).toBeInTheDocument();

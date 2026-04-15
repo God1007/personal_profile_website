@@ -24,6 +24,13 @@ export const siteContent = {
       "关注系统、网络、AI 与工程交叉能力"
     ]
   },
+  codingPulse: {
+    eyebrow: "Activity",
+    title: "Coding Pulse",
+    intro:
+      "这块区域用于展示持续编码节奏、主要语言、编辑器和项目分布。当前默认使用 mock 数据渲染，接入 WakaTime share JSON 后会自动切换为真实统计。",
+    shareUrl: null as string | null
+  },
   strengths: [
     {
       title: "C++ / Systems",
