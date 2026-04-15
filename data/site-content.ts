@@ -12,7 +12,7 @@ export const siteContent = {
     location: "Nanjing / Hong Kong",
     heroTitle: "Engineering Systems with Clarity",
     intro:
-      "专注于 C++、Linux 系统编程、网络协议与智能分析，持续把底层能力、工程实现与真实问题连接起来，让技术表达不只停留在概念层。",
+      "C++行者、Linux 系统编程、网络协议与智能分析，努力有一天也能成为大佬orz",
     summary:
       "本科毕业于南京信息工程大学计算机科学与技术专业，现于香港城市大学攻读电子信息工程硕士，关注系统、网络与工程落地交叉方向。",
     about:
@@ -29,7 +29,8 @@ export const siteContent = {
     title: "Coding Pulse",
     intro:
       "这块区域用于展示持续编码节奏、主要语言、编辑器和项目分布。当前默认使用 mock 数据渲染，接入 WakaTime share JSON 后会自动切换为真实统计。",
-    shareUrl: null as string | null
+    shareUrl:
+      "https://wakatime.com/share/@88aebc6e-75b1-4103-8ebb-63c5ad981afe/98b99ee4-1138-466e-bc13-66a3da8206ca.json"
   },
   strengths: [
     {
