@@ -10,12 +10,13 @@ export default function HomePage() {
   const [featuredProject, ...secondaryProjects] = projects;
 
   return (
-    <main className="site-shell">
-      <section className="hero-shell">
+    <main className="site-shell ppt-shell">
+      <section className="hero-shell ppt-opening">
         <div className="hero-backdrop" aria-hidden="true">
           <span className="hero-glow hero-glow-a" />
           <span className="hero-glow hero-glow-b" />
           <span className="hero-gridline" />
+          <span className="hero-noise" />
         </div>
 
         <header className="site-nav container">
@@ -38,7 +39,7 @@ export default function HomePage() {
           <ThemeToggle />
         </header>
 
-        <div className="hero-grid container" id="top">
+        <div className="container hero-stage" id="top">
           <div className="hero-copy surface-panel surface-panel-strong">
             <p className="eyebrow">{profile.role}</p>
             <p className="hero-kicker">Technical Brand / Systems / Networks / Analysis</p>
@@ -71,7 +72,7 @@ export default function HomePage() {
           <aside className="hero-panel surface-panel" aria-label="Profile Snapshot">
             <div className="hero-panel-copy">
               <p className="panel-label">{site.name}</p>
-              <h2>{profile.name}</h2>
+              <h2 className="identity-name">{profile.name}</h2>
               <p className="panel-text">{profile.summary}</p>
               <p className="panel-note">{site.description}</p>
             </div>
@@ -96,139 +97,165 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section container profile-snapshot" id="about">
-        <div className="section-heading narrow">
-          <p className="eyebrow">Profile</p>
-          <h2>About the Engineer</h2>
-          <p className="section-intro">{profile.about}</p>
-        </div>
-
-        <div className="snapshot-grid">
-          <article className="snapshot-card surface-panel">
-            <p className="snapshot-label">Current Focus</p>
-            <h3>{profile.location}</h3>
-            <p>{profile.summary}</p>
-          </article>
-
-          <article className="snapshot-card surface-panel">
-            <p className="snapshot-label">Quick Facts</p>
-            <ul className="fact-list">
-              {profile.quickFacts.map((fact) => (
-                <li key={fact}>{fact}</li>
-              ))}
-            </ul>
-          </article>
-
-          <article className="snapshot-card surface-panel">
-            <p className="snapshot-label">Writing System</p>
-            <h3>{writing.title}</h3>
-            <p>{writing.intro}</p>
-          </article>
-        </div>
-
-        <div className="strength-grid">
-          {strengths.map((item) => (
-            <article key={item.title} className="strength-card surface-panel">
-              <p className="card-label">{item.title}</p>
-              <p>{item.description}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section container projects-showcase" id="work">
-        <div className="section-heading narrow">
-          <p className="eyebrow">Projects</p>
-          <h2>Selected Projects</h2>
-          <p className="section-intro">
-            用工程实现、研究分析与系统能力来定义项目表达，而不是简单堆叠经历。每个项目都尽量呈现“问题、路径、验证、结果”。
-          </p>
-        </div>
-
-        <div className="project-showcase-grid">
-          <article className="project-card featured surface-panel surface-panel-strong">
-            <div className="project-surface">
-              <p className="project-kicker">{featuredProject.category}</p>
-              <h3>{featuredProject.title}</h3>
-              <p>{featuredProject.description}</p>
-            </div>
-            <div className="project-feature-band">
-              <div className="project-feature-stat">
-                <span className="feature-stat-label">Impact</span>
-                <strong>{featuredProject.impact}</strong>
-              </div>
-              <div className="project-feature-stat">
-                <span className="feature-stat-label">Stack</span>
-                <strong>{featuredProject.stack}</strong>
+      <section className="story-section" id="about">
+        <div className="container story-stage">
+          <div className="story-grid">
+            <div className="story-copy story-copy-sticky">
+              <p className="eyebrow">Profile</p>
+              <h2>About the Engineer</h2>
+              <p className="section-intro">{profile.about}</p>
+              <div className="identity-strip surface-panel">
+                <span className="identity-strip-label">Current handle</span>
+                <strong>{profile.name}</strong>
+                <span>{profile.location}</span>
               </div>
             </div>
-          </article>
 
-          <div className="project-stack">
-            {secondaryProjects.map((project) => (
-              <article key={project.title} className="project-card surface-panel">
-                <div className="project-surface">
-                  <p className="project-kicker">{project.category}</p>
-                  <h3>{project.title}</h3>
-                  <p>{project.description}</p>
-                </div>
-                <div className="project-meta">
-                  <span>{project.impact}</span>
-                  <span>{project.stack}</span>
+            <div className="scene-stack">
+              <article className="scene-card scene-card-offset-a surface-panel surface-panel-strong">
+                <p className="snapshot-label">Current Focus</p>
+                <h3>{profile.location}</h3>
+                <p>{profile.summary}</p>
+              </article>
+
+              <article className="scene-card scene-card-offset-b surface-panel">
+                <p className="snapshot-label">Quick Facts</p>
+                <ul className="fact-list">
+                  {profile.quickFacts.map((fact) => (
+                    <li key={fact}>{fact}</li>
+                  ))}
+                </ul>
+              </article>
+
+              <article className="scene-card scene-card-offset-c surface-panel">
+                <p className="snapshot-label">Core Directions</p>
+                <div className="strength-grid strength-grid-compact">
+                  {strengths.map((item) => (
+                    <article key={item.title} className="strength-card">
+                      <p className="card-label">{item.title}</p>
+                      <p>{item.description}</p>
+                    </article>
+                  ))}
                 </div>
               </article>
-            ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="section container writing-section" id="writing">
-        <div className="section-heading narrow">
-          <p className="eyebrow">{writing.eyebrow}</p>
-          <h2>{writing.title}</h2>
-          <p className="section-subtitle">{writing.subtitle}</p>
-          <p className="section-intro">{writing.intro}</p>
-        </div>
+      <section className="story-section story-section-projects" id="work">
+        <div className="container story-stage">
+          <div className="story-grid story-grid-wide">
+            <div className="story-copy story-copy-sticky">
+              <p className="eyebrow">Projects</p>
+              <h2>Selected Projects</h2>
+              <p className="section-intro">
+                用工程实现、研究分析与系统能力来定义项目表达，而不是简单堆叠经历。每个项目都尽量呈现问题、路径、验证与结果。
+              </p>
+            </div>
 
-        <div className="article-preview-grid">
-          {featuredPosts.map((post, index) => (
-            <article key={post.slug} className="article-preview-card surface-panel">
-              <div className="article-preview-head">
-                <p className="article-preview-index">0{index + 1}</p>
-                <p className="article-preview-meta">
-                  {post.category} · {post.date}
-                </p>
+            <div className="project-ledger">
+              <article className="project-hero-card surface-panel surface-panel-strong">
+                <p className="project-kicker">{featuredProject.category}</p>
+                <h3>{featuredProject.title}</h3>
+                <p>{featuredProject.description}</p>
+                <div className="project-feature-band">
+                  <div className="project-feature-stat">
+                    <span className="feature-stat-label">Impact</span>
+                    <strong>{featuredProject.impact}</strong>
+                  </div>
+                  <div className="project-feature-stat">
+                    <span className="feature-stat-label">Stack</span>
+                    <strong>{featuredProject.stack}</strong>
+                  </div>
+                </div>
+              </article>
+
+              <div className="project-side-stack">
+                {secondaryProjects.map((project, index) => (
+                  <article
+                    key={project.title}
+                    className={`project-note-card surface-panel project-note-card-${index + 1}`}
+                  >
+                    <p className="project-kicker">{project.category}</p>
+                    <h3>{project.title}</h3>
+                    <p>{project.description}</p>
+                    <div className="project-meta">
+                      <span>{project.impact}</span>
+                      <span>{project.stack}</span>
+                    </div>
+                  </article>
+                ))}
               </div>
-              <h3>{post.title}</h3>
-              <p>{post.summary}</p>
-              <Link href={`/blog/${post.slug}`}>Read Note</Link>
-            </article>
-          ))}
-        </div>
-
-        <div className="section-cta">
-          <Link className="button secondary" href="/blog">
-            Open {writing.title}
-          </Link>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="section container section-split" id="timeline">
-        <div className="section-heading">
-          <p className="eyebrow">Journey</p>
-          <h2>Education & Journey</h2>
-        </div>
-        <div className="timeline-list">
-          {timeline.map((item) => (
-            <article key={`${item.period}-${item.title}`} className="timeline-item surface-panel">
-              <div>
-                <p className="timeline-period">{item.period}</p>
-                <h3>{item.title}</h3>
-                <p className="timeline-place">{item.place}</p>
+      <section className="story-section story-section-writing" id="writing">
+        <div className="container story-stage">
+          <div className="story-grid story-grid-wide">
+            <div className="story-copy story-copy-sticky">
+              <p className="eyebrow">{writing.eyebrow}</p>
+              <h2>{writing.title}</h2>
+              <p className="section-subtitle">{writing.subtitle}</p>
+              <p className="section-intro">{writing.intro}</p>
+              <div className="section-cta">
+                <Link className="button secondary" href="/blog">
+                  Open {writing.title}
+                </Link>
               </div>
-              <p>{item.description}</p>
-            </article>
-          ))}
+            </div>
+
+            <div className="journal-stage">
+              {featuredPosts.map((post, index) => (
+                <article
+                  key={post.slug}
+                  className={`journal-card surface-panel journal-card-${index + 1}`}
+                >
+                  <div className="article-preview-head">
+                    <p className="article-preview-index">0{index + 1}</p>
+                    <p className="article-preview-meta">
+                      {post.category} · {post.date}
+                    </p>
+                  </div>
+                  <h3>{post.title}</h3>
+                  <p>{post.summary}</p>
+                  <Link href={`/blog/${post.slug}`}>Read Note</Link>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="story-section story-section-journey" id="timeline">
+        <div className="container story-stage">
+          <div className="story-grid">
+            <div className="story-copy story-copy-sticky">
+              <p className="eyebrow">Journey</p>
+              <h2>Education & Journey</h2>
+              <p className="section-intro">
+                这部分不是传统简历时间轴，而是把学习、研究和工程实践串成一个逐步推进的过程。
+              </p>
+            </div>
+
+            <div className="timeline-stack">
+              {timeline.map((item, index) => (
+                <article
+                  key={`${item.period}-${item.title}`}
+                  className={`timeline-item surface-panel timeline-item-scene timeline-item-${index + 1}`}
+                >
+                  <div>
+                    <p className="timeline-period">{item.period}</p>
+                    <h3>{item.title}</h3>
+                    <p className="timeline-place">{item.place}</p>
+                  </div>
+                  <p>{item.description}</p>
+                </article>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
