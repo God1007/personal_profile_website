@@ -166,7 +166,7 @@ main {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 1.25rem;
-  margin-bottom: 1.6rem;
+  margin-bottom: 0.95rem;
 }
 
 .site-nav-framed {
@@ -309,6 +309,9 @@ main {
 
 .hero-copy-cover {
   position: relative;
+  display: grid;
+  align-content: center;
+  min-height: 31rem;
   overflow: hidden;
   background:
     radial-gradient(circle at top, rgba(104, 179, 255, 0.22), transparent 36%),
@@ -1424,7 +1427,7 @@ main {
   }
 
   .home-panel .hero-grid-cover .hero-copy {
-    padding: 2.8rem 3.6rem;
+    padding: 3.5rem 4.2rem;
   }
 
   .home-panel .hero-grid-cover .hero-copy h1 {
