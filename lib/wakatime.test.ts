@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { mockCodingPulse, parseWakaTimeShare } from "@/lib/wakatime";
+import { describe, expect, it, vi } from "vitest";
+import { loadWakaTimeShare, mockCodingPulse, parseWakaTimeShare } from "@/lib/wakatime";
 
 describe("wakatime parsing", () => {
   it("falls back to mock data for invalid payloads", () => {
@@ -80,5 +80,33 @@ describe("wakatime parsing", () => {
     expect(result.totalTime).toBe("12 hrs 30 mins");
     expect(result.languages[0]?.name).toBe("TypeScript");
     expect(result.activity).toHaveLength(2);
+  });
+
+  it("loads live data with a fetch implementation", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        data: [
+          {
+            range: { date: "2026-04-10", text: "Fri Apr 10th 2026" },
+            grand_total: { total_seconds: 3600, text: "1 hr" }
+          }
+        ]
+      })
+    });
+
+    const result = await loadWakaTimeShare("https://example.com/share.json", fetchMock as unknown as typeof fetch);
+
+    expect(fetchMock).toHaveBeenCalledOnce();
+    expect(result.source).toBe("live");
+    expect(result.totalTime).toBe("1 hr");
+  });
+
+  it("falls back to mock data when fetching live data fails", async () => {
+    const fetchMock = vi.fn().mockRejectedValue(new Error("network"));
+
+    const result = await loadWakaTimeShare("https://example.com/share.json", fetchMock as unknown as typeof fetch);
+
+    expect(result).toEqual(mockCodingPulse);
   });
 });

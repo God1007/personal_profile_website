@@ -236,3 +236,30 @@ export function parseWakaTimeShare(payload: unknown): CodingPulseData {
     projects: projects.length > 0 ? projects : mockCodingPulse.projects
   };
 }
+
+export async function loadWakaTimeShare(
+  shareUrl?: string | null,
+  fetchImpl: typeof fetch = fetch
+): Promise<CodingPulseData> {
+  if (!shareUrl) {
+    return mockCodingPulse;
+  }
+
+  try {
+    const response = await fetchImpl(shareUrl, {
+      headers: {
+        Accept: "application/json"
+      },
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      throw new Error(`WakaTime share request failed: ${response.status}`);
+    }
+
+    const payload = (await response.json()) as unknown;
+    return parseWakaTimeShare(payload);
+  } catch {
+    return mockCodingPulse;
+  }
+}

@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { CodingPulse } from "@/components/home/coding-pulse";
+import { CodingPulseServer } from "@/components/home/coding-pulse-server";
 import { HeroOrbit } from "@/components/home/hero-orbit";
 import { HomeSnapShell } from "@/components/home/home-snap-shell";
 import { ScrollReveal } from "@/components/home/scroll-reveal";
@@ -162,7 +164,11 @@ export default function HomePage() {
 
           <div className="frame-content">
             <ScrollReveal offset={30}>
-              <CodingPulse shareUrl={codingPulse.shareUrl ?? process.env.NEXT_PUBLIC_WAKATIME_SHARE_URL ?? null} />
+              <Suspense fallback={<CodingPulse />}>
+                <CodingPulseServer
+                  shareUrl={codingPulse.shareUrl ?? process.env.NEXT_PUBLIC_WAKATIME_SHARE_URL ?? null}
+                />
+              </Suspense>
             </ScrollReveal>
           </div>
         </div>

@@ -1,54 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { mockCodingPulse, parseWakaTimeShare, type CodingPulseData } from "@/lib/wakatime";
+import { useMemo } from "react";
+import { mockCodingPulse, type CodingPulseData } from "@/lib/wakatime";
 
 type CodingPulseProps = {
-  shareUrl?: string | null;
+  data?: CodingPulseData;
 };
 
-export function CodingPulse({ shareUrl }: CodingPulseProps) {
-  const [data, setData] = useState<CodingPulseData>(mockCodingPulse);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function load() {
-      if (!shareUrl) {
-        setData(mockCodingPulse);
-        return;
-      }
-
-      try {
-        const response = await fetch(shareUrl, {
-          headers: {
-            Accept: "application/json"
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`WakaTime share request failed: ${response.status}`);
-        }
-
-        const payload = (await response.json()) as unknown;
-
-        if (!cancelled) {
-          setData(parseWakaTimeShare(payload));
-        }
-      } catch {
-        if (!cancelled) {
-          setData(mockCodingPulse);
-        }
-      }
-    }
-
-    void load();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [shareUrl]);
-
+export function CodingPulse({ data = mockCodingPulse }: CodingPulseProps) {
   const ceiling = useMemo(() => Math.max(...data.activity.map((item) => item.hours), 1), [data.activity]);
 
   return (

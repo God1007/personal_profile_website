@@ -543,7 +543,7 @@ main {
 
 .home-panel {
   scroll-snap-align: start;
-  scroll-snap-stop: always;
+  scroll-snap-stop: normal;
 }
 
 .home-panel-stack {
@@ -1219,7 +1219,7 @@ main {
 @media (min-width: 981px) {
   html,
   body {
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y proximity;
     scroll-padding-top: 0;
   }
 
