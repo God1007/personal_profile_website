@@ -260,7 +260,7 @@ main {
 }
 
 .hero-grid-cover {
-  grid-template-columns: minmax(0, 880px);
+  grid-template-columns: minmax(0, 1040px);
   justify-content: center;
 }
 
@@ -341,10 +341,11 @@ main {
 
 .hero-grid-cover .hero-copy h1 {
   margin-inline: auto;
+  max-width: 12ch;
 }
 
 .hero-grid-cover .hero-text {
-  max-width: 42rem;
+  max-width: 54rem;
   margin-inline: auto;
 }
 
@@ -1441,7 +1442,7 @@ main {
   }
 
   .home-panel .hero-grid-cover .hero-copy h1 {
-    max-width: 10ch;
+    max-width: 11.5ch;
   }
 
   .home-panel .hero-signal-grid {
