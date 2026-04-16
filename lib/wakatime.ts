@@ -53,6 +53,26 @@ export const mockCodingPulse: CodingPulseData = {
   ]
 };
 
+function formatHours(totalSeconds: number) {
+  const roundedMinutes = Math.round(totalSeconds / 60);
+  const hours = Math.floor(roundedMinutes / 60);
+  const minutes = roundedMinutes % 60;
+
+  if (hours > 0 && minutes > 0) {
+    return `${hours} hr${hours === 1 ? "" : "s"} ${minutes} min${minutes === 1 ? "" : "s"}`;
+  }
+
+  if (hours > 0) {
+    return `${hours} hr${hours === 1 ? "" : "s"}`;
+  }
+
+  if (minutes > 0) {
+    return `${minutes} min${minutes === 1 ? "" : "s"}`;
+  }
+
+  return "0 secs";
+}
+
 function normalizeBuckets(raw: unknown): CodingBucket[] {
   if (!Array.isArray(raw)) {
     return [];
@@ -114,11 +134,73 @@ function normalizeActivity(raw: unknown) {
   return activity.length > 0 ? activity : mockCodingPulse.activity;
 }
 
+function parseDailySummaryShare(raw: unknown): CodingPulseData | null {
+  if (!Array.isArray(raw)) {
+    return null;
+  }
+
+  const activity = raw
+    .map((item) => {
+      if (!item || typeof item !== "object") {
+        return null;
+      }
+
+      const entry = item as Record<string, unknown>;
+      const range = entry.range as Record<string, unknown> | undefined;
+      const total = entry.grand_total as Record<string, unknown> | undefined;
+      const label = String(range?.text ?? range?.date ?? "Day");
+      const seconds = typeof total?.total_seconds === "number" ? total.total_seconds : 0;
+
+      return {
+        day: label.slice(0, 3),
+        hours: Number((seconds / 3600).toFixed(1)),
+        seconds
+      };
+    })
+    .filter((item): item is { day: string; hours: number; seconds: number } => Boolean(item));
+
+  if (activity.length === 0) {
+    return null;
+  }
+
+  const totalSeconds = activity.reduce((sum, item) => sum + item.seconds, 0);
+  const bestActivity = [...activity].sort((a, b) => b.hours - a.hours)[0] ?? activity[0];
+  const activeDays = activity.filter((item) => item.hours > 0).length;
+  const firstDay = raw[0] as Record<string, unknown>;
+  const lastDay = raw[raw.length - 1] as Record<string, unknown>;
+  const firstRange = firstDay.range as Record<string, unknown> | undefined;
+  const lastRange = lastDay.range as Record<string, unknown> | undefined;
+  const firstDate = String(firstRange?.date ?? "");
+  const lastDate = String(lastRange?.date ?? "");
+  const rangeLabel =
+    firstDate && lastDate
+      ? `${firstDate} to ${lastDate}`
+      : mockCodingPulse.rangeLabel;
+
+  return {
+    source: "live",
+    rangeLabel,
+    totalTime: formatHours(totalSeconds),
+    dailyAverage: `${formatHours(totalSeconds / activity.length)} / day`,
+    bestDay: `${bestActivity.day} 路 ${bestActivity.hours.toFixed(1)} hrs`,
+    streak: `${activeDays} active days`,
+    activity: activity.map(({ day, hours }) => ({ day, hours })),
+    languages: mockCodingPulse.languages,
+    editors: mockCodingPulse.editors,
+    projects: mockCodingPulse.projects
+  };
+}
+
 export function parseWakaTimeShare(payload: unknown): CodingPulseData {
   const root =
     payload && typeof payload === "object" && "data" in payload
       ? (payload as Record<string, unknown>).data
       : payload;
+
+  const summaryShare = parseDailySummaryShare(root);
+  if (summaryShare) {
+    return summaryShare;
+  }
 
   if (!root || typeof root !== "object") {
     return mockCodingPulse;

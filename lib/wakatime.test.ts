@@ -6,6 +6,56 @@ describe("wakatime parsing", () => {
     expect(parseWakaTimeShare(null)).toEqual(mockCodingPulse);
   });
 
+  it("normalizes a daily-summary share payload", () => {
+    const result = parseWakaTimeShare({
+      data: [
+        {
+          range: {
+            date: "2026-04-10",
+            text: "Fri Apr 10th 2026"
+          },
+          grand_total: {
+            text: "0 secs",
+            total_seconds: 3.424
+          }
+        },
+        {
+          range: {
+            date: "2026-04-11",
+            text: "Sat Apr 11th 2026"
+          },
+          grand_total: {
+            text: "0 secs",
+            total_seconds: 0
+          }
+        },
+        {
+          range: {
+            date: "2026-04-12",
+            text: "Sun Apr 12th 2026"
+          },
+          grand_total: {
+            text: "24 mins",
+            total_seconds: 1469.297
+          }
+        }
+      ]
+    });
+
+    expect(result.source).toBe("live");
+    expect(result.activity).toEqual([
+      { day: "Fri", hours: 0 },
+      { day: "Sat", hours: 0 },
+      { day: "Sun", hours: 0.4 }
+    ]);
+    expect(result.rangeLabel).toBe("2026-04-10 to 2026-04-12");
+    expect(result.totalTime).toBe("25 mins");
+    expect(result.dailyAverage).toBe("8 mins / day");
+    expect(result.bestDay).toBe("Sun 路 0.4 hrs");
+    expect(result.streak).toBe("1 active days");
+    expect(result.languages).toEqual(mockCodingPulse.languages);
+  });
+
   it("normalizes a basic share payload", () => {
     const result = parseWakaTimeShare({
       data: {
