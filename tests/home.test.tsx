@@ -1,5 +1,18 @@
 import { render, screen } from "@testing-library/react";
+import { vi } from "vitest";
 import HomePage from "@/app/page";
+
+vi.mock("@/lib/wakatime-cache.server", async () => {
+  const actual = await vi.importActual<typeof import("@/lib/wakatime")>("@/lib/wakatime");
+
+  return {
+    loadCachedWakaTimeShare: vi.fn().mockResolvedValue({
+      ...actual.mockCodingPulse,
+      source: "live",
+      rangeLabel: "2026-04-10 to 2026-04-16"
+    })
+  };
+});
 
 describe("HomePage", () => {
   it("shows dedicated snap panels for each major homepage section", async () => {

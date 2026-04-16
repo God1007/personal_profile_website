@@ -3,3 +3,4 @@ node_modules
 out
 coverage
 npm-debug.log*
+data/wakatime-cache.json
