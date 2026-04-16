@@ -51,7 +51,7 @@ describe("wakatime parsing", () => {
     expect(result.rangeLabel).toBe("2026-04-10 to 2026-04-12");
     expect(result.totalTime).toBe("25 mins");
     expect(result.dailyAverage).toBe("8 mins / day");
-    expect(result.bestDay).toBe("Sun 路 0.4 hrs");
+    expect(result.bestDay).toBe("Sun 0.4 hrs");
     expect(result.streak).toBe("1 active days");
     expect(result.languages).toEqual(mockCodingPulse.languages);
   });
@@ -79,6 +79,7 @@ describe("wakatime parsing", () => {
     expect(result.rangeLabel).toBe("Last 7 Days");
     expect(result.totalTime).toBe("12 hrs 30 mins");
     expect(result.languages[0]?.name).toBe("TypeScript");
+    expect(result.bestDay).toBe("Tue 4.0 hrs");
     expect(result.activity).toHaveLength(2);
   });
 
