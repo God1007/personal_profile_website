@@ -42,4 +42,11 @@ describe("HomePage", () => {
     expect(document.querySelector("#timeline")).toBeTruthy();
     expect(document.querySelector("#contact")).toBeTruthy();
   });
+
+  it("renders separate hero backdrop layers for light and dark themes", async () => {
+    render(await HomePage());
+
+    expect(document.querySelector(".hero-backdrop-image.hero-backdrop-image-light")).toBeTruthy();
+    expect(document.querySelector(".hero-backdrop-image.hero-backdrop-image-dark")).toBeTruthy();
+  });
 });

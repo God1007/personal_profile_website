@@ -21,6 +21,9 @@ export default async function HomePage() {
     <HomeSnapShell>
       <section className="hero-shell home-panel home-panel-hero">
         <div className="hero-backdrop" aria-hidden="true">
+          <span className="hero-backdrop-image hero-backdrop-image-light" />
+          <span className="hero-backdrop-image hero-backdrop-image-dark" />
+          <span className="hero-backdrop-fade" />
           <span className="hero-glow hero-glow-a" />
           <span className="hero-glow hero-glow-b" />
           <span className="hero-gridline" />

@@ -117,6 +117,49 @@ main {
   pointer-events: none;
 }
 
+.hero-backdrop-image,
+.hero-backdrop-fade {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-backdrop-image {
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity 250ms ease;
+}
+
+.hero-backdrop-image-light {
+  background-image:
+    linear-gradient(180deg, rgba(244, 247, 251, 0.2) 0%, rgba(244, 247, 251, 0.1) 18%, rgba(244, 247, 251, 0) 100%),
+    url("/wallhaven-3q5k8y.png");
+  opacity: 0.3;
+}
+
+.hero-backdrop-image-dark {
+  background-image:
+    linear-gradient(180deg, rgba(7, 17, 31, 0.16) 0%, rgba(7, 17, 31, 0.08) 18%, rgba(7, 17, 31, 0) 100%),
+    url("/wallhaven-vpyrm5.jpg");
+  opacity: 0;
+}
+
+.hero-backdrop-fade {
+  background:
+    linear-gradient(180deg, rgba(7, 17, 31, 0) 0%, rgba(7, 17, 31, 0.1) 54%, rgba(7, 17, 31, 0.64) 82%, var(--bg) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, transparent 22%);
+}
+
+html[data-theme="dark"] .hero-backdrop-image-light {
+  opacity: 0;
+}
+
+html[data-theme="dark"] .hero-backdrop-image-dark {
+  opacity: 0.42;
+}
+
 .hero-glow {
   position: absolute;
   border-radius: 999px;
@@ -130,6 +173,7 @@ main {
   height: 22rem;
   top: 4rem;
   left: -2rem;
+  opacity: 0.5;
 }
 
 .hero-glow-b {
@@ -137,6 +181,7 @@ main {
   height: 18rem;
   right: 4rem;
   top: 8rem;
+  opacity: 0.38;
   animation-duration: 14s;
 }
 
@@ -1699,5 +1744,10 @@ main {
   .hero-orbit {
     width: 10rem;
     height: 10rem;
+  }
+
+  .hero-backdrop-image {
+    background-position: center top;
+    background-size: cover;
   }
 }
