@@ -49,7 +49,7 @@ export function CodingPulse({ data = mockCodingPulse, shareUrl }: CodingPulsePro
         <div>
           <p className="eyebrow">Activity</p>
           <h3>Coding Pulse</h3>
-          <p className="coding-pulse-intro">WakaTime summary for the latest recorded range.</p>
+          <p className="coding-pulse-intro">展示最近一个记录周期内的 WakaTime 活动数据。</p>
         </div>
         <div className={`pulse-status${hasLiveData ? " pulse-status-live" : ""}`}>
           <span>{hasLiveData ? "Live share" : "NULL"}</span>
@@ -80,7 +80,7 @@ export function CodingPulse({ data = mockCodingPulse, shareUrl }: CodingPulsePro
         <div className="pulse-cluster pulse-activity surface-panel">
           <div className="pulse-cluster-heading">
             <p className="eyebrow">Fluctuation</p>
-            <p className="pulse-cluster-meta">Recent daily activity</p>
+            <p className="pulse-cluster-meta">最近每日活跃变化</p>
           </div>
           <div className="pulse-activity-bars" aria-label="Weekly coding fluctuation">
             {displayActivity.map((item, index) => (

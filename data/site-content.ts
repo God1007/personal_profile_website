@@ -2,7 +2,7 @@ export const siteContent = {
   site: {
     name: "Jared 01 Home",
     label: "Personal Site / Technical Journal",
-    description: "Technical portfolio and journal focused on systems, networking, and applied engineering."
+    description: "聚焦系统、网络与工程实践的技术作品集与记录站点。"
   },
   profile: {
     name: "小陈",
@@ -13,20 +13,20 @@ export const siteContent = {
     heroTitle: "Engineering Systems with Clarity",
     intro: "",
     summary:
-      "Graduate study in electronic information engineering with prior training in computer science. Current work centers on systems, networking, and implementation-oriented analysis.",
+      "当前方向集中在系统、网络与工程分析的交叉场景，重点放在实现路径、诊断能力与落地效果。",
     about:
-      "This section outlines academic background, technical focus, and current engineering direction across systems, networking, and analysis work.",
+      "本节概述教育背景、技术方向与当前工程关注点，内容围绕系统、网络与分析相关工作展开。",
     quickFacts: [
-      "EAAI co-author publication",
-      "Independent AI network diagnostics project",
-      "Ongoing technical notes and project retrospectives",
-      "Focus on systems, networking, AI, and engineering execution"
+      "EAAI 联合作者论文经历",
+      "独立完成 AI 网络诊断项目",
+      "持续整理技术笔记与项目复盘",
+      "关注系统、网络、AI 与工程实现"
     ]
   },
   codingPulse: {
     eyebrow: "Activity",
     title: "Coding Pulse",
-    intro: "WakaTime activity summary for the latest recorded cycle.",
+    intro: "展示最近一个记录周期内的 WakaTime 活动数据。",
     shareUrl:
       "https://wakatime.com/share/@88aebc6e-75b1-4103-8ebb-63c5ad981afe/1968bd2b-f25f-4ce0-b6eb-394ed6c9f939.json"
   },
@@ -34,17 +34,17 @@ export const siteContent = {
     {
       title: "C++ / Systems",
       description:
-        "Foundation in C++11 and Linux systems programming with attention to module boundaries, performance tradeoffs, and maintainable implementation."
+        "具备 C++ 与 Linux 系统编程基础，关注模块边界、性能开销与可维护性。"
     },
     {
       title: "Networks / Protocols",
       description:
-        "Working knowledge of TCP/IP, DNS, ICMP, and ARP with emphasis on protocol behavior, diagnostics, and troubleshooting paths."
+        "熟悉 TCP/IP、DNS、ICMP、ARP 等协议及常见网络诊断与排障路径。"
     },
     {
       title: "AI / Analysis",
       description:
-        "Python-based analysis and model-assisted experimentation for data processing, system inspection, and interpretable evaluation."
+        "使用 Python 与模型辅助方法进行数据处理、系统分析与结果评估。"
     }
   ],
   projects: [
@@ -52,8 +52,8 @@ export const siteContent = {
       title: "AI Intelligent Network Diagnostics",
       category: "Featured System Case",
       description:
-        "A diagnostics service built with dbus, netlink, iptables, and eBPF for real-time monitoring, status checks, and issue analysis across multiple network signals.",
-      impact: "Covers NIC status, RTT, TCP loss, traffic statistics, and AI-assisted analysis",
+        "基于 dbus、netlink、iptables 与 eBPF 构建网络诊断服务，用于实时监控、状态判断与问题分析。",
+      impact: "覆盖网卡状态、RTT、TCP 丢包、流量统计与 AI 辅助分析",
       stack: "C++ / netlink / eBPF / Agent",
       featured: true
     },
@@ -61,16 +61,16 @@ export const siteContent = {
       title: "Multi-Agent Traffic Control Research",
       category: "Research",
       description:
-        "Research support work around multi-agent reinforcement learning, SUMO simulation, coordinated traffic signal control, and traffic-flow prediction.",
-      impact: "Includes experiment setup, simulation comparison, and historical-data modeling",
+        "围绕多智能体强化学习、SUMO 仿真、交通信号协同控制与车流预测开展实验与分析。",
+      impact: "包含实验搭建、仿真对比与历史数据建模",
       stack: "Python / SUMO / pandas / scikit-learn"
     },
     {
       title: "Modeling & Competition Practice",
       category: "Awards",
       description:
-        "Competition work covering problem abstraction, solution presentation, modeling analysis, and structured result reporting.",
-      impact: "Includes provincial and university-level awards",
+        "通过建模与竞赛项目积累问题抽象、方案表达、分析建模与结果呈现经验。",
+      impact: "包含省级与校级奖项成果",
       stack: "Modeling / Analysis / Presentation"
     }
   ],
@@ -78,7 +78,7 @@ export const siteContent = {
     eyebrow: "Journal",
     title: "Jared 01 Home",
     subtitle: "Technical Notes & Build Logs",
-    intro: "Selected notes covering project retrospectives, debugging records, and implementation decisions."
+    intro: "收录项目复盘、调试记录与实现决策等技术笔记。"
   },
   timeline: [
     {
@@ -86,21 +86,21 @@ export const siteContent = {
       title: "MSc in Electronic Information Engineering",
       place: "City University of Hong Kong",
       description:
-        "Advanced study across systems, networking, and implementation-focused engineering topics."
+        "围绕系统、网络与工程实现相关主题继续开展研究与课程学习。"
     },
     {
       period: "2021 - 2025",
       title: "BSc in Computer Science and Technology",
       place: "Nanjing University of Information Science and Technology",
       description:
-        "Undergraduate training across core computer science, networking, programming, and engineering methods."
+        "完成计算机基础、网络、编程与工程方法等方向的系统训练。"
     },
     {
       period: "2025",
       title: "EAAI Co-author Publication",
       place: "Research Contribution",
       description:
-        "Research contribution involving multi-agent traffic signal control experiments and supporting analysis."
+        "参与多智能体交通信号控制相关实验与分析工作。"
     }
   ],
   contacts: {

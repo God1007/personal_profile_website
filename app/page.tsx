@@ -22,7 +22,7 @@ export default function HomePage() {
           <span className="hero-noise" />
         </div>
 
-        <header className="site-nav container">
+        <header className="site-nav site-nav-framed container surface-panel">
           <a className="brand-lockup" href="#top" aria-label="Back to top">
             <span className="brand-mark">{profile.initials}</span>
             <span className="brand-copy">
@@ -67,17 +67,6 @@ export default function HomePage() {
               </a>
             </div>
 
-            <div className="hero-pulse-row" aria-label="Cover signals">
-              <ScrollReveal className="hero-chip" delay={150} offset={18} variant="slide-left">
-                Systems Thinking
-              </ScrollReveal>
-              <ScrollReveal className="hero-chip" delay={200} offset={18} variant="expand">
-                Network Engineering
-              </ScrollReveal>
-              <ScrollReveal className="hero-chip" delay={250} offset={18} variant="slide-right">
-                Technical Writing
-              </ScrollReveal>
-            </div>
           </ScrollReveal>
         </div>
       </section>
@@ -152,7 +141,7 @@ export default function HomePage() {
               <p className="eyebrow">Capabilities</p>
               <h2>Core Technical Tracks</h2>
               <p className="section-intro">
-                A cleaner breakdown of systems, networking, and analysis work so each panel carries one clear idea.
+                分别展示系统、网络与分析相关能力，避免单个页面信息堆叠过多。
               </p>
             </ScrollReveal>
           </div>
@@ -199,7 +188,7 @@ export default function HomePage() {
               <p className="eyebrow">Projects</p>
               <h2>Selected Projects</h2>
               <p className="section-intro">
-                Engineering work presented through problem framing, implementation path, validation, and outcome.
+                按问题定义、实现路径、验证方式与结果表现展示代表性项目。
               </p>
             </ScrollReveal>
           </div>
@@ -231,7 +220,7 @@ export default function HomePage() {
               <p className="eyebrow">More Work</p>
               <h2>Supporting Projects</h2>
               <p className="section-intro">
-                Secondary work separated from the featured case so the panel stays readable during snap navigation.
+                其余项目单独展示，用于补充研究、竞赛与建模相关经历。
               </p>
             </ScrollReveal>
           </div>
@@ -305,7 +294,7 @@ export default function HomePage() {
               <p className="eyebrow">Journey</p>
               <h2>Education & Journey</h2>
               <p className="section-intro">
-                A concise progression across study, research, and hands-on implementation rather than a crowded resume block.
+                以时间线方式概述学习经历、研究参与与工程实践过程。
               </p>
             </ScrollReveal>
           </div>
@@ -337,8 +326,7 @@ export default function HomePage() {
             <p className="eyebrow">Contact</p>
             <h2>Connect for Technical Work</h2>
             <p className="section-intro">
-              If you want to discuss systems work, research direction, technical writing, or engineering collaboration,
-              reach out by email, phone, or GitHub.
+              联系方式集中列于此处，用于技术交流、项目沟通与合作联络。
             </p>
           </div>
           <div className="contact-grid">

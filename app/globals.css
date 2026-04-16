@@ -169,6 +169,12 @@ main {
   margin-bottom: 3.5rem;
 }
 
+.site-nav-framed {
+  padding: 0.9rem 1.15rem;
+  border-radius: 1.4rem;
+  background: rgba(11, 23, 42, 0.52);
+}
+
 .brand-mark {
   display: inline-flex;
   align-items: center;
@@ -377,25 +383,6 @@ main {
   inset: auto 1rem 0.75rem;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--accent), transparent);
-}
-
-.hero-pulse-row {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  margin-top: 1.75rem;
-}
-
-.hero-chip {
-  padding: 0.72rem 0.95rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--muted);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 0.75rem;
 }
 
 .hero-kicker {
@@ -1643,10 +1630,6 @@ main {
   }
 
   .hero-grid-cover .hero-actions {
-    justify-content: flex-start;
-  }
-
-  .hero-pulse-row {
     justify-content: flex-start;
   }
 
