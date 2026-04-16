@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CodingPulse } from "@/components/home/coding-pulse";
 import { HeroOrbit } from "@/components/home/hero-orbit";
+import { HomeSnapShell } from "@/components/home/home-snap-shell";
 import { ScrollReveal } from "@/components/home/scroll-reveal";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { siteContent } from "@/data/site-content";
@@ -12,7 +13,7 @@ export default function HomePage() {
   const [featuredProject, ...secondaryProjects] = projects;
 
   return (
-    <main className="site-shell cinematic-home home-snap-shell">
+    <HomeSnapShell>
       <section className="hero-shell home-panel home-panel-hero">
         <div className="hero-backdrop" aria-hidden="true">
           <span className="hero-glow hero-glow-a" />
@@ -310,6 +311,6 @@ export default function HomePage() {
           <p>Built around systems thinking, engineering clarity, and continuous iteration.</p>
         </footer>
       </section>
-    </main>
+    </HomeSnapShell>
   );
 }

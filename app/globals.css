@@ -1041,7 +1041,7 @@ main {
 
 .pulse-board {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
   margin-top: 1.35rem;
 }
@@ -1240,6 +1240,20 @@ main {
   .home-panel .frame-grid-wide {
     min-height: calc(100svh - 4rem);
     align-items: center;
+  }
+
+  #pulse .frame-grid-wide {
+    grid-template-columns: minmax(220px, 0.28fr) minmax(0, 0.72fr);
+    gap: 1.4rem;
+  }
+
+  #pulse .coding-pulse {
+    width: 100%;
+  }
+
+  #pulse .pulse-activity-bars {
+    min-height: 20rem;
+    gap: 1rem;
   }
 
   .home-panel .frame-content.stack-grid,
