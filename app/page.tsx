@@ -6,11 +6,15 @@ import { ScrollReveal } from "@/components/home/scroll-reveal";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { siteContent } from "@/data/site-content";
 import { getFeaturedPosts } from "@/lib/blog";
+import { loadWakaTimeShare } from "@/lib/wakatime";
 
-export default function HomePage() {
+export default async function HomePage() {
   const { site, profile, codingPulse, strengths, projects, timeline, contacts, writing } = siteContent;
   const featuredPosts = getFeaturedPosts().slice(0, 3);
   const [featuredProject, ...secondaryProjects] = projects;
+  const codingPulseData = await loadWakaTimeShare(
+    codingPulse.shareUrl ?? process.env.NEXT_PUBLIC_WAKATIME_SHARE_URL ?? null
+  );
 
   return (
     <HomeSnapShell>
@@ -175,7 +179,10 @@ export default function HomePage() {
 
           <div className="frame-content">
             <ScrollReveal offset={30} variant="expand">
-              <CodingPulse shareUrl={codingPulse.shareUrl ?? process.env.NEXT_PUBLIC_WAKATIME_SHARE_URL ?? null} />
+              <CodingPulse
+                data={codingPulseData}
+                shareUrl={codingPulse.shareUrl ?? process.env.NEXT_PUBLIC_WAKATIME_SHARE_URL ?? null}
+              />
             </ScrollReveal>
           </div>
         </div>
