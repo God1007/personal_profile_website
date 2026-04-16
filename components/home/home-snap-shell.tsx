@@ -11,6 +11,7 @@ const GESTURE_RESET_MS = 700;
 export function HomeSnapShell({ children }: PropsWithChildren) {
   const rootRef = useRef<HTMLElement | null>(null);
   const lockedRef = useRef(false);
+  const currentIndexRef = useRef(0);
   const deltaAccumulatorRef = useRef(0);
   const gestureCountRef = useRef(0);
   const gestureDirectionRef = useRef(0);
@@ -31,6 +32,30 @@ export function HomeSnapShell({ children }: PropsWithChildren) {
     window.setTimeout(() => {
       lockedRef.current = false;
     }, SNAP_COOLDOWN_MS);
+  });
+
+  const getPanels = useEffectEvent(() => Array.from(rootRef.current?.querySelectorAll<HTMLElement>(".home-panel") ?? []));
+
+  const syncCurrentIndex = useEffectEvent(() => {
+    const panels = getPanels();
+    if (panels.length === 0) {
+      currentIndexRef.current = 0;
+      return;
+    }
+
+    const scrollTop = window.scrollY;
+    let nearestIndex = 0;
+    let nearestDistance = Number.POSITIVE_INFINITY;
+
+    panels.forEach((panel, index) => {
+      const distance = Math.abs(panel.offsetTop - scrollTop);
+      if (distance < nearestDistance) {
+        nearestDistance = distance;
+        nearestIndex = index;
+      }
+    });
+
+    currentIndexRef.current = nearestIndex;
   });
 
   const handleWheel = useEffectEvent((event: WheelEvent) => {
@@ -76,29 +101,24 @@ export function HomeSnapShell({ children }: PropsWithChildren) {
       return;
     }
 
-    const panels = Array.from(rootRef.current?.querySelectorAll<HTMLElement>(".home-panel") ?? []);
+    const panels = getPanels();
     if (panels.length === 0) {
       return;
     }
 
-    const scrollTop = window.scrollY;
-    const currentIndex = panels.findIndex((panel, index) => {
-      const next = panels[index + 1];
-      return scrollTop >= panel.offsetTop - 4 && (!next || scrollTop < next.offsetTop - 4);
-    });
+    syncCurrentIndex();
+    const nextIndex = Math.min(Math.max(currentIndexRef.current + direction, 0), panels.length - 1);
 
-    const resolvedIndex = currentIndex >= 0 ? currentIndex : 0;
-    const nextIndex = Math.min(Math.max(resolvedIndex + direction, 0), panels.length - 1);
-
-    if (nextIndex === resolvedIndex) {
+    if (nextIndex === currentIndexRef.current) {
       return;
     }
 
     lockedRef.current = true;
+    currentIndexRef.current = nextIndex;
     resetGestureProgress();
-    panels[nextIndex]?.scrollIntoView({
+    window.scrollTo({
       behavior: "smooth",
-      block: "start"
+      top: panels[nextIndex]?.offsetTop ?? 0
     });
     unlockAfterScroll();
   });
@@ -109,11 +129,16 @@ export function HomeSnapShell({ children }: PropsWithChildren) {
     };
 
     window.addEventListener("wheel", listener, { passive: false });
+    window.addEventListener("scroll", syncCurrentIndex, { passive: true });
+
+    syncCurrentIndex();
+
     return () => {
       resetGestureProgress();
       window.removeEventListener("wheel", listener);
+      window.removeEventListener("scroll", syncCurrentIndex);
     };
-  }, [handleWheel, resetGestureProgress]);
+  }, [getPanels, handleWheel, resetGestureProgress, syncCurrentIndex]);
 
   return (
     <main ref={rootRef} className="site-shell cinematic-home home-snap-shell">

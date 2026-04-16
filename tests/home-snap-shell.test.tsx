@@ -3,7 +3,6 @@ import { HomeSnapShell } from "@/components/home/home-snap-shell";
 
 describe("HomeSnapShell", () => {
   it("moves by one panel after three accumulated wheel gestures on desktop", () => {
-    const scrollMocks = Array.from({ length: 3 }, () => vi.fn());
     const panels = Array.from({ length: 3 }, (_, index) => {
       return (
         <section
@@ -15,7 +14,6 @@ describe("HomeSnapShell", () => {
                 configurable: true,
                 value: index * 1000
               });
-              node.scrollIntoView = scrollMocks[index] as typeof node.scrollIntoView;
             }
           }}
         >
@@ -35,26 +33,34 @@ describe("HomeSnapShell", () => {
       value: 0
     });
 
+    const scrollToMock = vi.fn();
+    Object.defineProperty(window, "scrollTo", {
+      configurable: true,
+      value: scrollToMock
+    });
+
     render(<HomeSnapShell>{panels}</HomeSnapShell>);
 
     for (let i = 0; i < 5; i += 1) {
       window.dispatchEvent(new WheelEvent("wheel", { deltaY: 30, cancelable: true }));
     }
 
-    expect(scrollMocks[1]).not.toHaveBeenCalled();
+    expect(scrollToMock).not.toHaveBeenCalled();
 
     for (let i = 0; i < 5; i += 1) {
       window.dispatchEvent(new WheelEvent("wheel", { deltaY: 30, cancelable: true }));
     }
 
-    expect(scrollMocks[1]).not.toHaveBeenCalled();
+    expect(scrollToMock).not.toHaveBeenCalled();
 
     for (let i = 0; i < 5; i += 1) {
       window.dispatchEvent(new WheelEvent("wheel", { deltaY: 30, cancelable: true }));
     }
 
-    expect(scrollMocks[0]).not.toHaveBeenCalled();
-    expect(scrollMocks[1]).toHaveBeenCalledOnce();
-    expect(scrollMocks[2]).not.toHaveBeenCalled();
+    expect(scrollToMock).toHaveBeenCalledOnce();
+    expect(scrollToMock).toHaveBeenCalledWith({
+      behavior: "smooth",
+      top: 1000
+    });
   });
 });
