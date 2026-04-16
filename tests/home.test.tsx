@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import HomePage from "@/app/page";
 
 describe("HomePage", () => {
-  it("shows grouped presentation panels for the homepage", () => {
+  it("shows dedicated snap panels for each major homepage section", () => {
     render(<HomePage />);
 
     expect(
@@ -20,8 +20,11 @@ describe("HomePage", () => {
     expect(screen.getByRole("heading", { level: 2, name: /jared 01 home/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 2, name: /education & journey/i })).toBeInTheDocument();
     expect(screen.getByText(/build, measure, iterate/i)).toBeInTheDocument();
-    expect(document.querySelector("#work-writing")).toBeTruthy();
-    expect(document.querySelector("#timeline-contact")).toBeTruthy();
     expect(document.querySelector(".home-snap-shell")).toBeTruthy();
+    expect(document.querySelectorAll(".home-panel")).toHaveLength(7);
+    expect(document.querySelector("#work")).toBeTruthy();
+    expect(document.querySelector("#writing")).toBeTruthy();
+    expect(document.querySelector("#timeline")).toBeTruthy();
+    expect(document.querySelector("#contact")).toBeTruthy();
   });
 });

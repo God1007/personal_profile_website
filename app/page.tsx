@@ -167,155 +167,149 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section container home-panel home-panel-combo" id="work-writing">
-        <div className="home-panel-stack">
-          <div className="section-frame" id="work">
-            <div className="frame-grid frame-grid-wide">
-              <div className="frame-heading frame-heading-sticky">
-                <ScrollReveal offset={20}>
-                  <p className="eyebrow">Projects</p>
-                  <h2>Selected Projects</h2>
-                  <p className="section-intro">
-                    用工程实现、研究分析与系统能力来定义项目表达，而不是简单堆叠经历。每个项目都尽量呈现问题、路径、验证与结果。
-                  </p>
-                </ScrollReveal>
-              </div>
+      <section className="section section-frame container home-panel" id="work">
+        <div className="frame-grid frame-grid-wide">
+          <div className="frame-heading frame-heading-sticky">
+            <ScrollReveal offset={20}>
+              <p className="eyebrow">Projects</p>
+              <h2>Selected Projects</h2>
+              <p className="section-intro">
+                用工程实现、研究分析与系统能力来定义项目表达，而不是简单堆叠经历。每个项目都尽量呈现问题、路径、验证与结果。
+              </p>
+            </ScrollReveal>
+          </div>
 
-              <div className="frame-content project-ledger">
-                <ScrollReveal className="project-hero-card surface-panel surface-panel-strong" delay={40}>
-                  <p className="project-kicker">{featuredProject.category}</p>
-                  <h3>{featuredProject.title}</h3>
-                  <p>{featuredProject.description}</p>
-                  <div className="project-feature-band">
-                    <div className="project-feature-stat">
-                      <span className="feature-stat-label">Impact</span>
-                      <strong>{featuredProject.impact}</strong>
-                    </div>
-                    <div className="project-feature-stat">
-                      <span className="feature-stat-label">Stack</span>
-                      <strong>{featuredProject.stack}</strong>
-                    </div>
-                  </div>
-                </ScrollReveal>
-
-                <div className="project-side-stack">
-                  {secondaryProjects.map((project, index) => (
-                    <ScrollReveal
-                      key={project.title}
-                      className="project-note-card surface-panel"
-                      delay={120 + index * 100}
-                      offset={28}
-                    >
-                      <p className="project-kicker">{project.category}</p>
-                      <h3>{project.title}</h3>
-                      <p>{project.description}</p>
-                      <div className="project-meta">
-                        <span>{project.impact}</span>
-                        <span>{project.stack}</span>
-                      </div>
-                    </ScrollReveal>
-                  ))}
+          <div className="frame-content project-ledger">
+            <ScrollReveal className="project-hero-card surface-panel surface-panel-strong" delay={40}>
+              <p className="project-kicker">{featuredProject.category}</p>
+              <h3>{featuredProject.title}</h3>
+              <p>{featuredProject.description}</p>
+              <div className="project-feature-band">
+                <div className="project-feature-stat">
+                  <span className="feature-stat-label">Impact</span>
+                  <strong>{featuredProject.impact}</strong>
+                </div>
+                <div className="project-feature-stat">
+                  <span className="feature-stat-label">Stack</span>
+                  <strong>{featuredProject.stack}</strong>
                 </div>
               </div>
-            </div>
-          </div>
+            </ScrollReveal>
 
-          <div className="section-frame" id="writing">
-            <div className="frame-grid frame-grid-wide">
-              <div className="frame-heading">
-                <ScrollReveal offset={20}>
-                  <p className="eyebrow">{writing.eyebrow}</p>
-                  <h2>{writing.title}</h2>
-                  <p className="section-subtitle">{writing.subtitle}</p>
-                  <p className="section-intro">{writing.intro}</p>
-                  <div className="section-cta">
-                    <Link className="button secondary" href="/blog">
-                      Open {writing.title}
-                    </Link>
+            <div className="project-side-stack">
+              {secondaryProjects.map((project, index) => (
+                <ScrollReveal
+                  key={project.title}
+                  className="project-note-card surface-panel"
+                  delay={120 + index * 100}
+                  offset={28}
+                >
+                  <p className="project-kicker">{project.category}</p>
+                  <h3>{project.title}</h3>
+                  <p>{project.description}</p>
+                  <div className="project-meta">
+                    <span>{project.impact}</span>
+                    <span>{project.stack}</span>
                   </div>
                 </ScrollReveal>
-              </div>
-
-              <div className="frame-content article-preview-grid">
-                {featuredPosts.map((post, index) => (
-                  <ScrollReveal
-                    key={post.slug}
-                    className="article-preview-card surface-panel"
-                    delay={index * 90}
-                    offset={30}
-                  >
-                    <div className="article-preview-head">
-                      <p className="article-preview-index">0{index + 1}</p>
-                      <p className="article-preview-meta">
-                        {post.category} 路 {post.date}
-                      </p>
-                    </div>
-                    <h3>{post.title}</h3>
-                    <p>{post.summary}</p>
-                    <Link href={`/blog/${post.slug}`}>Read Note</Link>
-                  </ScrollReveal>
-                ))}
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="section container home-panel home-panel-end" id="timeline-contact">
-        <div className="home-panel-stack">
-          <div className="section-frame" id="timeline">
-            <div className="frame-grid">
-              <div className="frame-heading frame-heading-sticky">
-                <ScrollReveal offset={20}>
-                  <p className="eyebrow">Journey</p>
-                  <h2>Education & Journey</h2>
-                  <p className="section-intro">
-                    这部分不是传统简历时间轴，而是把学习、研究和工程实践串成一个逐步推进的过程。
+      <section className="section section-frame container home-panel" id="writing">
+        <div className="frame-grid frame-grid-wide">
+          <div className="frame-heading">
+            <ScrollReveal offset={20}>
+              <p className="eyebrow">{writing.eyebrow}</p>
+              <h2>{writing.title}</h2>
+              <p className="section-subtitle">{writing.subtitle}</p>
+              <p className="section-intro">{writing.intro}</p>
+              <div className="section-cta">
+                <Link className="button secondary" href="/blog">
+                  Open {writing.title}
+                </Link>
+              </div>
+            </ScrollReveal>
+          </div>
+
+          <div className="frame-content article-preview-grid">
+            {featuredPosts.map((post, index) => (
+              <ScrollReveal
+                key={post.slug}
+                className="article-preview-card surface-panel"
+                delay={index * 90}
+                offset={30}
+              >
+                <div className="article-preview-head">
+                  <p className="article-preview-index">0{index + 1}</p>
+                  <p className="article-preview-meta">
+                    {post.category} 路 {post.date}
                   </p>
-                </ScrollReveal>
-              </div>
-
-              <div className="frame-content timeline-stack">
-                {timeline.map((item, index) => (
-                  <ScrollReveal
-                    key={`${item.period}-${item.title}`}
-                    className="timeline-item surface-panel"
-                    delay={index * 90}
-                    offset={32}
-                  >
-                    <div>
-                      <p className="timeline-period">{item.period}</p>
-                      <h3>{item.title}</h3>
-                      <p className="timeline-place">{item.place}</p>
-                    </div>
-                    <p>{item.description}</p>
-                  </ScrollReveal>
-                ))}
-              </div>
-            </div>
+                </div>
+                <h3>{post.title}</h3>
+                <p>{post.summary}</p>
+                <Link href={`/blog/${post.slug}`}>Read Note</Link>
+              </ScrollReveal>
+            ))}
           </div>
-
-          <ScrollReveal className="contact-band surface-panel" id="contact" offset={28}>
-            <div>
-              <p className="eyebrow">Contact</p>
-              <h2>Connect for Technical Work</h2>
-              <p className="section-intro">
-                如果你对我的项目经历、研究方向、系统开发能力或技术写作感兴趣，欢迎通过邮箱、电话或 GitHub 与我联系。
-              </p>
-            </div>
-            <div className="contact-grid">
-              <a href={`mailto:${contacts.email}`}>{contacts.email}</a>
-              <a href={`tel:${contacts.phone.replace(/[^+\d]/g, "")}`}>{contacts.phone}</a>
-              <a href={contacts.github}>GitHub</a>
-            </div>
-          </ScrollReveal>
         </div>
       </section>
 
-      <footer className="site-footer container">
-        <p>{site.name}</p>
-        <p>Built around systems thinking, engineering clarity, and continuous iteration.</p>
-      </footer>
+      <section className="section section-frame container home-panel" id="timeline">
+        <div className="frame-grid">
+          <div className="frame-heading frame-heading-sticky">
+            <ScrollReveal offset={20}>
+              <p className="eyebrow">Journey</p>
+              <h2>Education & Journey</h2>
+              <p className="section-intro">
+                这部分不是传统简历时间轴，而是把学习、研究和工程实践串成一个逐步推进的过程。
+              </p>
+            </ScrollReveal>
+          </div>
+
+          <div className="frame-content timeline-stack">
+            {timeline.map((item, index) => (
+              <ScrollReveal
+                key={`${item.period}-${item.title}`}
+                className="timeline-item surface-panel"
+                delay={index * 90}
+                offset={32}
+              >
+                <div>
+                  <p className="timeline-period">{item.period}</p>
+                  <h3>{item.title}</h3>
+                  <p className="timeline-place">{item.place}</p>
+                </div>
+                <p>{item.description}</p>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section container home-panel home-panel-contact" id="contact">
+        <ScrollReveal className="contact-band surface-panel" offset={28}>
+          <div>
+            <p className="eyebrow">Contact</p>
+            <h2>Connect for Technical Work</h2>
+            <p className="section-intro">
+              如果你对我的项目经历、研究方向、系统开发能力或技术写作感兴趣，欢迎通过邮箱、电话或 GitHub 与我联系。
+            </p>
+          </div>
+          <div className="contact-grid">
+            <a href={`mailto:${contacts.email}`}>{contacts.email}</a>
+            <a href={`tel:${contacts.phone.replace(/[^+\d]/g, "")}`}>{contacts.phone}</a>
+            <a href={contacts.github}>GitHub</a>
+          </div>
+        </ScrollReveal>
+
+        <footer className="site-footer container">
+          <p>{site.name}</p>
+          <p>Built around systems thinking, engineering clarity, and continuous iteration.</p>
+        </footer>
+      </section>
     </main>
   );
 }

@@ -543,7 +543,7 @@ main {
 
 .home-panel {
   scroll-snap-align: start;
-  scroll-snap-stop: normal;
+  scroll-snap-stop: always;
 }
 
 .home-panel-stack {
@@ -1217,17 +1217,18 @@ main {
 }
 
 @media (min-width: 981px) {
-  html {
-    scroll-snap-type: y proximity;
-    scroll-padding-top: 1rem;
+  html,
+  body {
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: 0;
   }
 
   .home-panel {
     min-height: 100svh;
     display: grid;
     align-items: center;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
   }
 
   .home-panel-hero {
@@ -1235,40 +1236,56 @@ main {
     padding-bottom: 3rem;
   }
 
-  .home-panel-combo,
-  .home-panel-end {
-    align-items: stretch;
-  }
-
-  .home-panel-combo .home-panel-stack,
-  .home-panel-end .home-panel-stack {
-    min-height: 100%;
-    align-content: center;
-  }
-
-  .home-panel-combo .section-frame,
-  .home-panel-end .section-frame {
-    display: grid;
-    align-content: center;
-  }
-
-  .home-panel-combo .frame-heading-sticky,
-  .home-panel-end .frame-heading-sticky {
-    position: static;
-  }
-
-  .home-panel-combo .frame-grid,
-  .home-panel-end .frame-grid {
+  .home-panel .frame-grid,
+  .home-panel .frame-grid-wide {
+    min-height: calc(100svh - 4rem);
     align-items: center;
   }
 
-  .home-panel-combo .article-preview-grid {
+  .home-panel .frame-content.stack-grid,
+  .home-panel .frame-content,
+  .home-panel .project-ledger,
+  .home-panel .article-preview-grid,
+  .home-panel .timeline-stack {
+    align-content: center;
+  }
+
+  .home-panel .frame-heading-sticky {
+    position: static;
+  }
+
+  #about .stack-grid {
+    gap: 1rem;
+  }
+
+  #work .project-ledger {
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.82fr);
+    gap: 1rem;
+  }
+
+  #writing .article-preview-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     align-self: center;
   }
 
-  .home-panel-end .contact-band {
-    align-self: end;
-    margin-top: 0.5rem;
+  #timeline .timeline-stack {
+    gap: 0.9rem;
+  }
+
+  .home-panel-contact {
+    align-content: space-between;
+  }
+
+  .home-panel-contact .contact-band {
+    width: min(1180px, calc(100% - 2rem));
+    margin: 0 auto;
+    align-self: center;
+  }
+
+  .home-panel-contact .site-footer {
+    width: min(1180px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding-bottom: 1rem;
   }
 }
 
