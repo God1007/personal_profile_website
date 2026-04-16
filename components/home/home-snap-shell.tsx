@@ -4,7 +4,7 @@ import { useEffect, useEffectEvent, useRef, type PropsWithChildren } from "react
 
 const DESKTOP_BREAKPOINT = 981;
 const WHEEL_THRESHOLD = 120;
-const SNAP_COOLDOWN_MS = 360;
+const SNAP_COOLDOWN_MS = 720;
 const REQUIRED_GESTURES = 3;
 const GESTURE_RESET_MS = 700;
 
