@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import { HomeSnapShell } from "@/components/home/home-snap-shell";
 
 describe("HomeSnapShell", () => {
-  it("moves by one panel per wheel gesture on desktop", () => {
+  it("moves by one panel after accumulated wheel input on desktop", () => {
     const scrollMocks = Array.from({ length: 3 }, () => vi.fn());
     const panels = Array.from({ length: 3 }, (_, index) => {
       return (
@@ -37,12 +37,9 @@ describe("HomeSnapShell", () => {
 
     render(<HomeSnapShell>{panels}</HomeSnapShell>);
 
-    const event = new WheelEvent("wheel", {
-      deltaY: 180,
-      cancelable: true
-    });
-
-    window.dispatchEvent(event);
+    window.dispatchEvent(new WheelEvent("wheel", { deltaY: 60, cancelable: true }));
+    window.dispatchEvent(new WheelEvent("wheel", { deltaY: 60, cancelable: true }));
+    window.dispatchEvent(new WheelEvent("wheel", { deltaY: 60, cancelable: true }));
 
     expect(scrollMocks[0]).not.toHaveBeenCalled();
     expect(scrollMocks[1]).toHaveBeenCalledOnce();

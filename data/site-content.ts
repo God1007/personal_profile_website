@@ -30,7 +30,7 @@ export const siteContent = {
     intro:
       "这块区域用于展示持续编码节奏、主要语言、编辑器和项目分布。当前默认使用 mock 数据渲染，接入 WakaTime share JSON 后会自动切换为真实统计。",
     shareUrl:
-      "https://wakatime.com/share/@88aebc6e-75b1-4103-8ebb-63c5ad981afe/98b99ee4-1138-466e-bc13-66a3da8206ca.json"
+      "https://wakatime.com/share/@88aebc6e-75b1-4103-8ebb-63c5ad981afe/1968bd2b-f25f-4ce0-b6eb-394ed6c9f939.json"
   },
   strengths: [
     {

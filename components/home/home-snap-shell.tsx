@@ -3,12 +3,13 @@
 import { useEffect, useEffectEvent, useRef, type PropsWithChildren } from "react";
 
 const DESKTOP_BREAKPOINT = 981;
-const WHEEL_THRESHOLD = 140;
-const SNAP_COOLDOWN_MS = 320;
+const WHEEL_THRESHOLD = 120;
+const SNAP_COOLDOWN_MS = 360;
 
 export function HomeSnapShell({ children }: PropsWithChildren) {
   const rootRef = useRef<HTMLElement | null>(null);
   const lockedRef = useRef(false);
+  const deltaAccumulatorRef = useRef(0);
 
   const unlockAfterScroll = useEffectEvent(() => {
     window.setTimeout(() => {
@@ -21,7 +22,17 @@ export function HomeSnapShell({ children }: PropsWithChildren) {
       return;
     }
 
-    if (lockedRef.current || Math.abs(event.deltaY) < WHEEL_THRESHOLD) {
+    if (lockedRef.current) {
+      return;
+    }
+
+    const nextAccumulated = deltaAccumulatorRef.current + event.deltaY;
+    const changedDirection =
+      deltaAccumulatorRef.current !== 0 && Math.sign(deltaAccumulatorRef.current) !== Math.sign(event.deltaY);
+
+    deltaAccumulatorRef.current = changedDirection ? event.deltaY : nextAccumulated;
+
+    if (Math.abs(deltaAccumulatorRef.current) < WHEEL_THRESHOLD) {
       return;
     }
 
@@ -45,6 +56,7 @@ export function HomeSnapShell({ children }: PropsWithChildren) {
     }
 
     lockedRef.current = true;
+    deltaAccumulatorRef.current = 0;
     event.preventDefault();
     panels[nextIndex]?.scrollIntoView({
       behavior: "smooth",
