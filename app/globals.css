@@ -314,17 +314,9 @@ main {
   position: absolute;
   inset: 1.2rem 1.2rem auto 1.2rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 1rem;
   pointer-events: none;
-}
-
-.hero-brand-shadow {
-  font-family: var(--font-display), serif;
-  font-size: clamp(4.5rem, 12vw, 9rem);
-  line-height: 0.8;
-  letter-spacing: -0.08em;
-  color: rgba(255, 255, 255, 0.08);
 }
 
 .hero-brand-serial {
@@ -428,6 +420,10 @@ main {
   max-width: 10ch;
   font-size: clamp(4rem, 8vw, 7rem);
   line-height: 0.9;
+}
+
+.hero-copy h1 span {
+  display: block;
 }
 
 .hero-text,
@@ -1622,11 +1618,8 @@ main {
   .hero-brand-cloud {
     position: static;
     align-items: center;
+    justify-content: flex-start;
     margin-bottom: 1rem;
-  }
-
-  .hero-brand-shadow {
-    font-size: 4.2rem;
   }
 
   .hero-cover-ribbon,

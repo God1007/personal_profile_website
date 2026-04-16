@@ -46,7 +46,6 @@ export default function HomePage() {
         <div className="hero-grid container hero-grid-cover" id="top">
           <ScrollReveal className="hero-copy hero-copy-cover surface-panel surface-panel-strong" offset={36} variant="expand">
             <div className="hero-brand-cloud" aria-hidden="true">
-              <span className="hero-brand-shadow">{profile.initials}</span>
               <span className="hero-brand-serial">JARED 01 / SYSTEMS / SIGNAL</span>
             </div>
             <p className="eyebrow">{profile.role}</p>
@@ -54,7 +53,10 @@ export default function HomePage() {
               Personal Brand / Systems / Networks / Analysis
             </ScrollReveal>
             <p className="hero-kicker">Technical Brand / Systems / Networks / Analysis</p>
-            <h1>{profile.heroTitle}</h1>
+            <h1 aria-label="Engineering Systems with Clarity">
+              <span>Engineering Systems</span>
+              <span>with Clarity</span>
+            </h1>
 
             <div className="hero-actions">
               <a className="button primary" href="#about">
