@@ -4,7 +4,7 @@ import { getAllCategories, getAllPosts, getAllTags } from "@/lib/blog";
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://example.com";
+  const baseUrl = "https://jared01home.com";
   const posts = getAllPosts().map((post) => ({
     url: `${baseUrl}/blog/${encodeURIComponent(post.slug)}`,
     lastModified: new Date(post.date)
