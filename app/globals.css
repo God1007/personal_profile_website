@@ -259,6 +259,11 @@ main {
   align-items: stretch;
 }
 
+.hero-grid-cover {
+  grid-template-columns: minmax(0, 880px);
+  justify-content: center;
+}
+
 .hero-copy,
 .hero-panel,
 .snapshot-card,
@@ -290,6 +295,23 @@ main {
 
 .hero-copy {
   padding: 4rem;
+}
+
+.hero-grid-cover .hero-copy {
+  text-align: center;
+}
+
+.hero-grid-cover .hero-copy h1 {
+  margin-inline: auto;
+}
+
+.hero-grid-cover .hero-text {
+  max-width: 42rem;
+  margin-inline: auto;
+}
+
+.hero-grid-cover .hero-actions {
+  justify-content: center;
 }
 
 .hero-kicker {
@@ -456,6 +478,23 @@ main {
 .hero-panel-copy {
   position: relative;
   z-index: 1;
+}
+
+.hero-profile-card {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.hero-orbit-card {
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+}
+
+.hero-orbit-wrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .hero-orbit {
@@ -1281,6 +1320,14 @@ main {
     font-size: clamp(3.2rem, 5.9vw, 5.8rem);
   }
 
+  .home-panel .hero-grid-cover .hero-copy {
+    padding: 3rem 3.2rem;
+  }
+
+  .home-panel .hero-grid-cover .hero-copy h1 {
+    max-width: 10ch;
+  }
+
   .home-panel .hero-signal-grid {
     margin-top: 1.6rem;
   }
@@ -1341,7 +1388,17 @@ main {
   }
 
   #about .stack-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.8rem;
+  }
+
+  #about .hero-profile-card,
+  #about .hero-orbit-card {
+    height: 100%;
+  }
+
+  #about .hero-orbit {
+    margin-top: 0;
   }
 
   #about-strengths .strength-grid {
@@ -1436,6 +1493,19 @@ main {
   .project-feature-band,
   .hero-metrics {
     grid-template-columns: 1fr;
+  }
+
+  .hero-grid-cover .hero-copy {
+    text-align: left;
+  }
+
+  .hero-grid-cover .hero-copy h1,
+  .hero-grid-cover .hero-text {
+    margin-inline: 0;
+  }
+
+  .hero-grid-cover .hero-actions {
+    justify-content: flex-start;
   }
 
   .hero-orbit {

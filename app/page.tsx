@@ -43,7 +43,7 @@ export default function HomePage() {
           <ThemeToggle />
         </header>
 
-        <div className="hero-grid container" id="top">
+        <div className="hero-grid container hero-grid-cover" id="top">
           <ScrollReveal className="hero-copy surface-panel surface-panel-strong" offset={36}>
             <p className="eyebrow">{profile.role}</p>
             <p className="hero-kicker">Technical Brand / Systems / Networks / Analysis</p>
@@ -51,52 +51,12 @@ export default function HomePage() {
             <p className="hero-text">{profile.intro}</p>
 
             <div className="hero-actions">
-              <a className="button primary" href="#work">
+              <a className="button primary" href="#about">
+                Enter Profile
+              </a>
+              <a className="button secondary" href="#work">
                 View Projects
               </a>
-              <Link className="button secondary" href="/blog">
-                Enter Journal
-              </Link>
-            </div>
-
-            <div className="hero-signal-grid" aria-label="Core signals">
-              <ScrollReveal className="signal-card" delay={80} offset={20}>
-                <span className="signal-label">Identity</span>
-                <strong>{profile.englishName}</strong>
-                <p>用系统思维、协议理解与工程实现组织技术表达，而不是只展示工具关键词。</p>
-              </ScrollReveal>
-
-              <ScrollReveal className="signal-card" delay={150} offset={24}>
-                <span className="signal-label">Approach</span>
-                <strong>Build, Measure, Iterate</strong>
-                <p>先把系统做出来，再用实验、日志与数据校验判断，让每一次迭代都有依据。</p>
-              </ScrollReveal>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal className="hero-panel surface-panel" delay={120} offset={40}>
-            <div className="hero-panel-copy">
-              <p className="panel-label">{site.name}</p>
-              <h2 className="identity-name">{profile.name}</h2>
-              <p className="panel-text">{profile.summary}</p>
-              <p className="panel-note">{site.description}</p>
-            </div>
-
-            <HeroOrbit />
-
-            <div className="hero-metrics" aria-label="Profile metrics">
-              <div className="metric-card">
-                <span className="metric-value">4</span>
-                <span className="metric-label">technical tracks</span>
-              </div>
-              <div className="metric-card">
-                <span className="metric-value">2025</span>
-                <span className="metric-label">research publication</span>
-              </div>
-              <div className="metric-card">
-                <span className="metric-value">J01</span>
-                <span className="metric-label">personal tech journal</span>
-              </div>
             </div>
           </ScrollReveal>
         </div>
@@ -132,6 +92,35 @@ export default function HomePage() {
                 ))}
               </ul>
             </ScrollReveal>
+
+            <ScrollReveal className="snapshot-card surface-panel hero-profile-card" delay={180}>
+              <p className="snapshot-label">{site.name}</p>
+              <h3 className="identity-name">{profile.englishName}</h3>
+              <p className="snapshot-label">Build, Measure, Iterate</p>
+              <p>{profile.summary}</p>
+              <p className="panel-note">{site.description}</p>
+            </ScrollReveal>
+
+            <ScrollReveal className="snapshot-card surface-panel hero-orbit-card" delay={240}>
+              <div className="hero-orbit-wrap">
+                <HeroOrbit />
+              </div>
+
+              <div className="hero-metrics" aria-label="Profile metrics">
+                <div className="metric-card">
+                  <span className="metric-value">4</span>
+                  <span className="metric-label">technical tracks</span>
+                </div>
+                <div className="metric-card">
+                  <span className="metric-value">2025</span>
+                  <span className="metric-label">research publication</span>
+                </div>
+                <div className="metric-card">
+                  <span className="metric-value">J01</span>
+                  <span className="metric-label">personal tech journal</span>
+                </div>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -142,7 +131,9 @@ export default function HomePage() {
             <ScrollReveal offset={20}>
               <p className="eyebrow">Capabilities</p>
               <h2>Core Technical Tracks</h2>
-              <p className="section-intro">把系统、网络和分析能力拆开呈现，避免在同一屏里堆得太满。</p>
+              <p className="section-intro">
+                A cleaner breakdown of systems, networking, and analysis work so each panel carries one clear idea.
+              </p>
             </ScrollReveal>
           </div>
 
@@ -187,7 +178,7 @@ export default function HomePage() {
               <p className="eyebrow">Projects</p>
               <h2>Selected Projects</h2>
               <p className="section-intro">
-                用工程实现、研究分析与系统能力来定义项目表达，而不是简单堆叠经历。每个项目都尽量呈现问题、路径、验证与结果。
+                Engineering work presented through problem framing, implementation path, validation, and outcome.
               </p>
             </ScrollReveal>
           </div>
@@ -218,7 +209,9 @@ export default function HomePage() {
             <ScrollReveal offset={20}>
               <p className="eyebrow">More Work</p>
               <h2>Supporting Projects</h2>
-              <p className="section-intro">把其余项目单独放一屏，避免和 featured case 挤在一起被切掉。</p>
+              <p className="section-intro">
+                Secondary work separated from the featured case so the panel stays readable during snap navigation.
+              </p>
             </ScrollReveal>
           </div>
 
@@ -270,7 +263,7 @@ export default function HomePage() {
                 <div className="article-preview-head">
                   <p className="article-preview-index">0{index + 1}</p>
                   <p className="article-preview-meta">
-                    {post.category} 路 {post.date}
+                    {post.category} / {post.date}
                   </p>
                 </div>
                 <h3>{post.title}</h3>
@@ -289,7 +282,7 @@ export default function HomePage() {
               <p className="eyebrow">Journey</p>
               <h2>Education & Journey</h2>
               <p className="section-intro">
-                这部分不是传统简历时间轴，而是把学习、研究和工程实践串成一个逐步推进的过程。
+                A concise progression across study, research, and hands-on implementation rather than a crowded resume block.
               </p>
             </ScrollReveal>
           </div>
@@ -320,7 +313,8 @@ export default function HomePage() {
             <p className="eyebrow">Contact</p>
             <h2>Connect for Technical Work</h2>
             <p className="section-intro">
-              如果你对我的项目经历、研究方向、系统开发能力或技术写作感兴趣，欢迎通过邮箱、电话或 GitHub 与我联系。
+              If you want to discuss systems work, research direction, technical writing, or engineering collaboration,
+              reach out by email, phone, or GitHub.
             </p>
           </div>
           <div className="contact-grid">
