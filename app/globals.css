@@ -1225,7 +1225,8 @@ main {
 @media (min-width: 981px) {
   html,
   body {
-    scroll-snap-type: y proximity;
+    scroll-behavior: auto;
+    scroll-snap-type: none;
     scroll-padding-top: 0;
   }
 

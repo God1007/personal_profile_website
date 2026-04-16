@@ -4,18 +4,21 @@ import { useEffect, useEffectEvent, useRef, type PropsWithChildren } from "react
 
 const DESKTOP_BREAKPOINT = 981;
 const WHEEL_THRESHOLD = 120;
-const SNAP_COOLDOWN_MS = 720;
 const REQUIRED_GESTURES = 3;
 const GESTURE_RESET_MS = 700;
+const ANIMATION_DURATION_MS = 620;
 
 export function HomeSnapShell({ children }: PropsWithChildren) {
   const rootRef = useRef<HTMLElement | null>(null);
-  const lockedRef = useRef(false);
+  const animatingRef = useRef(false);
   const currentIndexRef = useRef(0);
   const deltaAccumulatorRef = useRef(0);
   const gestureCountRef = useRef(0);
   const gestureDirectionRef = useRef(0);
   const resetTimerRef = useRef<number | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
+
+  const getPanels = useEffectEvent(() => Array.from(rootRef.current?.querySelectorAll<HTMLElement>(".home-panel") ?? []));
 
   const resetGestureProgress = useEffectEvent(() => {
     deltaAccumulatorRef.current = 0;
@@ -28,15 +31,18 @@ export function HomeSnapShell({ children }: PropsWithChildren) {
     }
   });
 
-  const unlockAfterScroll = useEffectEvent(() => {
-    window.setTimeout(() => {
-      lockedRef.current = false;
-    }, SNAP_COOLDOWN_MS);
+  const cancelAnimation = useEffectEvent(() => {
+    if (animationFrameRef.current !== null) {
+      window.cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = null;
+    }
   });
 
-  const getPanels = useEffectEvent(() => Array.from(rootRef.current?.querySelectorAll<HTMLElement>(".home-panel") ?? []));
-
   const syncCurrentIndex = useEffectEvent(() => {
+    if (animatingRef.current) {
+      return;
+    }
+
     const panels = getPanels();
     if (panels.length === 0) {
       currentIndexRef.current = 0;
@@ -58,13 +64,60 @@ export function HomeSnapShell({ children }: PropsWithChildren) {
     currentIndexRef.current = nearestIndex;
   });
 
+  const animateToTop = useEffectEvent((targetTop: number, targetIndex: number) => {
+    cancelAnimation();
+    animatingRef.current = true;
+    currentIndexRef.current = targetIndex;
+    resetGestureProgress();
+
+    const startTop = window.scrollY;
+    const delta = targetTop - startTop;
+
+    if (Math.abs(delta) < 2) {
+      window.scrollTo({ top: targetTop, left: 0, behavior: "auto" });
+      animatingRef.current = false;
+      return;
+    }
+
+    const startTime = performance.now();
+
+    const step = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / ANIMATION_DURATION_MS, 1);
+      const eased = 1 - (1 - progress) * (1 - progress) * (1 - progress);
+      const nextTop = startTop + delta * eased;
+
+      window.scrollTo({
+        top: nextTop,
+        left: 0,
+        behavior: "auto"
+      });
+
+      if (progress < 1) {
+        animationFrameRef.current = window.requestAnimationFrame(step);
+        return;
+      }
+
+      window.scrollTo({
+        top: targetTop,
+        left: 0,
+        behavior: "auto"
+      });
+      animationFrameRef.current = null;
+      animatingRef.current = false;
+    };
+
+    animationFrameRef.current = window.requestAnimationFrame(step);
+  });
+
   const handleWheel = useEffectEvent((event: WheelEvent) => {
     if (window.innerWidth < DESKTOP_BREAKPOINT) {
       return;
     }
 
-    if (lockedRef.current) {
-      event.preventDefault();
+    event.preventDefault();
+
+    if (animatingRef.current) {
       return;
     }
 
@@ -85,7 +138,6 @@ export function HomeSnapShell({ children }: PropsWithChildren) {
       return;
     }
 
-    event.preventDefault();
     deltaAccumulatorRef.current = 0;
     gestureCountRef.current += 1;
 
@@ -110,35 +162,29 @@ export function HomeSnapShell({ children }: PropsWithChildren) {
     const nextIndex = Math.min(Math.max(currentIndexRef.current + direction, 0), panels.length - 1);
 
     if (nextIndex === currentIndexRef.current) {
+      resetGestureProgress();
       return;
     }
 
-    lockedRef.current = true;
-    currentIndexRef.current = nextIndex;
-    resetGestureProgress();
-    window.scrollTo({
-      behavior: "smooth",
-      top: panels[nextIndex]?.offsetTop ?? 0
-    });
-    unlockAfterScroll();
+    animateToTop(panels[nextIndex]?.offsetTop ?? 0, nextIndex);
   });
 
   useEffect(() => {
-    const listener = (event: WheelEvent) => {
+    const wheelListener = (event: WheelEvent) => {
       handleWheel(event);
     };
 
-    window.addEventListener("wheel", listener, { passive: false });
+    window.addEventListener("wheel", wheelListener, { passive: false });
     window.addEventListener("scroll", syncCurrentIndex, { passive: true });
-
     syncCurrentIndex();
 
     return () => {
+      cancelAnimation();
       resetGestureProgress();
-      window.removeEventListener("wheel", listener);
+      window.removeEventListener("wheel", wheelListener);
       window.removeEventListener("scroll", syncCurrentIndex);
     };
-  }, [getPanels, handleWheel, resetGestureProgress, syncCurrentIndex]);
+  }, [cancelAnimation, handleWheel, resetGestureProgress, syncCurrentIndex]);
 
   return (
     <main ref={rootRef} className="site-shell cinematic-home home-snap-shell">
