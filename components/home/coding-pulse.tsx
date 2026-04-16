@@ -37,7 +37,9 @@ export function CodingPulse({ data = mockCodingPulse, shareUrl }: CodingPulsePro
     };
   }, [data.source, shareUrl]);
 
-  const ceiling = useMemo(() => Math.max(...resolvedData.activity.map((item) => item.hours), 1), [resolvedData.activity]);
+  const hasLiveData = resolvedData.source === "live";
+  const displayActivity = hasLiveData ? resolvedData.activity : mockCodingPulse.activity.map((item) => ({ ...item, hours: 0 }));
+  const ceiling = useMemo(() => Math.max(...displayActivity.map((item) => item.hours), 1), [displayActivity]);
 
   return (
     <div className="coding-pulse surface-panel surface-panel-strong">
@@ -49,28 +51,28 @@ export function CodingPulse({ data = mockCodingPulse, shareUrl }: CodingPulsePro
             通过 WakaTime share JSON 接入编码节奏。当前显示最近一段时间的活跃度、语言分布、编辑器和项目占比。
           </p>
         </div>
-        <div className={`pulse-status${resolvedData.source === "live" ? " pulse-status-live" : ""}`}>
-          <span>{resolvedData.source === "live" ? "Live share" : "Mock preview"}</span>
-          <strong>{resolvedData.rangeLabel}</strong>
+        <div className={`pulse-status${hasLiveData ? " pulse-status-live" : ""}`}>
+          <span>{hasLiveData ? "Live share" : "NULL"}</span>
+          <strong>{hasLiveData ? resolvedData.rangeLabel : "WakaTime unavailable"}</strong>
         </div>
       </div>
 
       <div className="pulse-metrics-grid">
         <div className="pulse-metric">
           <span className="pulse-metric-label">Total time</span>
-          <strong>{resolvedData.totalTime}</strong>
+          <strong>{hasLiveData ? resolvedData.totalTime : "NULL"}</strong>
         </div>
         <div className="pulse-metric">
           <span className="pulse-metric-label">Daily average</span>
-          <strong>{resolvedData.dailyAverage}</strong>
+          <strong>{hasLiveData ? resolvedData.dailyAverage : "NULL"}</strong>
         </div>
         <div className="pulse-metric">
           <span className="pulse-metric-label">Best day</span>
-          <strong>{resolvedData.bestDay}</strong>
+          <strong>{hasLiveData ? resolvedData.bestDay : "NULL"}</strong>
         </div>
         <div className="pulse-metric">
           <span className="pulse-metric-label">Rhythm</span>
-          <strong>{resolvedData.streak}</strong>
+          <strong>{hasLiveData ? resolvedData.streak : "NULL"}</strong>
         </div>
       </div>
 
@@ -81,7 +83,7 @@ export function CodingPulse({ data = mockCodingPulse, shareUrl }: CodingPulsePro
             <p className="pulse-cluster-meta">Coding intensity across the recent cycle</p>
           </div>
           <div className="pulse-activity-bars" aria-label="Weekly coding fluctuation">
-            {resolvedData.activity.map((item, index) => (
+            {displayActivity.map((item, index) => (
               <div key={`${item.day}-${index}`} className="pulse-activity-column">
                 <div className="pulse-activity-track">
                   <span

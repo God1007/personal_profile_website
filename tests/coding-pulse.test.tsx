@@ -32,9 +32,11 @@ describe("CodingPulse", () => {
     render(<CodingPulse />);
 
     expect(screen.getByRole("heading", { level: 3, name: /coding pulse/i })).toBeInTheDocument();
-    expect(screen.getByText(/mock preview/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/^null$/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/wakatime unavailable/i)).toBeInTheDocument();
     expect(screen.getByText(/total time/i)).toBeInTheDocument();
     expect(screen.getByText(/fluctuation/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/^NULL$/)).toHaveLength(5);
     expect(screen.queryByText(/languages/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/editors/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/projects/i)).not.toBeInTheDocument();

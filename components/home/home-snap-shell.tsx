@@ -5,11 +5,27 @@ import { useEffect, useEffectEvent, useRef, type PropsWithChildren } from "react
 const DESKTOP_BREAKPOINT = 981;
 const WHEEL_THRESHOLD = 120;
 const SNAP_COOLDOWN_MS = 360;
+const REQUIRED_GESTURES = 3;
+const GESTURE_RESET_MS = 700;
 
 export function HomeSnapShell({ children }: PropsWithChildren) {
   const rootRef = useRef<HTMLElement | null>(null);
   const lockedRef = useRef(false);
   const deltaAccumulatorRef = useRef(0);
+  const gestureCountRef = useRef(0);
+  const gestureDirectionRef = useRef(0);
+  const resetTimerRef = useRef<number | null>(null);
+
+  const resetGestureProgress = useEffectEvent(() => {
+    deltaAccumulatorRef.current = 0;
+    gestureCountRef.current = 0;
+    gestureDirectionRef.current = 0;
+
+    if (resetTimerRef.current !== null) {
+      window.clearTimeout(resetTimerRef.current);
+      resetTimerRef.current = null;
+    }
+  });
 
   const unlockAfterScroll = useEffectEvent(() => {
     window.setTimeout(() => {
@@ -23,8 +39,16 @@ export function HomeSnapShell({ children }: PropsWithChildren) {
     }
 
     if (lockedRef.current) {
+      event.preventDefault();
       return;
     }
+
+    const direction = event.deltaY > 0 ? 1 : -1;
+    if (gestureDirectionRef.current !== 0 && gestureDirectionRef.current !== direction) {
+      resetGestureProgress();
+    }
+
+    gestureDirectionRef.current = direction;
 
     const nextAccumulated = deltaAccumulatorRef.current + event.deltaY;
     const changedDirection =
@@ -33,6 +57,22 @@ export function HomeSnapShell({ children }: PropsWithChildren) {
     deltaAccumulatorRef.current = changedDirection ? event.deltaY : nextAccumulated;
 
     if (Math.abs(deltaAccumulatorRef.current) < WHEEL_THRESHOLD) {
+      return;
+    }
+
+    event.preventDefault();
+    deltaAccumulatorRef.current = 0;
+    gestureCountRef.current += 1;
+
+    if (resetTimerRef.current !== null) {
+      window.clearTimeout(resetTimerRef.current);
+    }
+
+    resetTimerRef.current = window.setTimeout(() => {
+      resetGestureProgress();
+    }, GESTURE_RESET_MS);
+
+    if (gestureCountRef.current < REQUIRED_GESTURES) {
       return;
     }
 
@@ -48,7 +88,6 @@ export function HomeSnapShell({ children }: PropsWithChildren) {
     });
 
     const resolvedIndex = currentIndex >= 0 ? currentIndex : 0;
-    const direction = event.deltaY > 0 ? 1 : -1;
     const nextIndex = Math.min(Math.max(resolvedIndex + direction, 0), panels.length - 1);
 
     if (nextIndex === resolvedIndex) {
@@ -56,8 +95,7 @@ export function HomeSnapShell({ children }: PropsWithChildren) {
     }
 
     lockedRef.current = true;
-    deltaAccumulatorRef.current = 0;
-    event.preventDefault();
+    resetGestureProgress();
     panels[nextIndex]?.scrollIntoView({
       behavior: "smooth",
       block: "start"
@@ -72,9 +110,10 @@ export function HomeSnapShell({ children }: PropsWithChildren) {
 
     window.addEventListener("wheel", listener, { passive: false });
     return () => {
+      resetGestureProgress();
       window.removeEventListener("wheel", listener);
     };
-  }, [handleWheel]);
+  }, [handleWheel, resetGestureProgress]);
 
   return (
     <main ref={rootRef} className="site-shell cinematic-home home-snap-shell">
