@@ -8,6 +8,7 @@ type ScrollRevealProps = ComponentPropsWithoutRef<"div"> & {
   delay?: number;
   offset?: number;
   scale?: number;
+  variant?: "rise" | "slide-left" | "slide-right" | "expand" | "tilt";
 };
 
 export function ScrollReveal({
@@ -16,6 +17,7 @@ export function ScrollReveal({
   delay = 0,
   offset = 28,
   scale = 0.985,
+  variant = "rise",
   ...props
 }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -61,7 +63,7 @@ export function ScrollReveal({
   return (
     <div
       ref={ref}
-      className={`scroll-reveal${visible ? " is-visible" : ""}${className ? ` ${className}` : ""}`}
+      className={`scroll-reveal scroll-reveal-${variant}${visible ? " is-visible" : ""}${className ? ` ${className}` : ""}`}
       style={style}
       {...props}
     >

@@ -44,19 +44,41 @@ export default function HomePage() {
         </header>
 
         <div className="hero-grid container hero-grid-cover" id="top">
-          <ScrollReveal className="hero-copy surface-panel surface-panel-strong" offset={36}>
+          <ScrollReveal className="hero-copy hero-copy-cover surface-panel surface-panel-strong" offset={36} variant="expand">
+            <div className="hero-brand-cloud" aria-hidden="true">
+              <span className="hero-brand-shadow">{profile.initials}</span>
+              <span className="hero-brand-serial">JARED 01 / SYSTEMS / SIGNAL</span>
+            </div>
             <p className="eyebrow">{profile.role}</p>
+            <ScrollReveal className="hero-cover-ribbon" delay={40} offset={18} variant="slide-left">
+              Personal Brand / Systems / Networks / Analysis
+            </ScrollReveal>
             <p className="hero-kicker">Technical Brand / Systems / Networks / Analysis</p>
             <h1>{profile.heroTitle}</h1>
+            <ScrollReveal className="hero-manifesto" delay={110} offset={20} variant="slide-right">
+              Build a name through systems, not slogans.
+            </ScrollReveal>
             <p className="hero-text">{profile.intro}</p>
 
             <div className="hero-actions">
               <a className="button primary" href="#about">
                 Enter Profile
               </a>
-              <a className="button secondary" href="#work">
+              <a className="button secondary hero-button-ghost" href="#work">
                 View Projects
               </a>
+            </div>
+
+            <div className="hero-pulse-row" aria-label="Cover signals">
+              <ScrollReveal className="hero-chip" delay={150} offset={18} variant="slide-left">
+                Systems Thinking
+              </ScrollReveal>
+              <ScrollReveal className="hero-chip" delay={200} offset={18} variant="expand">
+                Network Engineering
+              </ScrollReveal>
+              <ScrollReveal className="hero-chip" delay={250} offset={18} variant="slide-right">
+                Technical Writing
+              </ScrollReveal>
             </div>
           </ScrollReveal>
         </div>
@@ -65,7 +87,7 @@ export default function HomePage() {
       <section className="section section-frame container home-panel" id="about">
         <div className="frame-grid">
           <div className="frame-heading frame-heading-sticky">
-            <ScrollReveal offset={20}>
+            <ScrollReveal offset={20} variant="slide-left">
               <p className="eyebrow">Profile</p>
               <h2>About the Engineer</h2>
               <p className="section-intro">{profile.about}</p>
@@ -78,13 +100,13 @@ export default function HomePage() {
           </div>
 
           <div className="frame-content stack-grid">
-            <ScrollReveal className="snapshot-card surface-panel surface-panel-strong" delay={40}>
+            <ScrollReveal className="snapshot-card surface-panel surface-panel-strong" delay={40} variant="expand">
               <p className="snapshot-label">Current Focus</p>
               <h3>{profile.location}</h3>
               <p>{profile.summary}</p>
             </ScrollReveal>
 
-            <ScrollReveal className="snapshot-card surface-panel" delay={120}>
+            <ScrollReveal className="snapshot-card surface-panel" delay={120} variant="slide-right">
               <p className="snapshot-label">Quick Facts</p>
               <ul className="fact-list">
                 {profile.quickFacts.map((fact) => (
@@ -93,7 +115,7 @@ export default function HomePage() {
               </ul>
             </ScrollReveal>
 
-            <ScrollReveal className="snapshot-card surface-panel hero-profile-card" delay={180}>
+            <ScrollReveal className="snapshot-card surface-panel hero-profile-card" delay={180} variant="slide-left">
               <p className="snapshot-label">{site.name}</p>
               <h3 className="identity-name">{profile.englishName}</h3>
               <p className="snapshot-label">Build, Measure, Iterate</p>
@@ -101,7 +123,7 @@ export default function HomePage() {
               <p className="panel-note">{site.description}</p>
             </ScrollReveal>
 
-            <ScrollReveal className="snapshot-card surface-panel hero-orbit-card" delay={240}>
+            <ScrollReveal className="snapshot-card surface-panel hero-orbit-card" delay={240} variant="expand">
               <div className="hero-orbit-wrap">
                 <HeroOrbit />
               </div>
@@ -128,7 +150,7 @@ export default function HomePage() {
       <section className="section section-frame container home-panel" id="about-strengths">
         <div className="frame-grid frame-grid-wide">
           <div className="frame-heading">
-            <ScrollReveal offset={20}>
+            <ScrollReveal offset={20} variant="slide-left">
               <p className="eyebrow">Capabilities</p>
               <h2>Core Technical Tracks</h2>
               <p className="section-intro">
@@ -144,6 +166,7 @@ export default function HomePage() {
                 className="strength-card surface-panel"
                 delay={60 + index * 80}
                 offset={24}
+                variant={index % 2 === 0 ? "slide-right" : "expand"}
               >
                 <p className="card-label">{item.title}</p>
                 <p>{item.description}</p>
@@ -156,7 +179,7 @@ export default function HomePage() {
       <section className="section section-frame container home-panel" id="pulse">
         <div className="frame-grid frame-grid-wide">
           <div className="frame-heading frame-heading-sticky">
-            <ScrollReveal offset={20}>
+            <ScrollReveal offset={20} variant="slide-left">
               <p className="eyebrow">{codingPulse.eyebrow}</p>
               <h2>{codingPulse.title}</h2>
               <p className="section-intro">{codingPulse.intro}</p>
@@ -164,7 +187,7 @@ export default function HomePage() {
           </div>
 
           <div className="frame-content">
-            <ScrollReveal offset={30}>
+            <ScrollReveal offset={30} variant="expand">
               <CodingPulse shareUrl={codingPulse.shareUrl ?? process.env.NEXT_PUBLIC_WAKATIME_SHARE_URL ?? null} />
             </ScrollReveal>
           </div>
@@ -174,7 +197,7 @@ export default function HomePage() {
       <section className="section section-frame container home-panel" id="work">
         <div className="frame-grid frame-grid-wide">
           <div className="frame-heading frame-heading-sticky">
-            <ScrollReveal offset={20}>
+            <ScrollReveal offset={20} variant="slide-left">
               <p className="eyebrow">Projects</p>
               <h2>Selected Projects</h2>
               <p className="section-intro">
@@ -184,7 +207,7 @@ export default function HomePage() {
           </div>
 
           <div className="frame-content">
-            <ScrollReveal className="project-hero-card surface-panel surface-panel-strong" delay={40}>
+            <ScrollReveal className="project-hero-card surface-panel surface-panel-strong" delay={40} variant="expand">
               <p className="project-kicker">{featuredProject.category}</p>
               <h3>{featuredProject.title}</h3>
               <p>{featuredProject.description}</p>
@@ -206,7 +229,7 @@ export default function HomePage() {
       <section className="section section-frame container home-panel" id="work-notes">
         <div className="frame-grid frame-grid-wide">
           <div className="frame-heading">
-            <ScrollReveal offset={20}>
+            <ScrollReveal offset={20} variant="slide-left">
               <p className="eyebrow">More Work</p>
               <h2>Supporting Projects</h2>
               <p className="section-intro">
@@ -222,6 +245,7 @@ export default function HomePage() {
                 className="project-note-card surface-panel"
                 delay={80 + index * 90}
                 offset={28}
+                variant={index % 2 === 0 ? "slide-right" : "slide-left"}
               >
                 <p className="project-kicker">{project.category}</p>
                 <h3>{project.title}</h3>
@@ -239,7 +263,7 @@ export default function HomePage() {
       <section className="section section-frame container home-panel" id="writing">
         <div className="frame-grid frame-grid-wide">
           <div className="frame-heading">
-            <ScrollReveal offset={20}>
+            <ScrollReveal offset={20} variant="slide-left">
               <p className="eyebrow">{writing.eyebrow}</p>
               <h2>{writing.title}</h2>
               <p className="section-subtitle">{writing.subtitle}</p>
@@ -259,6 +283,7 @@ export default function HomePage() {
                 className="article-preview-card surface-panel"
                 delay={index * 90}
                 offset={30}
+                variant={index === 1 ? "expand" : index === 0 ? "slide-left" : "slide-right"}
               >
                 <div className="article-preview-head">
                   <p className="article-preview-index">0{index + 1}</p>
@@ -278,7 +303,7 @@ export default function HomePage() {
       <section className="section section-frame container home-panel" id="timeline">
         <div className="frame-grid">
           <div className="frame-heading frame-heading-sticky">
-            <ScrollReveal offset={20}>
+            <ScrollReveal offset={20} variant="slide-left">
               <p className="eyebrow">Journey</p>
               <h2>Education & Journey</h2>
               <p className="section-intro">
@@ -294,6 +319,7 @@ export default function HomePage() {
                 className="timeline-item surface-panel"
                 delay={index * 90}
                 offset={32}
+                variant="slide-right"
               >
                 <div>
                   <p className="timeline-period">{item.period}</p>
@@ -308,7 +334,7 @@ export default function HomePage() {
       </section>
 
       <section className="section container home-panel home-panel-contact" id="contact">
-        <ScrollReveal className="contact-band surface-panel" offset={28}>
+        <ScrollReveal className="contact-band surface-panel" offset={28} variant="expand">
           <div>
             <p className="eyebrow">Contact</p>
             <h2>Connect for Technical Work</h2>
