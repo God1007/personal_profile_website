@@ -55,10 +55,6 @@ export default function HomePage() {
             </ScrollReveal>
             <p className="hero-kicker">Technical Brand / Systems / Networks / Analysis</p>
             <h1>{profile.heroTitle}</h1>
-            <ScrollReveal className="hero-manifesto" delay={110} offset={20} variant="slide-right">
-              Build a name through systems, not slogans.
-            </ScrollReveal>
-            <p className="hero-text">{profile.intro}</p>
 
             <div className="hero-actions">
               <a className="button primary" href="#about">

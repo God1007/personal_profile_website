@@ -260,7 +260,7 @@ main {
 }
 
 .hero-grid-cover {
-  grid-template-columns: minmax(0, 1040px);
+  grid-template-columns: minmax(0, 1140px);
   justify-content: center;
 }
 
@@ -341,7 +341,8 @@ main {
 
 .hero-grid-cover .hero-copy h1 {
   margin-inline: auto;
-  max-width: 12ch;
+  max-width: 15ch;
+  line-height: 0.84;
 }
 
 .hero-grid-cover .hero-text {
@@ -368,16 +369,9 @@ main {
   font-size: 0.7rem;
 }
 
-.hero-manifesto {
-  margin: 0 0 1rem;
-  color: var(--accent);
-  font-family: var(--font-display), serif;
-  font-size: clamp(1.15rem, 2vw, 1.5rem);
-  letter-spacing: 0.04em;
-}
-
 .hero-grid-cover .hero-actions {
   justify-content: center;
+  margin-top: 1.4rem;
 }
 
 .hero-button-ghost {
@@ -1433,16 +1427,16 @@ main {
   }
 
   .home-panel .hero-copy h1 {
-    max-width: 9ch;
-    font-size: clamp(3.2rem, 5.9vw, 5.8rem);
+    max-width: 12.5ch;
+    font-size: clamp(3rem, 4.9vw, 5.1rem);
   }
 
   .home-panel .hero-grid-cover .hero-copy {
-    padding: 3rem 3.2rem;
+    padding: 2.8rem 3.6rem;
   }
 
   .home-panel .hero-grid-cover .hero-copy h1 {
-    max-width: 11.5ch;
+    max-width: 14ch;
   }
 
   .home-panel .hero-signal-grid {
