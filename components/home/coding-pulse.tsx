@@ -1,41 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { mockCodingPulse, parseWakaTimeShare, type CodingBucket, type CodingPulseData } from "@/lib/wakatime";
+import { mockCodingPulse, parseWakaTimeShare, type CodingPulseData } from "@/lib/wakatime";
 
 type CodingPulseProps = {
   shareUrl?: string | null;
 };
-
-function BucketList({
-  title,
-  items
-}: {
-  title: string;
-  items: CodingBucket[];
-}) {
-  return (
-    <div className="pulse-cluster surface-panel">
-      <div className="pulse-cluster-heading">
-        <p className="eyebrow">{title}</p>
-      </div>
-      <div className="pulse-list">
-        {items.map((item) => (
-          <div key={item.name} className="pulse-list-row">
-            <div className="pulse-list-copy">
-              <strong>{item.name}</strong>
-              <span>{item.text}</span>
-            </div>
-            <div className="pulse-bar-track">
-              <span className="pulse-bar-fill" style={{ width: `${Math.max(item.percent, 6)}%` }} />
-            </div>
-            <span className="pulse-percent">{item.percent}%</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 export function CodingPulse({ shareUrl }: CodingPulseProps) {
   const [data, setData] = useState<CodingPulseData>(mockCodingPulse);
@@ -136,12 +106,6 @@ export function CodingPulse({ shareUrl }: CodingPulseProps) {
               </div>
             ))}
           </div>
-        </div>
-
-        <div className="pulse-side">
-          <BucketList title="Languages" items={data.languages} />
-          <BucketList title="Editors" items={data.editors} />
-          <BucketList title="Projects" items={data.projects} />
         </div>
       </div>
     </div>
