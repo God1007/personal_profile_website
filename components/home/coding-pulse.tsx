@@ -38,7 +38,9 @@ export function CodingPulse({ data = mockCodingPulse, shareUrl }: CodingPulsePro
   }, [data.source, shareUrl]);
 
   const hasLiveData = resolvedData.source === "live";
-  const displayActivity = hasLiveData ? resolvedData.activity : mockCodingPulse.activity.map((item) => ({ ...item, hours: 0 }));
+  const displayActivity = hasLiveData
+    ? resolvedData.activity
+    : mockCodingPulse.activity.map((item) => ({ ...item, hours: 0 }));
   const ceiling = useMemo(() => Math.max(...displayActivity.map((item) => item.hours), 1), [displayActivity]);
 
   return (
@@ -47,9 +49,7 @@ export function CodingPulse({ data = mockCodingPulse, shareUrl }: CodingPulsePro
         <div>
           <p className="eyebrow">Activity</p>
           <h3>Coding Pulse</h3>
-          <p className="coding-pulse-intro">
-            通过 WakaTime share JSON 接入编码节奏。当前显示最近一段时间的活跃度、语言分布、编辑器和项目占比。
-          </p>
+          <p className="coding-pulse-intro">WakaTime summary for the latest recorded range.</p>
         </div>
         <div className={`pulse-status${hasLiveData ? " pulse-status-live" : ""}`}>
           <span>{hasLiveData ? "Live share" : "NULL"}</span>
@@ -80,7 +80,7 @@ export function CodingPulse({ data = mockCodingPulse, shareUrl }: CodingPulsePro
         <div className="pulse-cluster pulse-activity surface-panel">
           <div className="pulse-cluster-heading">
             <p className="eyebrow">Fluctuation</p>
-            <p className="pulse-cluster-meta">Coding intensity across the recent cycle</p>
+            <p className="pulse-cluster-meta">Recent daily activity</p>
           </div>
           <div className="pulse-activity-bars" aria-label="Weekly coding fluctuation">
             {displayActivity.map((item, index) => (

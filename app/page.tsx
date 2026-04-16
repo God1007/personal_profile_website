@@ -53,9 +53,9 @@ export default function HomePage() {
               Personal Brand / Systems / Networks / Analysis
             </ScrollReveal>
             <p className="hero-kicker">Technical Brand / Systems / Networks / Analysis</p>
-            <h1 aria-label="Engineering Systems with Clarity">
-              <span>Engineering Systems</span>
-              <span>with Clarity</span>
+            <h1 aria-label="Engineering Systems with Clarity" className="hero-title-fixed">
+              <span className="hero-title-line">Engineering Systems</span>
+              <span className="hero-title-line">with Clarity</span>
             </h1>
 
             <div className="hero-actions">

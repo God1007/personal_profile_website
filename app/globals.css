@@ -426,6 +426,15 @@ main {
   display: block;
 }
 
+.hero-title-fixed {
+  display: grid;
+  justify-items: center;
+}
+
+.hero-title-line {
+  white-space: nowrap;
+}
+
 .hero-text,
 .section-intro,
 .section-body p,
@@ -1433,6 +1442,10 @@ main {
 
   .home-panel .hero-grid-cover .hero-copy h1 {
     max-width: 14ch;
+  }
+
+  .home-panel .hero-title-fixed {
+    max-width: none;
   }
 
   .home-panel .hero-signal-grid {
