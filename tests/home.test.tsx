@@ -21,8 +21,9 @@ describe("HomePage", () => {
     expect(screen.getByRole("heading", { level: 2, name: /education & journey/i })).toBeInTheDocument();
     expect(screen.getByText(/build, measure, iterate/i)).toBeInTheDocument();
     expect(document.querySelector(".home-snap-shell")).toBeTruthy();
-    expect(document.querySelectorAll(".home-panel")).toHaveLength(7);
+    expect(document.querySelectorAll(".home-panel")).toHaveLength(9);
     expect(document.querySelector("#work")).toBeTruthy();
+    expect(document.querySelector("#work-notes")).toBeTruthy();
     expect(document.querySelector("#writing")).toBeTruthy();
     expect(document.querySelector("#timeline")).toBeTruthy();
     expect(document.querySelector("#contact")).toBeTruthy();

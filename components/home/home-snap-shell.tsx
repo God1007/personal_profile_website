@@ -3,8 +3,8 @@
 import { useEffect, useEffectEvent, useRef, type PropsWithChildren } from "react";
 
 const DESKTOP_BREAKPOINT = 981;
-const WHEEL_THRESHOLD = 95;
-const SNAP_COOLDOWN_MS = 520;
+const WHEEL_THRESHOLD = 140;
+const SNAP_COOLDOWN_MS = 320;
 
 export function HomeSnapShell({ children }: PropsWithChildren) {
   const rootRef = useRef<HTMLElement | null>(null);

@@ -38,7 +38,7 @@ describe("HomeSnapShell", () => {
     render(<HomeSnapShell>{panels}</HomeSnapShell>);
 
     const event = new WheelEvent("wheel", {
-      deltaY: 120,
+      deltaY: 180,
       cancelable: true
     });
 

@@ -932,6 +932,11 @@ main {
   gap: 1.25rem;
 }
 
+.project-side-grid {
+  display: grid;
+  gap: 1rem;
+}
+
 .project-note-card {
   padding: 1.5rem;
   border-radius: 1.6rem;
@@ -1185,6 +1190,7 @@ main {
   .pulse-metrics-grid,
   .pulse-board,
   .project-ledger,
+  .project-side-grid,
   .snapshot-grid,
   .strength-grid,
   .project-showcase-grid,
@@ -1272,14 +1278,28 @@ main {
     gap: 1rem;
   }
 
-  #work .project-ledger {
-    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.82fr);
+  #about-strengths .strength-grid {
+    grid-template-columns: 1fr;
     gap: 1rem;
+    margin-top: 0;
+  }
+
+  #work .project-hero-card {
+    min-height: auto;
   }
 
   #writing .article-preview-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     align-self: center;
+  }
+
+  #work-notes .project-side-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+  }
+
+  #work-notes .project-note-card {
+    height: 100%;
   }
 
   #timeline .timeline-stack {

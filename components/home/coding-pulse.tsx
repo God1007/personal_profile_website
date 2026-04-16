@@ -1,14 +1,43 @@
 "use client";
 
-import { useMemo } from "react";
-import { mockCodingPulse, type CodingPulseData } from "@/lib/wakatime";
+import { startTransition, useEffect, useMemo, useState } from "react";
+import { loadWakaTimeShare, mockCodingPulse, type CodingPulseData } from "@/lib/wakatime";
 
 type CodingPulseProps = {
   data?: CodingPulseData;
+  shareUrl?: string | null;
 };
 
-export function CodingPulse({ data = mockCodingPulse }: CodingPulseProps) {
-  const ceiling = useMemo(() => Math.max(...data.activity.map((item) => item.hours), 1), [data.activity]);
+export function CodingPulse({ data = mockCodingPulse, shareUrl }: CodingPulseProps) {
+  const [resolvedData, setResolvedData] = useState<CodingPulseData>(data);
+
+  useEffect(() => {
+    setResolvedData(data);
+  }, [data]);
+
+  useEffect(() => {
+    if (!shareUrl || data.source === "live") {
+      return;
+    }
+
+    let active = true;
+
+    void loadWakaTimeShare(shareUrl).then((nextData) => {
+      if (!active || nextData.source !== "live") {
+        return;
+      }
+
+      startTransition(() => {
+        setResolvedData(nextData);
+      });
+    });
+
+    return () => {
+      active = false;
+    };
+  }, [data.source, shareUrl]);
+
+  const ceiling = useMemo(() => Math.max(...resolvedData.activity.map((item) => item.hours), 1), [resolvedData.activity]);
 
   return (
     <div className="coding-pulse surface-panel surface-panel-strong">
@@ -20,28 +49,28 @@ export function CodingPulse({ data = mockCodingPulse }: CodingPulseProps) {
             通过 WakaTime share JSON 接入编码节奏。当前显示最近一段时间的活跃度、语言分布、编辑器和项目占比。
           </p>
         </div>
-        <div className={`pulse-status${data.source === "live" ? " pulse-status-live" : ""}`}>
-          <span>{data.source === "live" ? "Live share" : "Mock preview"}</span>
-          <strong>{data.rangeLabel}</strong>
+        <div className={`pulse-status${resolvedData.source === "live" ? " pulse-status-live" : ""}`}>
+          <span>{resolvedData.source === "live" ? "Live share" : "Mock preview"}</span>
+          <strong>{resolvedData.rangeLabel}</strong>
         </div>
       </div>
 
       <div className="pulse-metrics-grid">
         <div className="pulse-metric">
           <span className="pulse-metric-label">Total time</span>
-          <strong>{data.totalTime}</strong>
+          <strong>{resolvedData.totalTime}</strong>
         </div>
         <div className="pulse-metric">
           <span className="pulse-metric-label">Daily average</span>
-          <strong>{data.dailyAverage}</strong>
+          <strong>{resolvedData.dailyAverage}</strong>
         </div>
         <div className="pulse-metric">
           <span className="pulse-metric-label">Best day</span>
-          <strong>{data.bestDay}</strong>
+          <strong>{resolvedData.bestDay}</strong>
         </div>
         <div className="pulse-metric">
           <span className="pulse-metric-label">Rhythm</span>
-          <strong>{data.streak}</strong>
+          <strong>{resolvedData.streak}</strong>
         </div>
       </div>
 
@@ -52,7 +81,7 @@ export function CodingPulse({ data = mockCodingPulse }: CodingPulseProps) {
             <p className="pulse-cluster-meta">Coding intensity across the recent cycle</p>
           </div>
           <div className="pulse-activity-bars" aria-label="Weekly coding fluctuation">
-            {data.activity.map((item, index) => (
+            {resolvedData.activity.map((item, index) => (
               <div key={`${item.day}-${index}`} className="pulse-activity-column">
                 <div className="pulse-activity-track">
                   <span

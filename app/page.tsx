@@ -1,7 +1,5 @@
-import { Suspense } from "react";
 import Link from "next/link";
 import { CodingPulse } from "@/components/home/coding-pulse";
-import { CodingPulseServer } from "@/components/home/coding-pulse-server";
 import { HeroOrbit } from "@/components/home/hero-orbit";
 import { HomeSnapShell } from "@/components/home/home-snap-shell";
 import { ScrollReveal } from "@/components/home/scroll-reveal";
@@ -134,20 +132,32 @@ export default function HomePage() {
                 ))}
               </ul>
             </ScrollReveal>
+          </div>
+        </div>
+      </section>
 
-            <div className="strength-grid">
-              {strengths.map((item, index) => (
-                <ScrollReveal
-                  key={item.title}
-                  className="strength-card surface-panel"
-                  delay={180 + index * 80}
-                  offset={24}
-                >
-                  <p className="card-label">{item.title}</p>
-                  <p>{item.description}</p>
-                </ScrollReveal>
-              ))}
-            </div>
+      <section className="section section-frame container home-panel" id="about-strengths">
+        <div className="frame-grid frame-grid-wide">
+          <div className="frame-heading">
+            <ScrollReveal offset={20}>
+              <p className="eyebrow">Capabilities</p>
+              <h2>Core Technical Tracks</h2>
+              <p className="section-intro">把系统、网络和分析能力拆开呈现，避免在同一屏里堆得太满。</p>
+            </ScrollReveal>
+          </div>
+
+          <div className="frame-content strength-grid">
+            {strengths.map((item, index) => (
+              <ScrollReveal
+                key={item.title}
+                className="strength-card surface-panel"
+                delay={60 + index * 80}
+                offset={24}
+              >
+                <p className="card-label">{item.title}</p>
+                <p>{item.description}</p>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>
@@ -164,11 +174,7 @@ export default function HomePage() {
 
           <div className="frame-content">
             <ScrollReveal offset={30}>
-              <Suspense fallback={<CodingPulse />}>
-                <CodingPulseServer
-                  shareUrl={codingPulse.shareUrl ?? process.env.NEXT_PUBLIC_WAKATIME_SHARE_URL ?? null}
-                />
-              </Suspense>
+              <CodingPulse shareUrl={codingPulse.shareUrl ?? process.env.NEXT_PUBLIC_WAKATIME_SHARE_URL ?? null} />
             </ScrollReveal>
           </div>
         </div>
@@ -186,7 +192,7 @@ export default function HomePage() {
             </ScrollReveal>
           </div>
 
-          <div className="frame-content project-ledger">
+          <div className="frame-content">
             <ScrollReveal className="project-hero-card surface-panel surface-panel-strong" delay={40}>
               <p className="project-kicker">{featuredProject.category}</p>
               <h3>{featuredProject.title}</h3>
@@ -202,25 +208,37 @@ export default function HomePage() {
                 </div>
               </div>
             </ScrollReveal>
+          </div>
+        </div>
+      </section>
 
-            <div className="project-side-stack">
-              {secondaryProjects.map((project, index) => (
-                <ScrollReveal
-                  key={project.title}
-                  className="project-note-card surface-panel"
-                  delay={120 + index * 100}
-                  offset={28}
-                >
-                  <p className="project-kicker">{project.category}</p>
-                  <h3>{project.title}</h3>
-                  <p>{project.description}</p>
-                  <div className="project-meta">
-                    <span>{project.impact}</span>
-                    <span>{project.stack}</span>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
+      <section className="section section-frame container home-panel" id="work-notes">
+        <div className="frame-grid frame-grid-wide">
+          <div className="frame-heading">
+            <ScrollReveal offset={20}>
+              <p className="eyebrow">More Work</p>
+              <h2>Supporting Projects</h2>
+              <p className="section-intro">把其余项目单独放一屏，避免和 featured case 挤在一起被切掉。</p>
+            </ScrollReveal>
+          </div>
+
+          <div className="frame-content project-side-grid">
+            {secondaryProjects.map((project, index) => (
+              <ScrollReveal
+                key={project.title}
+                className="project-note-card surface-panel"
+                delay={80 + index * 90}
+                offset={28}
+              >
+                <p className="project-kicker">{project.category}</p>
+                <h3>{project.title}</h3>
+                <p>{project.description}</p>
+                <div className="project-meta">
+                  <span>{project.impact}</span>
+                  <span>{project.stack}</span>
+                </div>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>
