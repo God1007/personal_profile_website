@@ -359,6 +359,10 @@ main {
 }
 
 .hero-cover-ribbon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
   margin: 1rem auto 0;
   padding: 0.55rem 0.9rem;
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -368,6 +372,58 @@ main {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-size: 0.7rem;
+}
+
+.hero-cover-ribbon-text {
+  white-space: nowrap;
+}
+
+.hero-like-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.1rem;
+  padding: 0 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--ink);
+  cursor: pointer;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.hero-like-button:hover,
+.hero-like-button:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.hero-like-button.is-liked {
+  border-color: rgba(104, 179, 255, 0.4);
+  background: linear-gradient(180deg, rgba(104, 179, 255, 0.24), rgba(104, 179, 255, 0.12));
+  box-shadow: 0 0 0 1px rgba(104, 179, 255, 0.12) inset;
+}
+
+.hero-like-button-thumb {
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.hero-like-button-label,
+.hero-like-button-count {
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.hero-like-button-count {
+  min-width: 1.6ch;
 }
 
 .hero-grid-cover .hero-actions {
@@ -1630,6 +1686,10 @@ main {
     justify-content: flex-start;
     margin-left: 0;
     margin-right: 0;
+  }
+
+  .hero-cover-ribbon-text {
+    white-space: normal;
   }
 
   .hero-grid-cover .hero-actions {

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CodingPulse } from "@/components/home/coding-pulse";
+import { HeroLikeButton } from "@/components/home/hero-like-button";
 import { HeroOrbit } from "@/components/home/hero-orbit";
 import { HomeSnapShell } from "@/components/home/home-snap-shell";
 import { ScrollReveal } from "@/components/home/scroll-reveal";
@@ -54,7 +55,8 @@ export default async function HomePage() {
             </div>
             <p className="eyebrow">{profile.role}</p>
             <ScrollReveal className="hero-cover-ribbon" delay={40} offset={18} variant="slide-left">
-              Personal Brand / Systems / Networks / Analysis
+              <span className="hero-cover-ribbon-text">Personal Brand / Systems / Networks / Analysis</span>
+              <HeroLikeButton baseCount={12} />
             </ScrollReveal>
             <p className="hero-kicker">Technical Brand / Systems / Networks / Analysis</p>
             <h1 aria-label="Engineering Systems with Clarity" className="hero-title-fixed">
