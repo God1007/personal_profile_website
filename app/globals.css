@@ -249,6 +249,7 @@ html[data-theme="dark"] .hero-backdrop-image-dark {
 }
 
 .brand-copy strong {
+  color: rgba(248, 251, 255, 0.96);
   font-size: 0.95rem;
   letter-spacing: 0.08em;
   text-transform: lowercase;
@@ -256,7 +257,7 @@ html[data-theme="dark"] .hero-backdrop-image-dark {
 }
 
 .brand-copy small {
-  color: var(--muted);
+  color: rgba(214, 226, 245, 0.86);
   font-size: 0.72rem;
   text-transform: lowercase;
   font-variant-caps: all-small-caps;
