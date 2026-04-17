@@ -9,8 +9,8 @@ vi.mock("@/lib/wakatime-cache.server", async () => {
     loadCachedWakaTimeShare: vi.fn().mockResolvedValue({
       ...actual.mockCodingPulse,
       source: "live",
-      rangeLabel: "2026-04-10 to 2026-04-16"
-    })
+      rangeLabel: "2026-04-10 to 2026-04-16",
+    }),
   };
 });
 
@@ -21,14 +21,18 @@ describe("HomePage", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: /engineering systems with clarity/i
+        name: /engineering systems with clarity/i,
       })
     ).toBeInTheDocument();
 
     expect(screen.getAllByText(/jared 01 home/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/小陈/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/city university of hong kong/i).length).toBeGreaterThan(0);
     expect(screen.getByRole("button", { name: /toggle theme/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /like this intro/i })).toBeInTheDocument();
+
+    const likeButton = screen.getByRole("button", { name: /like this intro/i });
+    expect(likeButton).toBeInTheDocument();
+    expect(document.querySelector(".hero-actions-extended")).toContainElement(likeButton);
+
     expect(screen.getByRole("heading", { level: 2, name: /coding pulse/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 2, name: /selected projects/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 2, name: /jared 01 home/i })).toBeInTheDocument();

@@ -59,7 +59,6 @@ export default async function HomePage() {
             <p className="eyebrow">{profile.role}</p>
             <ScrollReveal className="hero-cover-ribbon" delay={40} offset={18} variant="slide-left">
               <span className="hero-cover-ribbon-text">Personal Brand / Systems / Networks / Analysis</span>
-              <HeroLikeButton baseCount={12} />
             </ScrollReveal>
             <p className="hero-kicker">Technical Brand / Systems / Networks / Analysis</p>
             <h1 aria-label="Engineering Systems with Clarity" className="hero-title-fixed">
@@ -67,15 +66,15 @@ export default async function HomePage() {
               <span className="hero-title-line">with Clarity</span>
             </h1>
 
-            <div className="hero-actions">
+            <div className="hero-actions hero-actions-extended">
               <a className="button primary" href="#about">
                 Enter Profile
               </a>
               <a className="button secondary hero-button-ghost" href="#work">
                 View Projects
               </a>
+              <HeroLikeButton />
             </div>
-
           </ScrollReveal>
         </div>
       </section>
