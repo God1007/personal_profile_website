@@ -2,15 +2,8 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const HERO_LIKE_API_URL = "https://example.test/hero-like";
-
-async function loadHeroLike(apiUrl: string | null = HERO_LIKE_API_URL) {
+async function loadHeroLike() {
   vi.resetModules();
-  if (apiUrl === null) {
-    delete process.env.NEXT_PUBLIC_HERO_LIKE_API_URL;
-  } else {
-    process.env.NEXT_PUBLIC_HERO_LIKE_API_URL = apiUrl;
-  }
 
   const [{ HERO_LIKE_STORAGE_KEY }, { HeroLikeButton }] = await Promise.all([
     import("@/lib/hero-like"),
@@ -24,10 +17,9 @@ describe("HeroLikeButton", () => {
   beforeEach(() => {
     window.localStorage.clear();
     vi.restoreAllMocks();
-    delete process.env.NEXT_PUBLIC_HERO_LIKE_API_URL;
   });
 
-  it("loads and shows the shared count", async () => {
+  it("loads and shows the baseline count from the static json file", async () => {
     const { HeroLikeButton } = await loadHeroLike();
 
     vi.stubGlobal(
@@ -49,20 +41,12 @@ describe("HeroLikeButton", () => {
 
   it("increments once and persists the liked state locally", async () => {
     const { HeroLikeButton, HERO_LIKE_STORAGE_KEY } = await loadHeroLike();
-    const fetchMock = vi
-      .fn()
-      .mockResolvedValueOnce(
-        new Response(JSON.stringify({ count: 12 }), {
-          status: 200,
-          headers: { "Content-Type": "application/json" },
-        })
-      )
-      .mockResolvedValueOnce(
-        new Response(JSON.stringify({ count: 13, liked: true }), {
-          status: 200,
-          headers: { "Content-Type": "application/json" },
-        })
-      );
+    const fetchMock = vi.fn(async () =>
+      new Response(JSON.stringify({ count: 12 }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      })
+    );
 
     vi.stubGlobal("fetch", fetchMock);
 
@@ -78,15 +62,15 @@ describe("HeroLikeButton", () => {
 
     expect(await screen.findByRole("button", { name: /you liked this intro/i })).toHaveTextContent("13");
     expect(window.localStorage.getItem(HERO_LIKE_STORAGE_KEY)).toBe("liked");
-    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
-  it("does not submit again when this browser already liked", async () => {
+  it("shows baseline plus one when this browser already liked", async () => {
     const { HeroLikeButton, HERO_LIKE_STORAGE_KEY } = await loadHeroLike();
     window.localStorage.setItem(HERO_LIKE_STORAGE_KEY, "liked");
 
     const fetchMock = vi.fn(async () =>
-      new Response(JSON.stringify({ count: 13 }), {
+      new Response(JSON.stringify({ count: 12 }), {
         status: 200,
         headers: { "Content-Type": "application/json" },
       })
@@ -102,52 +86,19 @@ describe("HeroLikeButton", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
-  it("disables the button when the endpoint is missing", async () => {
-    const { HeroLikeButton } = await loadHeroLike(null);
-
-    const fetchMock = vi.fn();
-    vi.stubGlobal("fetch", fetchMock);
-
-    render(<HeroLikeButton />);
-
-    const button = await screen.findByRole("button", { name: /like this intro/i });
-    expect(button).toBeDisabled();
-    expect(button).toHaveTextContent("0");
-    expect(fetchMock).not.toHaveBeenCalled();
-  });
-
-  it("shows an error state when the like submission fails", async () => {
+  it("falls back safely when the baseline json cannot be loaded", async () => {
     const { HeroLikeButton } = await loadHeroLike();
-    const fetchMock = vi
-      .fn()
-      .mockResolvedValueOnce(
-        new Response(JSON.stringify({ count: 12 }), {
-          status: 200,
-          headers: { "Content-Type": "application/json" },
-        })
-      )
-      .mockResolvedValueOnce(
-        new Response(JSON.stringify({ error: "boom" }), {
-          status: 500,
-          headers: { "Content-Type": "application/json" },
-        })
-      );
+    const fetchMock = vi.fn().mockRejectedValueOnce(new Error("network down"));
 
     vi.stubGlobal("fetch", fetchMock);
 
-    const user = userEvent.setup();
     render(<HeroLikeButton />);
 
     const button = await screen.findByRole("button", { name: /like this intro/i });
     await waitFor(() => {
-      expect(button).toHaveTextContent("12");
+      expect(button).toHaveTextContent("0");
     });
-
-    await user.click(button);
-
-    const errorButton = await screen.findByRole("button", { name: /like this intro unavailable/i });
-    expect(errorButton).toHaveClass("is-error");
-    expect(errorButton).toBeDisabled();
-    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(button).toBeEnabled();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 });

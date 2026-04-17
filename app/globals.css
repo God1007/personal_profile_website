@@ -268,7 +268,7 @@ html[data-theme="dark"] .hero-backdrop-image-dark {
   justify-content: center;
   flex-wrap: wrap;
   gap: 1.2rem;
-  color: var(--muted);
+  color: rgba(244, 248, 255, 0.9);
   font-size: 0.96rem;
   text-transform: lowercase;
   font-variant-caps: all-small-caps;
@@ -532,16 +532,6 @@ html[data-theme="dark"] .hero-copy-cover::after {
     0 16px 34px rgba(47, 124, 255, 0.12);
 }
 
-.hero-like-button.is-error {
-  border-color: rgba(255, 171, 96, 0.42);
-  background:
-    linear-gradient(180deg, rgba(255, 171, 96, 0.2), rgba(255, 171, 96, 0.08)),
-    rgba(255, 255, 255, 0.08);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.16),
-    0 16px 34px rgba(255, 171, 96, 0.08);
-}
-
 .hero-like-button-thumb {
   display: inline-flex;
   align-items: center;
@@ -575,11 +565,6 @@ html[data-theme="dark"] .hero-copy-cover::after {
 
 .hero-like-button.is-liked .hero-like-button-count {
   background: rgba(104, 179, 255, 0.16);
-  color: var(--ink);
-}
-
-.hero-like-button.is-error .hero-like-button-count {
-  background: rgba(255, 171, 96, 0.16);
   color: var(--ink);
 }
 
