@@ -97,7 +97,8 @@ main {
 .surface-panel {
   border: 1px solid var(--line);
   background: var(--surface);
-  backdrop-filter: blur(18px);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
   box-shadow: var(--shadow);
 }
 
@@ -135,21 +136,21 @@ main {
 .hero-backdrop-image-light {
   background-image:
     linear-gradient(180deg, rgba(244, 247, 251, 0.2) 0%, rgba(244, 247, 251, 0.1) 18%, rgba(244, 247, 251, 0) 100%),
-    url("/wallhaven-3q5k8y.png");
-  opacity: 0.3;
+    url("/hero-light.webp");
+  opacity: 0.42;
 }
 
 .hero-backdrop-image-dark {
   background-image:
     linear-gradient(180deg, rgba(7, 17, 31, 0.16) 0%, rgba(7, 17, 31, 0.08) 18%, rgba(7, 17, 31, 0) 100%),
-    url("/wallhaven-vpyrm5.jpg");
+    url("/hero-dark.webp");
   opacity: 0;
 }
 
 .hero-backdrop-fade {
   background:
-    linear-gradient(180deg, rgba(7, 17, 31, 0) 0%, rgba(7, 17, 31, 0.1) 54%, rgba(7, 17, 31, 0.64) 82%, var(--bg) 100%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, transparent 22%);
+    linear-gradient(180deg, rgba(7, 17, 31, 0) 0%, rgba(7, 17, 31, 0.04) 54%, rgba(7, 17, 31, 0.34) 82%, var(--bg) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, transparent 22%);
 }
 
 html[data-theme="dark"] .hero-backdrop-image-light {
@@ -157,7 +158,7 @@ html[data-theme="dark"] .hero-backdrop-image-light {
 }
 
 html[data-theme="dark"] .hero-backdrop-image-dark {
-  opacity: 0.42;
+  opacity: 0.5;
 }
 
 .hero-glow {
@@ -359,9 +360,64 @@ html[data-theme="dark"] .hero-backdrop-image-dark {
   min-height: 31rem;
   overflow: hidden;
   background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.14) 14%, rgba(255, 255, 255, 0.05) 34%, rgba(255, 255, 255, 0) 58%),
     radial-gradient(circle at top, rgba(104, 179, 255, 0.22), transparent 36%),
-    linear-gradient(145deg, rgba(255, 255, 255, 0.05), transparent 42%),
-    var(--surface-strong);
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), transparent 42%),
+    rgba(255, 255, 255, 0.38);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.38),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 28px 80px rgba(13, 20, 35, 0.14);
+}
+
+.hero-copy-cover::before,
+.hero-copy-cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-copy-cover::before {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.14) 14%, rgba(255, 255, 255, 0.04) 30%, transparent 54%),
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.2), transparent 42%);
+  opacity: 0.9;
+}
+
+.hero-copy-cover::after {
+  inset: 0.05rem;
+  border-radius: inherit;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+  opacity: 0.95;
+}
+
+html[data-theme="dark"] .hero-copy-cover {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.08) 16%, rgba(255, 255, 255, 0.03) 34%, rgba(255, 255, 255, 0) 58%),
+    radial-gradient(circle at top, rgba(104, 179, 255, 0.18), transparent 38%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.04), transparent 42%),
+    rgba(11, 23, 42, 0.42);
+  border-color: rgba(152, 181, 255, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 28px 80px rgba(0, 0, 0, 0.22);
+}
+
+html[data-theme="dark"] .hero-copy-cover::before {
+  opacity: 0.72;
+}
+
+html[data-theme="dark"] .hero-copy-cover::after {
+  border-top-color: rgba(255, 255, 255, 0.16);
+  opacity: 0.85;
 }
 
 .hero-brand-cloud {
@@ -1746,8 +1802,39 @@ html[data-theme="dark"] .hero-backdrop-image-dark {
     height: 10rem;
   }
 
+  .hero-copy-cover {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.09) 18%, rgba(255, 255, 255, 0.03) 52%, rgba(255, 255, 255, 0) 100%),
+      linear-gradient(145deg, rgba(255, 255, 255, 0.04), transparent 42%),
+      rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      0 18px 45px rgba(13, 20, 35, 0.12);
+  }
+
+  .hero-copy-cover::before {
+    opacity: 0.7;
+  }
+
+  .hero-copy-cover::after {
+    opacity: 0.65;
+  }
+
   .hero-backdrop-image {
     background-position: center top;
     background-size: cover;
+  }
+
+  html[data-theme="dark"] .hero-copy-cover {
+    background:
+      linear-gradient(180deg, rgba(11, 23, 42, 0.3) 0%, rgba(11, 23, 42, 0.18) 18%, rgba(11, 23, 42, 0.08) 52%, rgba(11, 23, 42, 0) 100%),
+      linear-gradient(145deg, rgba(104, 179, 255, 0.04), transparent 42%),
+      rgba(11, 23, 42, 0.24);
+    border-color: rgba(152, 181, 255, 0.1);
+    box-shadow:
+      inset 0 1px 0 rgba(104, 179, 255, 0.05),
+      0 18px 45px rgba(0, 0, 0, 0.14);
   }
 }
