@@ -1,0 +1,19 @@
+[Unit]
+Description=Jared personal profile website
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/personal-profile-site
+Environment=NODE_ENV=production
+Environment=PORT=3000
+Environment=HERO_LIKE_STORE_PATH=/var/lib/personal-profile-site/hero-likes.json
+Environment=HERO_LIKE_INITIAL_COUNT=12
+ExecStart=/usr/bin/npm run start
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

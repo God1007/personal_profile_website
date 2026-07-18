@@ -4,3 +4,4 @@ out
 coverage
 npm-debug.log*
 data/wakatime-cache.json
+.data/
