@@ -13,9 +13,9 @@ export const siteContent = {
     heroTitle: "Engineering Systems with Clarity",
     intro: "",
     summary:
-      "当前方向集中在系统、网络与工程分析的交叉场景，重点放在实现路径、诊断能力与落地效果。",
+      "我喜欢把模糊的问题拆成可观察的信号，再用工程方法把判断变成稳定、可解释的实现。",
     about:
-      "本节概述教育背景、技术方向与当前工程关注点，内容围绕系统、网络与分析相关工作展开。",
+      "从底层网络诊断到前端交互，我关注的不只是功能是否完成，也关注系统如何被看见、理解和验证。",
     quickFacts: [
       "EAAI 联合作者论文经历",
       "独立完成 AI 网络诊断项目",
@@ -34,17 +34,17 @@ export const siteContent = {
     {
       title: "C++ / Systems",
       description:
-        "具备 C++ 与 Linux 系统编程基础，关注模块边界、性能开销与可维护性。"
+        "用 C++ 与 Linux 处理真实系统边界，关注性能、可观测性与长期维护成本。"
     },
     {
       title: "Networks / Protocols",
       description:
-        "熟悉 TCP/IP、DNS、ICMP、ARP 等协议及常见网络诊断与排障路径。"
+        "从 TCP/IP、DNS、ICMP 与 ARP 的信号中定位问题，建立可复用的诊断路径。"
     },
     {
       title: "AI / Analysis",
       description:
-        "使用 Python 与模型辅助方法进行数据处理、系统分析与结果评估。"
+        "用 Python、数据与模型辅助方法验证假设，让分析结果回到可以执行的工程决策。"
     }
   ],
   projects: [

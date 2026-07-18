@@ -1,134 +1,28 @@
 # Personal Portfolio Website
 
-A static personal portfolio and blog built with Next.js, TypeScript, and plain CSS. The current version uses a dual-theme visual system:
+A dynamic personal portfolio and technical journal built with Next.js, React, TypeScript, and plain CSS.
 
-- `Light`: editorial technical brand
-- `Dark`: deeper engineering tone
+## Highlights
 
-It is designed to deploy as static files on Ubuntu + Nginx.
-
-## Stack
-
-- `Next.js` App Router
-- `React`
-- `TypeScript`
-- `plain CSS`
-- `gray-matter` + `marked` for Markdown blog posts
-- `Vitest` + `Testing Library`
-
-## What is included
-
-- Personal homepage
-- Theme toggle with system-aware default
-- Blog index and article pages
-- Category and tag pages
-- Markdown-based publishing flow
-- Static export for simple server deployment
-
-## Main folders
-
-```text
-app/
-components/
-content/blog/
-data/
-deploy/nginx/
-lib/
-tests/
-```
-
-## Files you will edit most often
-
-- `data/site-content.ts`
-  Edit your profile, projects, timeline, links, and homepage copy.
-- `content/blog/*.md`
-  Add and edit blog posts.
-- `app/globals.css`
-  Control theme tokens, layout, spacing, motion, and visual style.
-- `app/page.tsx`
-  Control homepage structure.
-
-## Theme system
-
-The site supports both light and dark themes.
-
-- Default behavior: follow the user's system theme
-- Manual override: use the theme toggle in the top navigation
-- Storage: saved in `localStorage`
-
-Theme files:
-
-- `components/theme/theme-provider.tsx`
-- `components/theme/theme-toggle.tsx`
-- `app/globals.css`
-
-Most colors are managed through CSS custom properties:
-
-- `--bg`
-- `--surface`
-- `--ink`
-- `--muted`
-- `--line`
-- `--accent`
-- `--glow`
-
-## Blog publishing
-
-Create a file in `content/blog/`, for example:
-
-```text
-content/blog/my-note.md
-```
-
-Use this structure:
-
-```md
----
-title: "My Technical Note"
-date: "2026-04-16"
-summary: "A short summary for cards, previews, and SEO."
-tags: ["Next.js", "Blog"]
-category: "Engineering Notes"
-featured: false
-published: true
----
-
-Write your article here in Markdown.
-```
-
-Fields:
-
-- `title`: article title
-- `date`: publish date in `YYYY-MM-DD`
-- `summary`: short description
-- `tags`: tag list
-- `category`: one main category
-- `featured`: whether it appears in featured sections
-- `published`: whether it is visible on the site
+- Responsive light and dark themes
+- Pointer-reactive network field in the hero
+- Live WakaTime activity visualization
+- Markdown-based technical journal
+- Shared, persistent appreciation counter
+- Accessible reduced-motion and reduced-transparency fallbacks
 
 ## Local development
 
-Install dependencies:
-
 ```bash
 npm install
-```
-
-Run the dev server:
-
-```bash
 npm run dev
 ```
 
-Open:
+Open `http://localhost:3000`.
 
-```text
-http://localhost:3000
-```
+The shared appreciation count is stored in `.data/hero-likes.json` by default. The file is created automatically and ignored by Git.
 
 ## Verification
-
-Run:
 
 ```bash
 npm run lint
@@ -136,75 +30,55 @@ npm test
 npm run build
 ```
 
-The static output is generated in:
+## Shared appreciation counter
 
-```text
-out/
+The homepage uses `/api/likes` for a real shared total.
+
+- Each browser receives a random visitor ID.
+- The server stores only a SHA-256 hash of that ID.
+- Repeated or simultaneous submissions from the same browser are idempotent.
+- Writes are serialized and committed with an atomic file rename.
+- If the API is unavailable, the client displays the static baseline in `public/likes.json` and allows retrying.
+
+Optional environment variables:
+
+```bash
+HERO_LIKE_STORE_PATH=/absolute/path/to/hero-likes.json
+HERO_LIKE_INITIAL_COUNT=12
 ```
+
+This intentionally provides lightweight browser-level duplicate protection, not account-level anti-fraud. A horizontally scaled deployment should replace the file store with Redis or a database.
 
 ## Ubuntu deployment
 
-Build the site:
+The writable shared counter means the site now runs as a small Node service instead of a static export.
+
+1. Install dependencies and build in `/var/www/personal-profile-site`.
+2. Create the persistent data directory:
 
 ```bash
-npm run build
+sudo mkdir -p /var/lib/personal-profile-site
+sudo chown -R www-data:www-data /var/lib/personal-profile-site
 ```
 
-Upload the generated `out/` folder to your server, or pull the repo on the server and build there.
+3. Install the included service:
 
-Recommended web root:
-
-```text
-/var/www/personal-profile-site
+```bash
+sudo cp deploy/systemd/personal-profile.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now personal-profile
 ```
 
-Nginx config template:
-
-```text
-deploy/nginx/personal-profile.conf
-```
-
-Typical Nginx `server` block:
-
-```nginx
-server {
-    listen 80;
-    listen [::]:80;
-    server_name your-domain.com www.your-domain.com;
-
-    root /var/www/personal-profile-site;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-}
-```
-
-After changing Nginx:
+4. Install `deploy/nginx/personal-profile.conf`, then reload Nginx:
 
 ```bash
 sudo nginx -t
 sudo systemctl reload nginx
 ```
 
-## Updating the live site
-
-After content or style updates:
-
-```bash
-npm run build
-```
-
-Then upload or sync the new `out/` contents to the server web root.
-
-## Current content entry points
+## Content
 
 - Homepage content: `data/site-content.ts`
-- Demo article: `content/blog/demo.md`
-
-## Notes
-
-- This project does not require a backend or database.
-- It is optimized for static hosting and simple maintenance.
-- If you later want CMS, comments, or search, they can be added on top of the current structure.
+- Blog posts: `content/blog/*.md`
+- Global visual system: `app/globals.css`
+- Homepage visual system: `app/home.css`

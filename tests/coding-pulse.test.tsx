@@ -22,7 +22,7 @@ describe("CodingPulse", () => {
     render(<CodingPulse shareUrl="https://example.com/share.json" />);
 
     await waitFor(() => {
-      expect(screen.getByText(/live share/i)).toBeInTheDocument();
+      expect(screen.getByText(/live data/i)).toBeInTheDocument();
     });
 
     expect(screen.getByText("2 hrs")).toBeInTheDocument();
@@ -32,11 +32,10 @@ describe("CodingPulse", () => {
     render(<CodingPulse />);
 
     expect(screen.getByRole("heading", { level: 3, name: /coding pulse/i })).toBeInTheDocument();
-    expect(screen.getAllByText(/^null$/i).length).toBeGreaterThan(0);
-    expect(screen.getByText(/wakatime unavailable/i)).toBeInTheDocument();
+    expect(screen.getByText(/waiting for the next sync/i)).toBeInTheDocument();
     expect(screen.getByText(/total time/i)).toBeInTheDocument();
-    expect(screen.getByText(/fluctuation/i)).toBeInTheDocument();
-    expect(screen.getAllByText(/^NULL$/)).toHaveLength(5);
+    expect(screen.getByText(/daily fluctuation/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/no data/i)).toHaveLength(4);
     expect(screen.queryByText(/languages/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/editors/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/projects/i)).not.toBeInTheDocument();
