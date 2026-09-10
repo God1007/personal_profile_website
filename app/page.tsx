@@ -12,6 +12,7 @@ export default function HomePage() {
   const shareUrl = siteContent.codingPulse.shareUrl ?? process.env.NEXT_PUBLIC_WAKATIME_SHARE_URL ?? null;
 
   return <div className={styles.profilePage}>
+  <div className={styles.readingProgress} aria-hidden="true" />
   <a className={styles["skip-link"]} href="#main">跳转到正文</a>
   <header className={styles["site-header"]}>
     <a className={styles["wordmark"]} href="#main" aria-label="陈嘉乐，回到首页">JIALE<span aria-hidden="true">.</span></a>
@@ -20,7 +21,7 @@ export default function HomePage() {
       <a href="#experience">经历</a>
       <a href="#about">关于我</a><Link href="/blog">博客</Link>
     </nav>
-    <a className={styles["nav-contact"]} href="#contact">联系我 <span aria-hidden="true">↗</span></a>
+    <div className={styles.navTools}><ThemeToggle /><a className={styles["nav-contact"]} href="#contact">联系我 <span aria-hidden="true">↗</span></a></div>
   </header>
 
   <main id="main">
@@ -33,7 +34,11 @@ export default function HomePage() {
           <a className={styles["text-link"]} href="/assets/chen-jiale-resume.pdf" download="陈嘉乐-简历.pdf">下载简历 <span aria-hidden="true">↓</span></a>
         </div>
       </div>
-      <aside className={styles["profile-summary"]} aria-label="个人概况"><dl><div><dt>目前</dt><dd><strong>字节跳动 · TikTok</strong><span>AI Agent 开发工程师（实习） / 2026.04 起</span></dd></div><div><dt>教育</dt><dd><strong>香港城市大学</strong><span>电子信息工程硕士 / GPA 3.58 / 4.0</span></dd></div><div><dt>方向</dt><dd>多智能体协作、Linux 网络诊断、性能优化</dd></div><div><dt>联系</dt><dd><a href="mailto:jaredchan1007@gmail.com">jaredchan1007@gmail.com</a></dd></div></dl></aside>
+      <aside className={styles["profile-summary"]} aria-label="个人概况">
+        <p className={styles.focusLabel}>从信号到判断，从判断到实现。</p>
+        <ol className={styles.workFlow} aria-label="工程工作方式"><li><span>观察</span><strong>系统信号</strong></li><li><span>分析</span><strong>问题与证据</strong></li><li><span>验证</span><strong>工程结果</strong></li></ol>
+        <dl><div><dt>目前</dt><dd><strong>字节跳动 · TikTok</strong><span>AI Agent 开发工程师（实习） / 2026.04 起</span></dd></div><div><dt>教育</dt><dd><strong>香港城市大学</strong><span>电子信息工程硕士 / GPA 3.58 / 4.0</span></dd></div></dl>
+      </aside>
     </section>
 
     <section className={[styles["impact"], styles["section-wrap"]].join(" ")} aria-label="工程成果概览">
@@ -51,6 +56,7 @@ export default function HomePage() {
           <h3>EvoAgent</h3>
           <p className={styles["project-subtitle"]}>多智能体 PR 代码审查与安全修复平台</p>
           <p>独立构建从代码分析、证据过滤到风险复现与安全修复的闭环，让审查结论经得起验证。</p>
+          <figure className={styles.agentFlow}><figcaption>从 PR 到可执行证据</figcaption><ol aria-label="EvoAgent 审查流程"><li>Planner</li><li>Reviewer</li><li>Critic / Test</li><li>Verifier</li></ol></figure>
           <ul className={styles["project-highlights"]}><li><strong>多 Agent 协作：</strong>Planner、Reviewer、Critic 与 Verifier 形成证据审查链。</li><li><strong>可靠异步：</strong>Outbox + Redis Streams，支持崩溃接管与死信重放。</li><li><strong>保守修复：</strong>28/28 个可修复风险通过门禁，覆盖受控风险样本的 70%。</li></ul>
           <div className={styles["project-stat"]}><strong>82.5<span>%</span></strong><div>多智能体审查 F1<small>受控合成 PR 评测，由 75.0% 提升</small></div></div>
           <div className={styles["tech-list"]} aria-label="EvoAgent 技术栈"><span>Python</span><span>LangGraph</span><span>PostgreSQL</span><span>Redis</span><span>Docker</span></div>
@@ -85,7 +91,7 @@ export default function HomePage() {
     </section>
 
     <section className={[styles["experience"], styles["section-wrap"], styles["section-space"]].join(" ")} id="experience" aria-labelledby="experience-title">
-      <div className={styles["experience-heading"]}><h2 id="experience-title">实习经历</h2><p>字节跳动 · TikTok</p><p className={styles["role"]}>AI Agent 开发工程师（实习）<br /><time dateTime="2026-04">2026.04 - 至今</time></p></div>
+      <div className={styles["experience-heading"]}><h2 id="experience-title">实习经历</h2><p>字节跳动 · TikTok</p><p className={styles["role"]}>AI Agent 开发工程师（实习）<br /><time dateTime="2026-04">2026.04 - 至今</time></p><a className={styles["text-link"]} href="/assets/chen-jiale-resume.pdf" download="陈嘉乐-简历.pdf">完整经历 <span aria-hidden="true">↗</span></a></div>
       <div className={styles["experience-list"]}>
         <article><div className={styles["experience-title"]}><h3>让请求更有效</h3><span>可靠性</span></div><p>优化 Friends、Follow、FYP 的 Polling 与 Inbox 的 Preload 时机，减少后台态及非必要场景的无效失败请求，接口成功率提升约 2.3%。</p></article>
         <article><div className={styles["experience-title"]}><h3>在 12 小时内定位与止损</h3><span>故障治理</span></div><p>定位 US 区 Highlight 空数据触发的客户端重复请求，完成客户端止损后，服务端 QPS 下降约 20%，回落至告警线以下。</p></article>
@@ -115,7 +121,7 @@ export default function HomePage() {
       <div className={styles["phone-links"]}><a href="tel:+8613327829740">+86 133 2782 9740</a><a href="tel:+85284961406">+852 8496 1406</a></div>
     </section>
   </main>
-  <footer className={[styles["site-footer"], styles["section-wrap"]].join(" ")}><span>© 2026 陈嘉乐</span><div className={styles["footer-tools"]}><ThemeToggle /><HeroLikeButton /></div><a href="#main">回到顶部 ↑</a></footer>
+  <footer className={[styles["site-footer"], styles["section-wrap"]].join(" ")}><span>© 2026 陈嘉乐</span><div className={styles["footer-tools"]}><HeroLikeButton /></div><a href="#main">回到顶部 ↑</a></footer>
 
   </div>;
 }
