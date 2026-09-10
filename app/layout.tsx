@@ -17,12 +17,12 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Jared 01 Home",
-  description: "Jared 01 Home 是小陈的个人网站与技术博客，聚焦系统、网络、工程实现与技术写作。",
+  title: "陈嘉乐 | AI Agent 与系统工程",
+  description: "陈嘉乐的个人网站与技术博客：AI Agent 开发、Linux 网络诊断、性能优化，以及项目、研究和教育经历。",
   metadataBase: new URL("https://jared01home.com"),
   openGraph: {
-    title: "Jared 01 Home",
-    description: "聚焦 C++、Linux、网络系统、工程实现与技术写作的个人网站。",
+    title: "陈嘉乐 | AI Agent 与系统工程",
+    description: "多智能体代码审查、Linux 网络诊断与工程实践。",
     url: "https://jared01home.com",
     siteName: "Jared 01 Home",
     type: "website",
@@ -37,8 +37,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jared 01 Home",
-    description: "聚焦 C++、Linux、网络系统、工程实现与技术写作的个人网站。",
+    title: "陈嘉乐 | AI Agent 与系统工程",
+    description: "多智能体代码审查、Linux 网络诊断与工程实践。",
     images: ["/og.png"]
   }
 };

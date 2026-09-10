@@ -5,8 +5,9 @@
 ## 当前能力
 
 - 自适应明暗主题
-- 首屏可交互网络信号场
-- WakaTime 编码活动可视化
+- 紧凑的简历主页，展示项目细节、实习成果、教育与研究经历
+- 简历下载和直接联系入口
+- 可展开的 WakaTime 编码活动可视化
 - Markdown 技术日志
 - 多访客共享点赞计数
 - 减少动态效果与减少透明度的无障碍降级
@@ -78,7 +79,9 @@ sudo systemctl reload nginx
 
 ## 常用内容入口
 
-- 首页内容：`data/site-content.ts`
+- 首页内容：`app/page.tsx`
+- 博客文案和 WakaTime 配置：`data/site-content.ts`
 - 博客文章：`content/blog/*.md`
 - 全站样式：`app/globals.css`
-- 首页样式：`app/home.css`
+- 首页样式：`app/profile.module.css`
+- 原有交互组件样式：`app/home.css`

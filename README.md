@@ -5,8 +5,9 @@ A dynamic personal portfolio and technical journal built with Next.js, React, Ty
 ## Highlights
 
 - Responsive light and dark themes
-- Pointer-reactive network field in the hero
-- Live WakaTime activity visualization
+- Compact resume-based homepage with project details, work experience, education, and research
+- Downloadable resume and direct contact links
+- Live WakaTime activity visualization in an expandable section
 - Markdown-based technical journal
 - Shared, persistent appreciation counter
 - Accessible reduced-motion and reduced-transparency fallbacks
@@ -78,7 +79,9 @@ sudo systemctl reload nginx
 
 ## Content
 
-- Homepage content: `data/site-content.ts`
+- Homepage content: `app/page.tsx`
+- Blog labels and WakaTime configuration: `data/site-content.ts`
 - Blog posts: `content/blog/*.md`
 - Global visual system: `app/globals.css`
-- Homepage visual system: `app/home.css`
+- Homepage visual system: `app/profile.module.css`
+- Existing interactive component styles: `app/home.css`
