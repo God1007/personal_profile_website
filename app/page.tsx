@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { HeroLikeButton } from "@/components/home/hero-like-button";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
@@ -28,15 +27,14 @@ export default function HomePage() {
           <div className={styles.heroCopy}>
             <p className={styles.eyebrow}>AI AGENT / SYSTEMS ENGINEERING</p>
             <h1 id="intro-title">陈嘉乐<span lang="en">Chen Jiale</span></h1>
+          </div>
+          <div className={styles.heroIntro}>
             <p className={styles.heroLead}>AI Agent · 网络与系统</p>
-            <p className={styles.heroDescription}>多智能体代码审查、Linux 网络诊断，<br className={styles.desktopBreak} />以及工程实践中的技术记录。</p>
+            <p className={styles.heroDescription}>多智能体代码审查、Linux 网络诊断，以及工程实践中的技术记录。</p>
             <div className={styles.heroActions}>
               <a className={styles.button} href="#projects">浏览项目</a>
               <Link className={styles.textLink} href="/blog">技术笔记 <span aria-hidden="true">›</span></Link>
             </div>
-          </div>
-          <div className={styles.heroArtwork} aria-hidden="true">
-            <Image src="/silver-system.webp" alt="" width={1536} height={1024} priority />
           </div>
         </section>
 

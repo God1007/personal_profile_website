@@ -7,7 +7,7 @@ A dynamic personal portfolio and technical journal built with Next.js, React, Ty
 - Neutral light and dark themes, with native system typography
 - Concise personal profile and project presentations
 - Direct email and GitHub contact links
-- Scroll-driven transitions, original silver artwork, and expandable project details
+- Compact, image-free introduction, scroll-driven transitions, and expandable project details
 - Markdown-based technical journal
 - Shared, persistent appreciation counter
 - Accessible reduced-motion and reduced-transparency fallbacks
