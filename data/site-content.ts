@@ -6,7 +6,7 @@ export const siteContent = {
   },
   profile: {
     name: "小陈",
-    englishName: "Jared Chan",
+    englishName: "Jared",
     initials: "CJL",
     role: "City University of Hong Kong / Electronic Information Engineering",
     location: "Nanjing / Hong Kong",

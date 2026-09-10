@@ -6,6 +6,8 @@
   --font-signature:"Bodoni 72","Didot","Bodoni MT",Georgia,serif;
   --bg:#fff; --surface:#f5f5f7; --card:#fff; --ink:#1d1d1f; --muted:#646469;
   --line:#d9d9de; --accent:#0066cc; --glass:rgba(255,255,255,.86);
+  --relief-face:#6c6c74; --relief-light:#fff; --relief-edge:#a3a3ac;
+  --relief-depth:#c5c5cc; --relief-shadow:rgba(35,35,45,.2);
   --surface-strong:var(--card); --ease:cubic-bezier(.22,1,.36,1);
   min-height:100dvh; background:var(--bg); color:var(--ink); isolation:isolate;
   font-family:var(--font-sans); font-size:1rem; line-height:1.65;
@@ -14,6 +16,8 @@
 :global(html[data-theme="dark"]) .profilePage {
   color-scheme:dark; --bg:#101011; --surface:#1c1c1e; --card:#28282b;
   --ink:#f5f5f7; --muted:#aaaab0; --line:#3b3b40; --accent:#75baff; --glass:rgba(16,16,17,.86);
+  --relief-face:#c5c5ce; --relief-light:#f3f3f7; --relief-edge:#666671;
+  --relief-depth:#41414a; --relief-shadow:rgba(0,0,0,.75);
 }
 :global(body):has(.profilePage)::before { display:none; }
 .profilePage * { box-sizing:border-box; }
@@ -28,18 +32,19 @@
 .skipLink:focus { top:12px; }
 .header { position:sticky; top:0; z-index:3; border-bottom:1px solid var(--line); background:var(--glass); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); }
 .navInner { min-height:56px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
-.wordmark { font-family:var(--font-signature); font-size:1.625rem; font-style:italic; font-weight:400; line-height:1.35; letter-spacing:-.035em; padding-block:3px; }
+.wordmark { font-family:var(--font-signature); font-size:1.625rem; font-style:italic; font-weight:400; line-height:1.35; letter-spacing:-.035em; padding-block:3px; text-shadow:-.5px -.5px 0 var(--relief-light),1px 1px 0 var(--relief-depth),2px 3px 4px var(--relief-shadow); }
 .header nav { display:flex; align-items:center; gap:28px; font-size:.8125rem; }
 .header nav a { min-height:40px; display:flex; align-items:center; transition:color .2s; }
 .header nav a:hover { color:var(--accent); }
 .header .navContact { min-height:30px; padding:3px 15px; border-radius:99px; background:#0071e3; color:#fff; }
 .header .navContact:hover { background:#0077ed; color:#fff; }
 .hero { display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:48px; padding-block:44px; }
-.heroCopy { position:relative; z-index:1; }
+.heroCopy { position:relative; z-index:1; display:flex; flex-direction:column; width:min(100%,360px); }
 .heroIntro { max-width:460px; }
 .eyebrow { font-size:.75rem; line-height:1.5; font-weight:500; letter-spacing:.09em; color:var(--muted); }
-.hero h1 { display:flex; align-items:baseline; flex-wrap:wrap; gap:8px 22px; margin-top:13px; font-family:var(--font-title); font-size:2.75rem; line-height:1.5; font-weight:400; letter-spacing:.08em; }
-.hero h1 span { display:inline-block; padding:0 .08em .1em 0; color:var(--ink); font-family:var(--font-signature); font-size:3rem; font-style:italic; font-weight:400; line-height:1.35; letter-spacing:-.045em; transform:rotate(-4deg); }
+.hero h1 { margin-top:15px; padding-bottom:5px; font-family:var(--font-title); font-size:3.25rem; line-height:1.4; font-weight:600; letter-spacing:.18em; color:var(--relief-face); text-shadow:-1px -1px 0 var(--relief-light),1px 1px 0 var(--relief-edge),2px 2px 0 var(--relief-depth),3px 4px 3px var(--relief-shadow),6px 9px 12px var(--relief-shadow); }
+.hero .signature { align-self:flex-end; display:flex; align-items:center; gap:16px; margin-top:2px; padding:0 .1em .12em 0; font-family:var(--font-signature); font-size:2.375rem; font-style:italic; line-height:1.35; letter-spacing:-.035em; transform:rotate(-4deg); }
+.signature::before { content:""; width:42px; height:1px; background:var(--line); }
 .heroLead { font-size:1.4375rem; line-height:1.5; font-weight:500; letter-spacing:-.02em; }
 .heroDescription { margin-top:12px!important; color:var(--muted); line-height:1.85; }
 .heroActions { display:flex; align-items:center; gap:26px; margin-top:23px; }
@@ -142,8 +147,9 @@
 @media(max-width:1023px) {
   .wrap,.navInner { width:calc(100% - 48px); }
   .hero { gap:18px; }
-  .hero h1 { font-size:2.375rem; gap:6px 16px; }
-  .hero h1 span { font-size:2.5rem; }
+  .heroCopy { width:min(100%,320px); }
+  .hero h1 { font-size:2.875rem; }
+  .hero .signature { font-size:2.125rem; }
   .heroLead { font-size:1.25rem; }
   .project { padding:26px 24px 0; }
   .agentDiagram ol { gap:10px; }
@@ -159,8 +165,8 @@
   .header nav { gap:17px; font-size:.8125rem; }
   .header .navContact { display:none; }
   .hero { grid-template-columns:1fr; gap:22px; padding-block:28px; }
-  .hero h1 { font-size:2.125rem; margin-top:10px; gap:6px 16px; }
-  .hero h1 span { font-size:2.375rem; }
+  .hero h1 { font-size:2.625rem; margin-top:12px; }
+  .hero .signature { font-size:2rem; }
   .heroLead { font-size:1.25rem; }
   .heroDescription { margin-top:9px!important; }
   .heroActions { margin-top:18px; }
@@ -193,6 +199,9 @@
   :global(html):has(.profilePage) { scroll-behavior:auto; }
   .profilePage *,.profilePage *::before,.profilePage *::after { animation:none!important; transition:none!important; }
 }
+@media(prefers-contrast:more),(forced-colors:active) {
+  .hero h1,.wordmark { color:var(--ink); text-shadow:none; }
+}
 @media print {
   .profilePage { --bg:#fff; --surface:#f5f5f7; --ink:#222; --muted:#555; --line:#ddd; background:#fff; color:#222; }
   .header,.heroActions,.skipLink,.footer { display:none; }
@@ -200,4 +209,5 @@
   .section { padding-block:20px; }
   .project { break-inside:avoid; }
   .profilePage * { animation:none!important; translate:none!important; }
+  .hero h1 { color:#222; text-shadow:none; }
 }

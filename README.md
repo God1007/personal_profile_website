@@ -4,7 +4,7 @@ A dynamic personal portfolio and technical journal built with Next.js, React, Ty
 
 ## Highlights
 
-- Neutral light and dark themes, expressive serif titles, and readable system body text
+- Neutral light and dark themes, embossed name lettering, a separate Jared signature, and readable system body text
 - Concise personal profile and project presentations
 - Direct email and GitHub contact links
 - Compact, image-free introduction, scroll-driven transitions, and expandable project details

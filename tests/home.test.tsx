@@ -18,9 +18,12 @@ describe("HomePage", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: /陈嘉乐.*Chen Jiale/i
+        name: "陈嘉乐"
       })
     ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Jared，回到首页" })).toHaveTextContent("Jared");
+    expect(screen.getByText("Jared", { selector: "p" })).toHaveAttribute("lang", "en");
+    expect(screen.queryByText(/Chen Jiale/i)).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "EvoAgent" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "智能网络诊断" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "关于" })).toBeInTheDocument();

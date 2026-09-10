@@ -12,7 +12,7 @@ export default function HomePage() {
       <a className={styles.skipLink} href="#main">跳转到正文</a>
       <header className={styles.header}>
         <div className={styles.navInner}>
-          <a className={styles.wordmark} href="#main" aria-label="陈嘉乐，回到首页">Chen Jiale</a>
+          <a className={styles.wordmark} href="#main" aria-label="Jared，回到首页" lang="en">Jared</a>
           <nav aria-label="主导航">
             <a href="#projects">项目</a>
             <a href="#about">关于</a>
@@ -26,7 +26,8 @@ export default function HomePage() {
         <section className={`${styles.hero} ${styles.wrap}`} aria-labelledby="intro-title">
           <div className={styles.heroCopy}>
             <p className={styles.eyebrow}>AI AGENT / SYSTEMS ENGINEERING</p>
-            <h1 id="intro-title">陈嘉乐<span lang="en">Chen Jiale</span></h1>
+            <h1 id="intro-title">陈嘉乐</h1>
+            <p className={styles.signature} lang="en">Jared</p>
           </div>
           <div className={styles.heroIntro}>
             <p className={styles.heroLead}>AI Agent · 网络与系统</p>
