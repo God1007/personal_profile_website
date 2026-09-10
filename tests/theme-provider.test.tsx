@@ -30,15 +30,15 @@ describe("ThemeProvider", () => {
     });
   });
 
-  it("defaults to dark when there is no stored preference", () => {
+  it("defaults to light when there is no stored preference", () => {
     render(
       <ThemeProvider>
         <ThemeToggle />
       </ThemeProvider>
     );
 
-    expect(screen.getByRole("button", { name: /toggle theme/i })).toHaveTextContent(/dark/i);
-    expect(document.documentElement.dataset.theme).toBe("dark");
-    expect(window.localStorage.getItem("theme")).toBe("dark");
+    expect(screen.getByRole("button", { name: /toggle theme/i })).toHaveTextContent(/light/i);
+    expect(document.documentElement.dataset.theme).toBe("light");
+    expect(window.localStorage.getItem("theme")).toBe("light");
   });
 });

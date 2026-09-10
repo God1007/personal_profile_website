@@ -1,24 +1,11 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Manrope } from "next/font/google";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import "./globals.css";
 import "./home.css";
 
-const manrope = Manrope({
-  subsets: ["latin"],
-  variable: "--font-manrope",
-  display: "swap"
-});
-
-const jetBrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
-  display: "swap"
-});
-
 export const metadata: Metadata = {
   title: "陈嘉乐 | AI Agent 与系统工程",
-  description: "陈嘉乐的个人空间：一些关于 AI Agent、网络与系统的尝试，以及构建它们时留下的想法和笔记。",
+  description: "陈嘉乐的个人网站。AI Agent、Linux 网络诊断与工程实践，项目与技术笔记。",
   metadataBase: new URL("https://jared01home.com"),
   openGraph: {
     title: "陈嘉乐 | AI Agent 与系统工程",
@@ -49,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" className={`${manrope.variable} ${jetBrainsMono.variable}`}>
+    <html lang="zh-CN">
       <body>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
