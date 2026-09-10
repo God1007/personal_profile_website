@@ -18,7 +18,7 @@ const jetBrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "陈嘉乐 | AI Agent 与系统工程",
-  description: "陈嘉乐的个人网站与技术博客：AI Agent 开发、Linux 网络诊断、性能优化，以及项目、研究和教育经历。",
+  description: "陈嘉乐的个人空间：一些关于 AI Agent、网络与系统的尝试，以及构建它们时留下的想法和笔记。",
   metadataBase: new URL("https://jared01home.com"),
   openGraph: {
     title: "陈嘉乐 | AI Agent 与系统工程",

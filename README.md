@@ -5,9 +5,9 @@ A dynamic personal portfolio and technical journal built with Next.js, React, Ty
 ## Highlights
 
 - Responsive light and dark themes
-- Compact resume-based homepage with project details, work experience, education, and research
-- Downloadable resume and direct contact links
-- Live WakaTime activity visualization in an expandable section
+- Personal introduction, project stories, and engineering reflections
+- Direct email and GitHub contact links
+- Scroll-driven transitions and interactive project disclosures
 - Markdown-based technical journal
 - Shared, persistent appreciation counter
 - Accessible reduced-motion and reduced-transparency fallbacks
